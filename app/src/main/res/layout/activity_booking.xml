@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
+
+    <TextView
+            android:id="@+id/textView_name"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:layout_width="match_parent"
+            android:hint="User Name"
+            android:drawablePadding="16dp"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="80dp"/>
+    <TableRow
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+    <TextView
+            android:id="@+id/textView_buildingname"
+            android:drawableStart="@drawable/ic_building_black_24dp"
+            android:layout_width="match_parent"
+            android:hint="Building Name"
+            android:drawablePadding="16dp"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="80dp"/>
+    <TableRow
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+    <TextView
+            android:id="@+id/textView_conf_name"
+            android:drawableStart="@drawable/ic_room_black_24dp"
+            android:layout_width="match_parent"
+            android:hint="Room Name"
+            android:drawablePadding="16dp"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="80dp"
+            android:layout_height="wrap_content"/>
+    <TableRow
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+
+    <TextView
+            android:id="@+id/textView_date"
+            android:drawableStart="@drawable/ic_today_black_24dp"
+            android:layout_width="match_parent"
+            android:hint="Date"
+            android:drawablePadding="16dp"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="80dp"
+            android:layout_height="wrap_content"/>
+    <TableRow
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+    <TextView
+            android:id="@+id/textView_from_time"
+            android:drawableStart="@drawable/ic_schedule_black_24dp"
+            android:layout_width="match_parent"
+            android:hint="Time"
+            android:drawablePadding="16dp"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:paddingRight="80dp"
+            android:layout_height="wrap_content"/>
+
+    <TableRow
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/purpose_edit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:layout_marginTop="5dp"
+            android:focusableInTouchMode="true"
+            android:background="#FFFFFF"
+            app:errorEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:id="@+id/editText_purpose"
+                android:hint="Purpose"
+                android:maxLines="1"
+                android:textColor="@color/textColorGray"
+                android:singleLine="true"
+                android:drawableStart="@drawable/ic_local_offer_black_24dp"
+                android:drawablePadding="16dp"
+                android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+            android:id="@+id/book_button"
+            android:layout_marginTop="20dp"
+            android:text="Book"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

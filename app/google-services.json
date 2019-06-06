@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "861287179604",
+    "firebase_url": "https://conference-room-1554271457428.firebaseio.com",
+    "project_id": "conference-room-1554271457428",
+    "storage_bucket": "conference-room-1554271457428.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861287179604:android:7c9a313ef546b642",
+        "android_client_info": {
+          "package_name": "com.example.conferencerommapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861287179604-2j15ccaju7a9pacmihf7ianvc0knq1rv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.conferencerommapp",
+            "certificate_hash": "7ac979ff97649a804e14d790c53610eb3da187d7"
+          }
+        },
+        {
+          "client_id": "861287179604-gast46l6odls3dhsmeom8ceidubdflv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdY7cYhmHlsYPvVI2nyWVKM3n_PsSkrTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861287179604-gast46l6odls3dhsmeom8ceidubdflv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

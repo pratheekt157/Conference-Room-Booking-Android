@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="2dp"
+        app:cardCornerRadius="5dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/linear_layout_icon">
+            <TextView
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/conference_room_capacity_show"
+                    android:hint="5"
+                    android:drawablePadding="5dp"
+                    android:layout_margin="8dp"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:drawableStart="@drawable/ic_show_members"
+                    android:layout_width="wrap_content"/>
+        </LinearLayout>
+
+        <View
+                android:id="@+id/vertical_bar"
+                android:layout_width="1dp"
+                android:layout_toRightOf="@+id/linear_layout_icon"
+                android:layout_height="match_parent"
+                android:background="#0072bc"/>
+        <LinearLayout
+                android:layout_toEndOf="@+id/linear_layout_icon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="8dp">
+
+            <TextView
+                    android:id="@+id/room_name_show"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:hint="Prithvi(1st floor)"
+                    android:drawablePadding="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:layout_below="@id/room_name_show"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/dashboard_building_name"
+                    android:layout_width="wrap_content"
+                    android:hint="Main Building"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+            <TextView
+                    android:id="@+id/dashboard_room_resource"
+                    android:text="Amenities"
+                    android:textSize="12sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+            />
+            <LinearLayout
+                    android:weightSum="100"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/dashboard_no_resource_detail_found"
+                        android:text="No details found for amenities"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/dashboard_ani_1"
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:hint="Projector"
+                        android:drawablePadding="5dp"
+                        android:textSize="10sp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="8dp"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+                <TextView
+                        android:id="@+id/dashboard_ani_2"
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:hint="WhiteBoard-Marker"
+                        android:layout_marginTop="4dp"
+                        android:drawablePadding="5dp"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/dashboard_ani_3"
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:hint="Monitor"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="8dp"
+                        android:drawablePadding="5dp"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+
+                <TextView
+                        android:id="@+id/dashboard_ani_4"
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:hint="Speaker"
+                        android:layout_marginTop="4dp"
+                        android:drawablePadding="5dp"
+                        android:textSize="10sp"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/dashboard_ani_5"
+                        android:layout_width="0dp"
+                        android:layout_weight="50"
+                        android:hint="Extension Board"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
+                        android:visibility="gone"
+                        android:drawablePadding="5dp"
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+
+
+
+
+
+

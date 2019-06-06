@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="5dp">
+
+    <RelativeLayout
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/linear_layout_icon">
+            <TextView
+                    android:text="Cancel"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btnCancel"
+                    android:layout_margin="8dp"
+                    android:drawableTop="@drawable/ic_cancel_booking"
+                    android:layout_width="wrap_content"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_toRightOf="@+id/linear_layout_icon"
+                android:layout_height="match_parent"
+                android:background="#B9B9B9"/>
+        <LinearLayout
+                android:layout_toEndOf="@+id/linear_layout_icon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:layout_marginStart="16dp">
+
+            <TextView
+                    android:id="@+id/purpose"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:hint="Ford Client Comming"
+                    android:drawablePadding="16dp"
+                    android:drawableRight="@drawable/ic_edit_black_24dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:id="@+id/building_name"
+                    android:drawableStart="@drawable/ic_business_black_24dp"
+                    android:layout_width="match_parent"
+                    android:hint="Main Building"
+                    android:drawablePadding="16dp"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:id="@+id/conferenceRoomName"
+                    android:drawableStart="@drawable/ic_room_resized"
+                    android:layout_width="match_parent"
+                    android:hint="Prithvi(1st floor)"
+                    android:drawablePadding="16dp"
+                    android:textSize="12sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/date"
+                    android:drawableStart="@drawable/ic_today_resized"
+                    android:layout_width="match_parent"
+                    android:hint="25 April 2019"
+                    android:drawablePadding="16dp"
+                    android:textSize="12sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/btnshow"
+                android:drawableStart="@drawable/ic_show_members"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="12dp"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

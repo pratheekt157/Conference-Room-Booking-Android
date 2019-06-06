@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="1dp"
+        app:cardCornerRadius="5dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear_layout_icon">
+            <TextView
+                    android:text="Cancelled"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_cancel"
+                    android:textColor="@color/textColorGray"
+                    android:layout_margin="8dp"
+                    android:drawableTop="@drawable/ic_cancelled_circle"
+                    android:layout_width="wrap_content"/>
+        </LinearLayout>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_toRightOf="@+id/linear_layout_icon"
+                android:layout_height="match_parent"
+                android:background="#B9B9B9"/>
+        <LinearLayout
+                android:layout_toEndOf="@+id/linear_layout_icon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="8dp">
+
+            <TextView
+                    android:id="@+id/cancelled_purpose"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:hint="Ford Client Comming"
+                    android:drawablePadding="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:id="@+id/cancelled_building_name"
+                    android:drawableStart="@drawable/ic_business_black_24dp"
+                    android:layout_width="match_parent"
+                    android:hint="Vayu(1st floor),Main Building"
+                    android:drawablePadding="16dp"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:id="@+id/cancelled_date"
+                    android:drawableStart="@drawable/ic_today_resized"
+                    android:layout_width="match_parent"
+                    android:hint="25 April 2019"
+                    android:drawablePadding="16dp"
+                    android:textSize="12sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/cancelled_time"
+                        android:drawableStart="@drawable/ic_time_dashboard"
+                        android:layout_width="match_parent"
+                        android:hint="11:00 - 12:00"
+                        android:drawablePadding="16dp"
+                        android:textSize="12sp"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:id="@+id/cancelled_btnshow"
+                        android:drawableStart="@drawable/ic_show_members"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

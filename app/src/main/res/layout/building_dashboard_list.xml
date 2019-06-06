@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="5dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/linear_layout_icon">
+            <TextView
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/status_icon"
+                    android:layout_margin="8dp"
+                    android:textSize="12sp"
+                    android:gravity="center"
+                    android:drawableTop="@drawable/ic_building_icon"
+                    android:layout_width="wrap_content"/>
+        </LinearLayout>
+
+        <View
+                android:id="@+id/vertical_bar"
+                android:layout_width="1dp"
+                android:layout_toRightOf="@+id/linear_layout_icon"
+                android:layout_height="match_parent"
+                android:background="#B9B9B9"/>
+        <RelativeLayout
+                android:layout_toEndOf="@+id/linear_layout_icon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="8dp">
+
+            <TextView
+                    android:id="@+id/building_name"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:hint="Main Building"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:layout_below="@id/building_name"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/building_place"
+                    android:layout_width="match_parent"
+                    android:hint="Main Building"
+                    android:drawablePadding="16dp"
+                    android:textSize="12sp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
