@@ -16,9 +16,9 @@ import java.text.SimpleDateFormat
 class UpcomingBookingAdapter(
     private val dashboardItemList: ArrayList<Dashboard>,
     val mContext: Context,
-    private val btnListener: UpcomingBookingAdapter.CancelBtnClickListener,
-    private val mShowMembers: UpcomingBookingAdapter.ShowMembersListener,
-    private val mEditBooking: UpcomingBookingAdapter.EditBookingListener
+    private val btnListener: CancelBtnClickListener,
+    private val mShowMembers: ShowMembersListener,
+    private val mEditBooking: EditBookingListener
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<UpcomingBookingAdapter.ViewHolder>() {
 
     /**
@@ -54,10 +54,15 @@ class UpcomingBookingAdapter(
 
         if (dashboardItemList[position].isTagged == true) {
             holder.cancelButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_attendee, 0, 0)
+            holder.purposeTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             holder.cancelButton.text = "Attendee"
         } else {
             holder.cancelButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_cancel_booking, 0, 0)
             holder.cancelButton.text = " Cancel "
+            holder.purposeTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_edit_black_24dp, 0)
+            holder.purposeTextView.onRightDrawableClicked {
+                editActivity(position, mContext)
+            }
         }
         if (dashboardItemList[position].status == Constants.BOOKING_DASHBOARD_PENDING) {
             holder.statusTextView.visibility = View.VISIBLE
@@ -94,18 +99,9 @@ class UpcomingBookingAdapter(
 
         setDataToFields(holder, position)
 
-        holder.fromTimeTextView.text = fromDate[1] + " - " + toDate[1]
+        holder.fromTimeTextView.text = FormatDate.changeFormat(fromDate[1]) + " - " + FormatDate.changeFormat(toDate[1])
         holder.dateTextView.text = formatDate(fromDate[0])
         setFunctionOnButton(holder, position, mContext)
-        if (dashboardItemList[position].isTagged == true) {
-            holder.purposeTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-        } else {
-            holder.purposeTextView.onRightDrawableClicked {
-                editActivity(position, mContext)
-            }
-        }
-
-
     }
 
     fun setDrawable(amitie: String, targetTextView: TextView) {

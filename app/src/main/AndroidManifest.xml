@@ -21,10 +21,11 @@
                 android:enabled="true"
                 android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-
+        <activity android:name=".Activity.CheckAdapter">
+        </activity>
         <activity
                 android:name=".Activity.InputDetailsForBooking"
                 android:launchMode="singleTop"
@@ -69,7 +70,7 @@
         </activity>
         <activity
                 android:name=".Activity.UserBookingsDashboardActivity"
-                android:label="Bookings"
+                android:label="Booking"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">

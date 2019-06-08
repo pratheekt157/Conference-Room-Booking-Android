@@ -21,5 +21,11 @@ class FormatDate {
         fun reverseDateFormat(date: String): String {
             return simpleDateFormatInput.format(simpleDateFormatOutput.parse(date))
         }
+
+        fun changeFormat(time: String): String {
+            var simpleDateFormat = SimpleDateFormat("HH:mm:ss")
+            var simpleDateFormat1 = SimpleDateFormat("HH:mm")
+            return simpleDateFormat1.format(simpleDateFormat.parse(time))
+        }
     }
 }

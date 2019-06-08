@@ -6,8 +6,8 @@
               android:layout_height="match_parent">
 
     <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:id="@+id/icon"
             android:paddingTop="3dp"
             android:src="@drawable/arrow_pointing_to_right"/>
@@ -15,6 +15,7 @@
     <TextView
             android:id="@+id/spinner_text"
             android:paddingLeft="14dp"
+            android:textSize="16sp"
             android:paddingTop="1dp"
             android:layout_marginTop="3dp"
             android:layout_width="match_parent"

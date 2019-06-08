@@ -6,37 +6,51 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html.fromHtml
+import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
+import com.example.conferencerommapp.R
+import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import butterknife.ButterKnife
 import com.example.conferencerommapp.Helper.*
-import com.example.conferencerommapp.Model.Building
-import com.example.conferencerommapp.Model.GetIntentDataFromActvity
-import com.example.conferencerommapp.Model.RoomDetails
-import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Model.*
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ConferenceRoomViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.shawnlin.numberpicker.NumberPicker
-import kotlinx.android.synthetic.main.activity_booking.*
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
-import kotlinx.android.synthetic.main.activity_project_manager_input.*
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.booking_scroll_view
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.building_name_spinner
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.capacity_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.date
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.date_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.from_time_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.horizontal_line_below_search_button
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.purpose_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.search_room
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.suggestions
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.text_view_error_spinner_building
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.to_time_layout
+import kotlinx.android.synthetic.main.check_recycler_view.*
 
-class InputDetailsForBooking : AppCompatActivity() {
+
+class InputDetailsForBookingFragment : Fragment() {
+
     @BindView(R.id.date)
     lateinit var dateEditText: EditText
     @BindView(R.id.fromTime)
@@ -52,7 +66,7 @@ class InputDetailsForBooking : AppCompatActivity() {
     @BindView(R.id.event_name_text_view)
     lateinit var purposeEditText: EditText
     @BindView(R.id.booking_scroll_view)
-    lateinit var scroolView: NestedScrollView
+    lateinit var scrollView: NestedScrollView
     private lateinit var mProgressDialog: ProgressDialog
     private lateinit var mSetDataFromActivity: GetIntentDataFromActvity
     private lateinit var mConferenceRoomViewModel: ConferenceRoomViewModel
@@ -64,10 +78,14 @@ class InputDetailsForBooking : AppCompatActivity() {
     var mBuildingId = -1
     var capacity = 0
     var buildingId = 0
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_booking_input_from_user)
-        ButterKnife.bind(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_input_details_for_bookings, container, false)
+        ButterKnife.bind(this, view)
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
         observeData()
         search_room.setOnClickListener {
@@ -75,27 +93,23 @@ class InputDetailsForBooking : AppCompatActivity() {
             validationOnDataEnteredByUser()
         }
     }
-
     private fun init() {
-        val actionBar = supportActionBar
-        actionBar!!.title =
-            fromHtml("<font font-size = \"23px\" color=\"#FFFFFF\">" + getString(R.string.Booking_Details) + "</font>")
         setPickerToEditText()
         textChangeListenerOnDateEditText()
         textChangeListenerOnFromTimeEditText()
         textChangeListenerOnToTimeEditText()
         textChangeListenerOnPurposeEditText()
         textChangeListenerOnRoomCapacity()
-        acct = GoogleSignIn.getLastSignedInAccount(this)!!
+        acct = GoogleSignIn.getLastSignedInAccount(activity)!!
         mInputDetailsForRoom.email = acct.email.toString()
-        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
+        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
         mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
         mConferenceRoomViewModel = ViewModelProviders.of(this).get(ConferenceRoomViewModel::class.java)
         mSetDataFromActivity = GetIntentDataFromActvity()
-        if (NetworkState.appIsConnectedToInternet(this)) {
+        if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModelForBuildingList()
         } else {
-            val i = Intent(this, NoInternetConnectionActivity::class.java)
+            val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
     }
@@ -117,7 +131,7 @@ class InputDetailsForBooking : AppCompatActivity() {
     private fun setAdapter(mListOfRooms: List<RoomDetails>) {
         mProgressDialog.dismiss()
         customAdapter =
-            RoomAdapter(mListOfRooms as ArrayList<RoomDetails>, this, object : RoomAdapter.ItemClickListener {
+            RoomAdapter(mListOfRooms as ArrayList<RoomDetails>, activity!!, object : RoomAdapter.ItemClickListener {
                 override fun onItemClick(roomId: Int?, buidingId: Int?, roomName: String?, buildingName: String?) {
                     mSetIntentData.buildingName = mBuildingName
                     mSetIntentData.roomName = roomName
@@ -129,7 +143,9 @@ class InputDetailsForBooking : AppCompatActivity() {
                 }
             })
         mRecyclerView.adapter = customAdapter
-        mRecyclerView.smoothScrollToPosition(customAdapter.itemCount)
+        booking_scroll_view.post {
+            scrollView.smoothScrollTo(0, mRecyclerView.top)
+        }
     }
 
     /**
@@ -145,8 +161,8 @@ class InputDetailsForBooking : AppCompatActivity() {
             if (it == Constants.INVALID_TOKEN) {
                 showAlert()
             } else {
-                ShowToast.show(this, it as Int)
-                finish()
+                ShowToast.show(activity!!, it as Int)
+
             }
         })
 
@@ -160,8 +176,7 @@ class InputDetailsForBooking : AppCompatActivity() {
             if (it == Constants.INVALID_TOKEN) {
                 showAlert()
             } else {
-                ShowToast.show(this, it as Int)
-                finish()
+                ShowToast.show(activity!!, it as Int)
             }
         })
 
@@ -182,8 +197,8 @@ class InputDetailsForBooking : AppCompatActivity() {
             if (it == Constants.INVALID_TOKEN) {
                 showAlert()
             } else {
-                ShowToast.show(this, it as Int)
-                finish()
+                ShowToast.show(activity!!, it as Int)
+
             }
         })
     }
@@ -191,7 +206,7 @@ class InputDetailsForBooking : AppCompatActivity() {
         mSetIntentData.fromTime = dateEditText.text.toString() + " " + fromTimeEditText.text.toString()
         mSetIntentData.toTime = dateEditText.text.toString() + " " + toTimeEditText.text.toString()
         mSetIntentData.purpose = purposeEditText.text.toString()
-        var intent = Intent(this@InputDetailsForBooking, SelectMeetingMembersActivity::class.java)
+        var intent = Intent(activity!!, SelectMeetingMembersActivity::class.java)
         intent.putExtra(Constants.EXTRA_INTENT_DATA, mSetIntentData)
         startActivity(intent)
     }
@@ -204,10 +219,10 @@ class InputDetailsForBooking : AppCompatActivity() {
             }
         }
         if (count == mListOfRooms.size) {
-            if (NetworkState.appIsConnectedToInternet(this)) {
+            if (NetworkState.appIsConnectedToInternet(activity!!)) {
                 makeCallToApiForSuggestedRooms()
             } else {
-                val i = Intent(this, NoInternetConnectionActivity::class.java)
+                val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE3)
             }
 
@@ -243,7 +258,7 @@ class InputDetailsForBooking : AppCompatActivity() {
             buildingNameList.add(mBuilding.buildingName!!)
             buildingIdList.add(mBuilding.buildingId!!.toInt())
         }
-        val adapter = ArrayAdapter<String>(this, R.layout.spinner_icon, R.id.spinner_text, buildingNameList)
+        val adapter = ArrayAdapter<String>(activity!!, R.layout.spinner_icon, R.id.spinner_text, buildingNameList)
         building_name_spinner.adapter = adapter
         building_name_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -267,20 +282,20 @@ class InputDetailsForBooking : AppCompatActivity() {
          * set Time picker for the edittext fromtime
          */
         fromTimeEditText.setOnClickListener {
-            DateAndTimePicker.getTimePickerDialog(this, fromTimeEditText)
+            DateAndTimePicker.getTimePickerDialog(activity!!, fromTimeEditText)
         }
 
         /**
          * set Time picker for the edittext toTime
          */
         toTimeEditText.setOnClickListener {
-            DateAndTimePicker.getTimePickerDialog(this, toTimeEditText)
+            DateAndTimePicker.getTimePickerDialog(activity!!, toTimeEditText)
         }
         /**
          * set Date picker for the edittext dateEditText
          */
         dateEditText.setOnClickListener {
-            DateAndTimePicker.getDatePickerDialog(this, dateEditText)
+            DateAndTimePicker.getDatePickerDialog(activity!!, dateEditText)
         }
     }
 
@@ -510,7 +525,7 @@ class InputDetailsForBooking : AppCompatActivity() {
              */
             if (elapsed2 < 0) {
                 val builder = GetAleretDialog.getDialog(
-                    this,
+                    activity!!,
                     getString(R.string.invalid),
                     getString(R.string.invalid_fromtime)
                 )
@@ -531,7 +546,7 @@ class InputDetailsForBooking : AppCompatActivity() {
                 setDataForApiCallToFetchRoomDetails()
             } else {
                 val builder = GetAleretDialog.getDialog(
-                    this,
+                    activity!!,
                     getString(R.string.invalid),
                     getString(R.string.time_validation_message)
                 )
@@ -543,7 +558,7 @@ class InputDetailsForBooking : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Log.i("-------------", e.message)
-            Toast.makeText(this@InputDetailsForBooking, getString(R.string.details_invalid), Toast.LENGTH_LONG).show()
+            Toast.makeText(activity!!, getString(R.string.details_invalid), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -552,10 +567,10 @@ class InputDetailsForBooking : AppCompatActivity() {
         mInputDetailsForRoom.buildingId = mBuildingId
         mInputDetailsForRoom.fromTime = dateEditText.text.toString() + " " + fromTimeEditText.text.toString()
         mInputDetailsForRoom.toTime = dateEditText.text.toString() + " " + toTimeEditText.text.toString()
-        if (NetworkState.appIsConnectedToInternet(this)) {
+        if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModelForConferenceRoomList(mInputDetailsForRoom)
         } else {
-            val i = Intent(this, NoInternetConnectionActivity::class.java)
+            val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE2)
         }
     }
@@ -565,7 +580,7 @@ class InputDetailsForBooking : AppCompatActivity() {
      */
     private fun showAlert() {
         val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
+            activity!!, getString(R.string.session_expired), "Your session is expired!\n" +
                     getString(R.string.session_expired_messgae)
         )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
@@ -579,18 +594,18 @@ class InputDetailsForBooking : AppCompatActivity() {
      * sign out from application
      */
     private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
+        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(activity!!)
         mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
+            .addOnCompleteListener(activity!!) {
+                startActivity(Intent(activity!!, SignIn::class.java))
+                activity!!.finish()
             }
     }
     /**
      * get token and userId from local storage
      */
     private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
+        return activity!!.getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
     }
-}
 
+}

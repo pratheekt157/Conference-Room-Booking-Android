@@ -42,9 +42,8 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
                 R.id.nav_home -> selectedFragment = UpcomingBookingFragment()
                 R.id.nav_previous -> selectedFragment = PreviousBookingFragment()
                 R.id.nav_cancelled -> selectedFragment = CancelledBookingFragment()
-                R.id.nav_new_booking -> {
-                    startActivity(Intent(this@UserBookingsDashboardActivity, InputDetailsForBooking::class.java))
-                }
+                R.id.nav_new_booking -> selectedFragment = InputDetailsForBookingFragment()
+
             }
             if (selectedFragment != null) {
                 supportFragmentManager.beginTransaction().replace(
@@ -104,13 +103,15 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     }
 
 
-
     /**
      * show dialog for passcode
      */
     private fun showAlertForPasscode(passcode: Int) {
         val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.do_not_share), "Your passcode is "+ passcode + ". You can use this passcode to book a room from tablet placed inside conference room.")
+            this,
+            getString(R.string.do_not_share),
+            "Your passcode is " + passcode + ". You can use this passcode to book a room from tablet placed inside conference room."
+        )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
         }
         val builder = GetAleretDialog.showDialog(dialog)

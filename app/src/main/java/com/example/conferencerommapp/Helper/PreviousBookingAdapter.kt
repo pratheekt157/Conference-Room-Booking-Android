@@ -47,7 +47,7 @@ class PreviousBookingAdapter(
         val toDate = toTime!!.split("T")
 
         holder.dateTextView.text = formatDate(fromDate[0])
-        holder.fromTimeTextView.text = fromDate[1] + " - " + toDate[1]
+        holder.fromTimeTextView.text = FormatDate.changeFormat(fromDate[1]) + " - " + FormatDate.changeFormat(toDate[1])
         setDataToFields(holder, position)
     }
     /**
