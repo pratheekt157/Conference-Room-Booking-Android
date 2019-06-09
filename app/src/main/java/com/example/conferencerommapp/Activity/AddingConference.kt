@@ -22,6 +22,7 @@ import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.AddConferenceRoomViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_adding_conference.*
@@ -93,7 +94,7 @@ class AddingConference : AppCompatActivity() {
             if (it == getString(R.string.invalid_token)) {
                 showAlert()
             } else {
-                // ShowToast.show(this, it)
+                ShowToast.show(this, it as Int)
             }
         })
     }
@@ -187,7 +188,7 @@ class AddingConference : AppCompatActivity() {
      */
     private fun addRoom() {
         progressDialog.show()
-        mAddConferenceRoomViewModel.addConferenceDetails(getTokenFromPreference(), mConferenceRoom)
+        mAddConferenceRoomViewModel.addConferenceDetails(GetPreference.getTokenFromPreference(this), mConferenceRoom)
     }
 
     /**
@@ -216,18 +217,6 @@ class AddingConference : AppCompatActivity() {
                 finish()
             }
     }
-
-    /**
-     * get token and userId from local storage
-     */
-    fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
-
-    fun getUserIdFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("UserId", "Not Set")!!
-    }
-
 
     /**
      * add text change listener for the room name

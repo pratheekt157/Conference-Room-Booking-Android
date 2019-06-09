@@ -23,6 +23,7 @@ import com.example.conferencerommapp.Model.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -88,7 +89,7 @@ class UpcomingBookingFragment : Fragment() {
 
     private fun getViewModel() {
         progressDialog.show()
-        mBookingDashBoardViewModel.getBookingList(getTokenFromPreference(), mBookingDashboardInput)
+        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
     }
 
     private fun initRecyclerView() {
@@ -122,7 +123,7 @@ class UpcomingBookingFragment : Fragment() {
                         pagination++
                         mBookingDashboardInput.pageNumber = pagination
                         upcoming_booking_progress_bar.visibility = View.VISIBLE
-                        mBookingDashBoardViewModel.getBookingList(getTokenFromPreference(), mBookingDashboardInput)
+                        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
                     }
                 }
             }
@@ -138,7 +139,7 @@ class UpcomingBookingFragment : Fragment() {
             pagination = 1
             mBookingDashboardInput.pageNumber = pagination
             if (NetworkState.appIsConnectedToInternet(activity!!)) {
-                mBookingDashBoardViewModel.getBookingList(getTokenFromPreference(), mBookingDashboardInput)
+                mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
             } else {
                 val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE)
@@ -186,7 +187,7 @@ class UpcomingBookingFragment : Fragment() {
             finalList.clear()
             dashBord_recyclerView1.adapter?.notifyDataSetChanged()
             mBookingDashBoardViewModel.getBookingList(
-                getTokenFromPreference(),
+                GetPreference.getTokenFromPreference(activity!!),
                 mBookingDashboardInput
             )
         })
@@ -240,18 +241,6 @@ class UpcomingBookingFragment : Fragment() {
         startActivity(updateActivityIntent)
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        if(NetworkState.appIsConnectedToInternet(activity!!)) {
-//            finalList.clear()
-//            pagination = 1
-//            mBookingDashboardInput.pageNumber = pagination
-//            getViewModel()
-//        } else {
-//            val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
-//            startActivityForResult(i, Constants.RES_CODE)
-//        }
-//    }
 
     /**
      * show a dialog to confirm cancel of booking
@@ -288,7 +277,7 @@ class UpcomingBookingFragment : Fragment() {
      */
     private fun cancelBooking(mBookingId: Int) {
         progressDialog.show()
-        mBookingDashBoardViewModel.cancelBooking(getTokenFromPreference(), mBookingId)
+        mBookingDashBoardViewModel.cancelBooking(GetPreference.getTokenFromPreference(activity!!), mBookingId)
     }
 
 
@@ -320,12 +309,6 @@ class UpcomingBookingFragment : Fragment() {
         ColorOfDialogButton.setColorOfDialogButton(builder)
     }
 
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return activity!!.getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
 
 }
 

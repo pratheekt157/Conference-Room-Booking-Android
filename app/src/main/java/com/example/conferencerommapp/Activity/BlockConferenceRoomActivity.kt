@@ -27,6 +27,7 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BlockRoomViewModel
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import es.dmoral.toasty.Toasty
@@ -247,7 +248,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     private fun getBuilding() {
         progressDialog.show()
         // make api call
-        mBuildingViewModel.getBuildingList(getTokenFromPreference())
+        mBuildingViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -255,7 +256,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      */
     private fun blocking(room: BlockRoom) {
         progressDialog.show()
-        mBlockRoomViewModel.blockingStatus(room, getTokenFromPreference())
+        mBlockRoomViewModel.blockingStatus(room, GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -263,7 +264,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      */
     private fun blockConfirmed(mRoom: BlockRoom) {
         progressDialog.show()
-        mBlockRoomViewModel.blockRoom(mRoom, getTokenFromPreference())
+        mBlockRoomViewModel.blockRoom(mRoom, GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -271,7 +272,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      */
     fun conferenceRoomListFromBackend(buildingId: Int) {
         progressDialog.show()
-        mBlockRoomViewModel.getRoomList(buildingId, getTokenFromPreference())
+        mBlockRoomViewModel.getRoomList(buildingId, GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -531,18 +532,6 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
                 finish()
             }
     }
-
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
-
-    private fun getUserIdFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("UserId", "Not Set")!!
-    }
-
     /**
      * add text change listener for the start time edit text
      */

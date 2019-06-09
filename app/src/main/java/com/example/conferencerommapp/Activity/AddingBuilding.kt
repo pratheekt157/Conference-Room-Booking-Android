@@ -21,6 +21,7 @@ import com.example.conferencerommapp.Model.AddBuilding
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.AddBuildingViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_adding_building.*
 
@@ -197,7 +198,7 @@ class AddingBuilding : AppCompatActivity() {
          * Get the progress dialog from GetProgress Helper class
          */
         progressDialog.show()
-        mAddBuildingViewModel.addBuildingDetails(mBuilding, getTokenFromPreference())
+        mAddBuildingViewModel.addBuildingDetails(mBuilding, GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -225,10 +226,5 @@ class AddingBuilding : AppCompatActivity() {
                 finish()
             }
     }
-    /**
-     * get token and userId from local storage
-     */
-    fun getTokenFromPreference(): String {
-        return getSharedPreferences(getString(R.string.preference), Context.MODE_PRIVATE).getString(getString(R.string.token), getString(R.string.not_set))!!
-    }
+
 }

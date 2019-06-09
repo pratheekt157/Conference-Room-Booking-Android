@@ -23,6 +23,7 @@ import com.example.conferencerommapp.Model.UpdateBooking
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.UpdateBookingViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import es.dmoral.toasty.Toasty
 
@@ -165,7 +166,7 @@ class UpdateBookingActivity : AppCompatActivity() {
 
     private fun updateMeetingDetails() {
         progressDialog.show()
-        mUpdateBookingViewModel.updateBookingDetails(mUpdateBooking, getTokenFromPreference())
+        mUpdateBookingViewModel.updateBookingDetails(mUpdateBooking, GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -267,11 +268,6 @@ class UpdateBookingActivity : AppCompatActivity() {
                 finish()
             }
     }
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
+
 
 }

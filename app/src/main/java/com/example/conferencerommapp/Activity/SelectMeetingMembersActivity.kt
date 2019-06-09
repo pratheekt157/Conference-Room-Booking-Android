@@ -28,6 +28,7 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingViewModel
 import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.chip.Chip
@@ -55,9 +56,11 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
 
     private lateinit var mGetIntentDataFromActivity: GetIntentDataFromActvity
     private var count = 0
+
     companion object {
         var selectedCapacity = 0
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_meeting_members)
@@ -77,7 +80,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
 
     @OnClick(R.id.add_email)
     fun checkSearchEditTextContent() {
-        if(validateEmailFormat()) {
+        if (validateEmailFormat()) {
             var email = searchEditText.text.toString().trim()
             addChip(email, email)
         } else {
@@ -108,11 +111,12 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {
             getViewModel()
-        } else if(requestCode == Constants.RES_CODE2 && resultCode == Activity.RESULT_OK) {
-                addBooking()
+        } else if (requestCode == Constants.RES_CODE2 && resultCode == Activity.RESULT_OK) {
+            addBooking()
         }
 
     }
+
     /**
      * observer data from ViewModel
      */
@@ -122,7 +126,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
             progressDialog.dismiss()
             employeeList.clear()
             employeeList.addAll(it)
-            customAdapter = SelectMembers(it, object: SelectMembers.ItemClickListener {
+            customAdapter = SelectMembers(it, object : SelectMembers.ItemClickListener {
                 override fun onBtnClick(name: String?, email: String?) {
                     addChip(name!!, email!!)
                 }
@@ -133,9 +137,9 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         // Negative response from server
         mSelectMemberViewModel.returnFailureForEmployeeList().observe(this, Observer {
             progressDialog.dismiss()
-            if(it == Constants.INVALID_TOKEN) {
+            if (it == Constants.INVALID_TOKEN) {
                 showAlert()
-            }else {
+            } else {
                 ShowToast.show(this, it as Int)
                 finish()
             }
@@ -150,9 +154,9 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         // negative response from server
         mBookingViewModel.returnFailureForBooking().observe(this, Observer {
             progressDialog.dismiss()
-            if(it ==Constants.INVALID_TOKEN) {
+            if (it == Constants.INVALID_TOKEN) {
                 showAlert()
-            }else {
+            } else {
                 ShowToast.show(this, it as Int)
             }
         })
@@ -163,7 +167,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
      */
     private fun addBooking() {
         progressDialog.show()
-        mBookingViewModel.addBookingDetails(mBooking, getTokenFromPreference())
+        mBookingViewModel.addBookingDetails(mBooking, GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -178,7 +182,6 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         mBooking.buildingId = mBookingDetails.buildingId!!.toInt()
         mBooking.fromTime = mBookingDetails.fromTime!!
         mBooking.toTime = mBookingDetails.toTime!!
-
     }
 
     /**
@@ -192,28 +195,24 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     // call function of ViewModel which will make API call
     private fun getViewModel() {
         progressDialog.show()
-        mSelectMemberViewModel.getEmployeeList(getTokenFromPreference())
+        mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this))
     }
 
     @OnClick(R.id.next_activity)
     fun onClick() {
-       if(selectedName.isEmpty()) {
-           Toast.makeText(this, "Select Meeting Members", Toast.LENGTH_SHORT).show()
-           return
-       }
         var emailString = ""
         val size = selectedName.size
         selectedEmail.indices.forEach { index ->
             emailString += selectedEmail[index]
-            if(index != (size - 1)) {
+            if (index != (size - 1)) {
                 emailString += ","
             }
         }
         mBooking.cCMail = emailString
         //mGetIntentDataFromActivity.emailOfSelectedEmployees = emailString
         // show alert before booking
-        val dialog = GetAleretDialog.getDialog(this, "Confirm", "Press Ok to book Room.")
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
+        val dialog = GetAleretDialog.getDialog(this, "Confirm", "Are you sure want to book room?")
+        dialog.setPositiveButton("Book") { _, _ ->
             if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject()
                 addBooking()
@@ -222,7 +221,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
                 startActivityForResult(i, Constants.RES_CODE2)
             }
         }
-        dialog.setNegativeButton(R.string.no) {_, _ ->
+        dialog.setNegativeButton(R.string.no) { _, _ ->
             // do nothing
         }
         val builder = GetAleretDialog.showDialog(dialog)
@@ -232,8 +231,8 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     /**
      * add selected recycler item to chip and add this chip to chip group
      */
-    fun addChip(name:String, email: String) {
-        if(!selectedEmail.contains(email) && count < selectedCapacity) {
+    fun addChip(name: String, email: String) {
+        if (!selectedEmail.contains(email)) {
             val chip = Chip(this)
             chip.text = name
             chip.isCloseIconVisible = true
@@ -248,12 +247,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
             selectedEmail.add(email)
             count++
         } else {
-            if(count >= selectedCapacity) {
-                Toast.makeText(this, "select at max $selectedCapacity participants", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Already Selected!", Toast.LENGTH_SHORT).show()
-            }
-
+            Toast.makeText(this, "Already Selected!", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -316,9 +310,9 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         }
         customAdapter.filterList(filterName)
         // no items present in recyclerview than give option for add other emails
-        if(customAdapter.itemCount == 0) {
+        if (customAdapter.itemCount == 0) {
             addEmailButton.visibility = View.VISIBLE
-        }else {
+        } else {
             addEmailButton.visibility = View.GONE
         }
     }
@@ -327,8 +321,10 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
      * show dialog for session expired
      */
     private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(this, getString(R.string.session_expired), "Your session is expired!\n" +
-                getString(R.string.session_expired_messgae))
+        val dialog = GetAleretDialog.getDialog(
+            this, getString(R.string.session_expired), "Your session is expired!\n" +
+                    getString(R.string.session_expired_messgae)
+        )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
             signOut()
         }
@@ -347,14 +343,8 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
                 finish()
             }
     }
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
 
-    fun validateEmailFormat(): Boolean {
+    private fun validateEmailFormat(): Boolean {
         var email = searchEditText.text.toString().trim()
         val pat = Pattern.compile(Constants.MATCHER)
         return pat.matcher(email).matches()

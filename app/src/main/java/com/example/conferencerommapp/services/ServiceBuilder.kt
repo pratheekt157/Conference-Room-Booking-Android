@@ -35,7 +35,6 @@ object ServiceBuilder {
 
     private val builder: Retrofit.Builder = Retrofit.Builder()
         .baseUrl(Constants.IP_ADDRESS)
-
         .addConverterFactory(GsonConverterFactory.create()).client(okHttp.build())
     private val retrofit: Retrofit = builder.build()
 

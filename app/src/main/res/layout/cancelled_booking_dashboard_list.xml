@@ -94,9 +94,8 @@
 
                 <TextView
                         android:id="@+id/cancelled_btnshow"
-                        android:drawableStart="@drawable/ic_show_members"
+                        android:drawableEnd="@drawable/ic_show_members"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"/>
             </RelativeLayout>

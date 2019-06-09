@@ -19,6 +19,7 @@ import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.HrConferenceRoomViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
 import kotlinx.android.synthetic.main.activity_building_dashboard.*
 import kotlinx.android.synthetic.main.activity_conference_dash_board.*
@@ -145,7 +146,7 @@ class ConferenceDashBoard : AppCompatActivity() {
 
         // todo pass pagination to backend
         progressDialog.show()
-        mHrConferenceRoomViewModel.getConferenceRoomList(buildingId, getTokenFromPreference())
+        mHrConferenceRoomViewModel.getConferenceRoomList(buildingId, GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -173,13 +174,6 @@ class ConferenceDashBoard : AppCompatActivity() {
                 startActivity(Intent(applicationContext, SignIn::class.java))
                 finish()
             }
-    }
-
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
     }
 }
 

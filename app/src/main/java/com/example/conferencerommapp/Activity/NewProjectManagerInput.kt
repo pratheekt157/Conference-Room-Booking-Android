@@ -28,6 +28,7 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.shawnlin.numberpicker.NumberPicker
 import kotlinx.android.synthetic.main.activity_adding_conference.*
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
@@ -284,7 +285,7 @@ class NewProjectManagerInput : AppCompatActivity() {
 
     private fun makeCallToApiForSuggestedRooms() {
         mSuggestedRoomApiIsCallled = true
-        mManagerConferecneRoomViewModel.getSuggestedConferenceRoomList(getTokenFromPreference(), mRoom)
+        mManagerConferecneRoomViewModel.getSuggestedConferenceRoomList(GetPreference.getTokenFromPreference(this), mRoom)
     }
 
     /**
@@ -293,7 +294,7 @@ class NewProjectManagerInput : AppCompatActivity() {
     private fun getViewModelForBuildingList() {
         progressDialog.show()
         // make api call
-        mBuildingsViewModel.getBuildingList(getTokenFromPreference())
+        mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -556,7 +557,7 @@ class NewProjectManagerInput : AppCompatActivity() {
     private fun getConferenceRoomViewModel() {
         if (NetworkState.appIsConnectedToInternet(this)) {
             progressDialog.show()
-            mManagerConferecneRoomViewModel.getConferenceRoomList(mRoom, getTokenFromPreference())
+            mManagerConferecneRoomViewModel.getConferenceRoomList(mRoom, GetPreference.getTokenFromPreference(this))
         } else {
 
         }
@@ -707,15 +708,6 @@ class NewProjectManagerInput : AppCompatActivity() {
                 finish()
             }
     }
-
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
-
-
     private fun setBuildingSpinner(mBuildingList: List<Building>) {
         var buildingNameList = mutableListOf<String>()
         var buildingIdList = mutableListOf<Int>()

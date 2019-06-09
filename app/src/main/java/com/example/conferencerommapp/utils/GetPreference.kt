@@ -1,0 +1,22 @@
+package com.example.conferenceroomtabletversion.utils
+
+import android.content.Context
+import com.example.conferencerommapp.Helper.Constants
+import com.example.conferencerommapp.R
+
+class GetPreference {
+    companion object {
+
+        /**
+         * get token and userId from local storage
+         */
+        fun getTokenFromPreference(mContext: Context): String {
+            return mContext.getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString(mContext.getString(R.string.token), mContext.getString(
+                R.string.not_set))!!
+        }
+
+        fun getDeviceIdFromPreference(mContext: Context): String {
+            return mContext.getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString(Constants.DEVICE_ID, mContext.getString(R.string.not_set))!!
+        }
+    }
+}

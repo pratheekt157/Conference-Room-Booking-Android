@@ -28,6 +28,7 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.ManagerBookingViewModel
 import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.chip.Chip
@@ -102,7 +103,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
 
     private fun getViewModel() {
         progressDialog.show()
-        mSelectMemberViewModel.getEmployeeList(getTokenFromPreference())
+        mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -177,10 +178,6 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
 
     @OnClick(R.id.next_activity)
     fun onClick() {
-        if (selectedName.isEmpty()) {
-            Toast.makeText(this, "Select Meeting Members", Toast.LENGTH_SHORT).show()
-            return
-        }
         var emailString = ""
         val size = selectedName.size
         selectedEmail.indices.forEach { index ->
@@ -212,7 +209,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
      */
     private fun addBooking() {
         progressDialog.show()
-        mManagerBookingViewModel.addBookingDetails(mManagerBooking, getTokenFromPreference())
+        mManagerBookingViewModel.addBookingDetails(mManagerBooking, GetPreference.getTokenFromPreference(this))
     }
 
     fun addChip(name: String, email: String) {
@@ -327,14 +324,8 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
             }
     }
 
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
 
-    fun validateEmailFormat(): Boolean {
+    private fun validateEmailFormat(): Boolean {
         var email = searchEditText.text.toString().trim()
         val pat = Pattern.compile(Constants.MATCHER)
         return pat.matcher(email).matches()

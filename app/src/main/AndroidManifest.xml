@@ -27,12 +27,6 @@
         <activity android:name=".Activity.CheckAdapter">
         </activity>
         <activity
-                android:name=".Activity.InputDetailsForBooking"
-                android:launchMode="singleTop"
-                android:parentActivityName=".Activity.UserBookingsDashboardActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
                 android:name=".Activity.NoInternetConnectionActivity"
                 android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
         <activity
@@ -54,7 +48,7 @@
         <activity
                 android:name=".Activity.SelectMeetingMembersActivity"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.InputDetailsForBooking"
+                android:parentActivityName=".Activity.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
@@ -80,7 +74,6 @@
                 android:name=".SignIn"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
                 android:name=".Activity.AddingBuilding"
                 android:label="Add Building"

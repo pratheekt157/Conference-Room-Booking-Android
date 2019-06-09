@@ -62,8 +62,14 @@ class RoomAdapter(
         }
         if (roomDetailsList[position].status == "Unavailable") {
             holder.statusTextView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_status_unavailable, 0, 0)
+            holder.statusTextView.textSize = 11F
             holder.statusTextView.text = "Unavailable"
         }
+//        else {
+//            holder.statusTextView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_status_available, 0, 0)
+//            holder.statusTextView.textSize = 12F
+//            holder.statusTextView.text = "Available"
+//        }
         setDataToFields(holder, position)
         holder.itemView.setOnClickListener {
             if (roomDetailsList[position].status == "Available") {

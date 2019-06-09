@@ -6,12 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
@@ -22,31 +22,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
-import com.example.conferencerommapp.R
-import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import butterknife.ButterKnife
 import com.example.conferencerommapp.Helper.*
-import com.example.conferencerommapp.Model.*
+import com.example.conferencerommapp.Model.Building
+import com.example.conferencerommapp.Model.GetIntentDataFromActvity
+import com.example.conferencerommapp.Model.RoomDetails
+import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ConferenceRoomViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.booking_scroll_view
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.building_name_spinner
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.capacity_layout
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.date
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.date_layout
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.from_time_layout
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.horizontal_line_below_search_button
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.purpose_layout
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.search_room
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.suggestions
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.text_view_error_spinner_building
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.to_time_layout
-import kotlinx.android.synthetic.main.check_recycler_view.*
 
 
 class InputDetailsForBookingFragment : Fragment() {
@@ -90,6 +78,8 @@ class InputDetailsForBookingFragment : Fragment() {
         observeData()
         search_room.setOnClickListener {
             suggestions.visibility = View.GONE
+            purposeEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
+            roomCapacityEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
             validationOnDataEnteredByUser()
         }
     }
@@ -120,12 +110,12 @@ class InputDetailsForBookingFragment : Fragment() {
     private fun getViewModelForBuildingList() {
         mProgressDialog.show()
         // make api call
-        mBuildingsViewModel.getBuildingList(getTokenFromPreference())
+        mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(activity!!))
     }
 
     private fun getViewModelForConferenceRoomList(mInputDetailsForRoom: InputDetailsForRoom) {
         mProgressDialog.show()
-        mConferenceRoomViewModel.getConferenceRoomList(getTokenFromPreference(), mInputDetailsForRoom)
+        mConferenceRoomViewModel.getConferenceRoomList(GetPreference.getTokenFromPreference(activity!!), mInputDetailsForRoom)
     }
 
     private fun setAdapter(mListOfRooms: List<RoomDetails>) {
@@ -245,7 +235,7 @@ class InputDetailsForBookingFragment : Fragment() {
     }
     private fun makeCallToApiForSuggestedRooms() {
         mSuggestedRoomApiIsCallled = true
-        mConferenceRoomViewModel.getSuggestedConferenceRoomList(getTokenFromPreference(), mInputDetailsForRoom)
+        mConferenceRoomViewModel.getSuggestedConferenceRoomList(GetPreference.getTokenFromPreference(activity!!), mInputDetailsForRoom)
     }
 
     private fun setBuildingSpinner(mBuildingList: List<Building>) {
@@ -601,11 +591,4 @@ class InputDetailsForBookingFragment : Fragment() {
                 activity!!.finish()
             }
     }
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return activity!!.getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
-
 }

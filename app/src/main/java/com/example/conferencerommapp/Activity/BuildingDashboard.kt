@@ -19,6 +19,7 @@ import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 
 class BuildingDashboard : AppCompatActivity() {
     /**
@@ -52,7 +53,7 @@ class BuildingDashboard : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        mBuildingsViewModel.getBuildingList(getTokenFromPreference())
+        mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -112,7 +113,7 @@ class BuildingDashboard : AppCompatActivity() {
     private fun getViewModel() {
         mProgressDialog.show()
         // making API call
-        mBuildingsViewModel.getBuildingList(getTokenFromPreference())
+        mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -142,11 +143,5 @@ class BuildingDashboard : AppCompatActivity() {
             }
     }
 
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
 
 }

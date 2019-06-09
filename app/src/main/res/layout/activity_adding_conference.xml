@@ -87,7 +87,7 @@
 
             <CheckBox
                     android:id="@+id/projector_check_box"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Projector"
                     android:paddingLeft="12dp"
@@ -96,7 +96,7 @@
             />
             <CheckBox
                     android:id="@+id/monitor_check_box"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="12dp"
                     android:text="Monitor"
@@ -105,7 +105,7 @@
 
             <CheckBox
                     android:id="@+id/speaker_check_box"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Speaker"
                     android:paddingLeft="12dp"
@@ -113,7 +113,7 @@
                     android:textColor="@color/textColorGray"/>
             <CheckBox
                     android:id="@+id/extension_board_check_box"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Extension-Board"
                     android:paddingLeft="12dp"
@@ -121,7 +121,7 @@
                     android:textColor="@color/textColorGray"/>
             <CheckBox
                     android:id="@+id/whiteboard_marker_check_box"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="WhiteBoard-Marker"
                     android:paddingLeft="12dp"

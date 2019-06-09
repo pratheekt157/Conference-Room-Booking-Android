@@ -25,6 +25,7 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.R.color.colorPrimary
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BlockedDashboardViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_blocked_dashboard.*
 
@@ -86,7 +87,7 @@ class BlockedDashboard : AppCompatActivity() {
      */
     private fun refreshOnPull() {
         refreshLayout.setOnRefreshListener {
-            mBlockedDashboardViewModel.getBlockedList(getTokenFromPreference())
+            mBlockedDashboardViewModel.getBlockedList(GetPreference.getTokenFromPreference(this))
         }
     }
 
@@ -127,7 +128,7 @@ class BlockedDashboard : AppCompatActivity() {
         mBlockedDashboardViewModel.returnSuccessCodeForUnBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
             Toasty.success(this, getString(R.string.room_unblocked), Toast.LENGTH_SHORT, true).show()
-            mBlockedDashboardViewModel.getBlockedList(getTokenFromPreference())
+            mBlockedDashboardViewModel.getBlockedList(GetPreference.getTokenFromPreference(this))
         })
         mBlockedDashboardViewModel.returnFailureCodeForUnBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
@@ -186,7 +187,7 @@ class BlockedDashboard : AppCompatActivity() {
      */
     private fun loadBlocking() {
         progressDialog.show()
-        mBlockedDashboardViewModel.getBlockedList(getTokenFromPreference())
+        mBlockedDashboardViewModel.getBlockedList(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -194,7 +195,7 @@ class BlockedDashboard : AppCompatActivity() {
      */
     fun unblockRoom(mBookingId: Int) {
         progressDialog.show()
-        mBlockedDashboardViewModel.unBlockRoom(getTokenFromPreference(), mBookingId)
+        mBlockedDashboardViewModel.unBlockRoom(GetPreference.getTokenFromPreference(this), mBookingId)
     }
 
     /**
@@ -220,13 +221,6 @@ class BlockedDashboard : AppCompatActivity() {
                 startActivity(Intent(applicationContext, SignIn::class.java))
                 finish()
             }
-    }
-
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
     }
 
 }

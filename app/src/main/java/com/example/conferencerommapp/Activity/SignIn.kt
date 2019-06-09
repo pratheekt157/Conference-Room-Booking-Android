@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +16,7 @@ import com.example.conferencerommapp.Activity.NoInternetConnectionActivity
 import com.example.conferencerommapp.Activity.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -47,7 +47,7 @@ class SignIn : AppCompatActivity() {
      * function intialize all items of UI, sharedPreference and calls the setAnimationToLayout function to set the animation to the layouts
      */
     fun initialize() {
-        prefs = getSharedPreferences(getString(R.string.preference), Context.MODE_PRIVATE)
+        prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
         mCheckRegistrationViewModel = ViewModelProviders.of(this).get(CheckRegistrationViewModel::class.java)
         initializeGoogleSignIn()
@@ -83,7 +83,6 @@ class SignIn : AppCompatActivity() {
             handleSignInResult(task)
         }
         if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {
-            //Toast.makeText(this, "" + data!!.getBooleanExtra("result", false), Toast.LENGTH_SHORT).show()
             checkRegistration()
         }
     }
@@ -121,7 +120,7 @@ class SignIn : AppCompatActivity() {
 
     private fun saveTokenAndUserIdInSharedPreference(idToken: String?) {
         val editor = prefs.edit()
-        editor.putString("Token", idToken)
+        editor.putString(Constants.TOKEN, idToken)
         editor.apply()
     }
 
@@ -139,7 +138,7 @@ class SignIn : AppCompatActivity() {
      */
     private fun checkRegistration() {
         progressDialog.show()
-        mCheckRegistrationViewModel.checkRegistration(getTokenFromPreference(), getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("deviceId", "Not Set")!!)
+        mCheckRegistrationViewModel.checkRegistration(GetPreference.getTokenFromPreference(this), GetPreference.getDeviceIdFromPreference(this))
     }
 
 
@@ -164,9 +163,8 @@ class SignIn : AppCompatActivity() {
      * this function will intent to some activity according to the received data from backend
      */
     private fun intentToNextActivity(code: Int?) {
-        Log.i("---------", "" + code)
         when (code) {
-            11, 10, 12, 13 -> {
+            Constants.HR_CODE, Constants.Facility_Manager, Constants.MANAGER_CODE, Constants.EMPLOYEE_CODE -> {
                 startActivity(Intent(this@SignIn, UserBookingsDashboardActivity::class.java))
                 finish()
             }
@@ -185,18 +183,10 @@ class SignIn : AppCompatActivity() {
      * a function which will set the value in shared preference
      */
     private fun setValueForSharedPreference(status: Int) {
-        val code = status
         val editor = prefs.edit()
-        editor.putInt("Code", code)
+        editor.putInt(Constants.ROLE_CODE, status)
         editor.apply()
-        intentToNextActivity(code)
-    }
-
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
+        intentToNextActivity(status)
     }
 
 }

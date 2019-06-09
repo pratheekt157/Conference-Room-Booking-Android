@@ -77,5 +77,12 @@ class Constants {
 
         const val RES_CODE4 = 203
 
+        const val PREFERENCE = "PREFERENCE"
+
+        const val TOKEN = "TOKEN"
+
+        const val DEVICE_ID = "DEVICE ID"
+
+        const val ROLE_CODE = "Code"
     }
 }

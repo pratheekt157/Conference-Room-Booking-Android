@@ -22,6 +22,7 @@ import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -85,7 +86,7 @@ class PreviousBookingFragment : Fragment() {
 
     private fun getViewModel() {
         progressDialog.show()
-        mBookingDashBoardViewModel.getBookingList(getTokenFromPreference(), mBookingDashboardInput)
+        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
     }
 
     private fun initRecyclerView() {
@@ -110,7 +111,7 @@ class PreviousBookingFragment : Fragment() {
                         pagination++
                         previous_progress_bar.visibility = View.VISIBLE
                         mBookingDashboardInput.pageNumber = pagination
-                        mBookingDashBoardViewModel.getBookingList(getTokenFromPreference(), mBookingDashboardInput)
+                        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
                     }
                 }
             }
@@ -125,7 +126,7 @@ class PreviousBookingFragment : Fragment() {
             finalList.clear()
             pagination = 1
             mBookingDashboardInput.pageNumber = pagination
-            mBookingDashBoardViewModel.getBookingList(getTokenFromPreference(), mBookingDashboardInput)
+            mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
         }
     }
 
@@ -215,13 +216,6 @@ class PreviousBookingFragment : Fragment() {
         }
         val builder = GetAleretDialog.showDialog(dialog)
         ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return activity!!.getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
     }
 }
 

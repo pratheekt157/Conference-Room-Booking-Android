@@ -19,6 +19,7 @@ import com.example.conferencerommapp.Helper.ShowToast
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 
@@ -29,7 +30,7 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var mCheckRegistrationViewModel: CheckRegistrationViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.conferencerommapp.R.layout.activity_splash_screen)
+        setContentView(R.layout.activity_splash_screen)
         init()
         observeData()
         val logoHandler = Handler()
@@ -48,8 +49,6 @@ class SplashScreen : AppCompatActivity() {
         }
         logoHandler.postDelayed(logoRunnable, 3000)
     }
-
-
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {
@@ -62,7 +61,7 @@ class SplashScreen : AppCompatActivity() {
      */
     private fun checkRegistration() {
         progressDialog.show()
-        mCheckRegistrationViewModel.checkRegistration(getTokenFromPreference(), getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("deviceId", "Not Set")!!)
+        mCheckRegistrationViewModel.checkRegistration(GetPreference.getTokenFromPreference(this), GetPreference.getDeviceIdFromPreference(this))
     }
 
     /**
@@ -103,13 +102,13 @@ class SplashScreen : AppCompatActivity() {
      */
     private fun goToNextActivity(code: Int?) {
         when (code) {
-            10, 11, 12, 13 -> {
+            Constants.HR_CODE, Constants.Facility_Manager, Constants.MANAGER_CODE, Constants.EMPLOYEE_CODE -> {
                 startActivity(Intent(this@SplashScreen, UserBookingsDashboardActivity::class.java))
                 finish()
             }
             else -> {
                 val builder = AlertDialog.Builder(this@SplashScreen)
-                builder.setTitle("Error!")
+                builder.setTitle(getString(R.string.error))
                 builder.setMessage(getString(R.string.restart_app))
                 builder.setPositiveButton(getString(R.string.ok)) { _,_ ->
                     finish()
@@ -125,30 +124,8 @@ class SplashScreen : AppCompatActivity() {
      */
     private fun setValueForSharedPreference(status: Int) {
         val editor = prefs.edit()
-        editor.putInt("Code", status)
+        editor.putInt(Constants.ROLE_CODE, status)
         editor.apply()
         goToNextActivity(status)
     }
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
-    }
-
 }
-
-/*
-if(NetworkState.appIsConnectedToInternet(this)) {
-    checkRegistration()
-} else {
-    val i = Intent(this@SplashScreen, NoInternetConnectionActivity::class.java)
-    startActivityForResult(i, Constants.RES_CODE)
-}
-
-public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {
-        checkRegistration()
-    }
-}*/
