@@ -120,7 +120,7 @@ class SignIn : AppCompatActivity() {
 
     private fun saveTokenAndUserIdInSharedPreference(idToken: String?) {
         val editor = prefs.edit()
-        editor.putString(Constants.TOKEN, idToken)
+        editor.putString(getString(R.string.token), idToken)
         editor.apply()
     }
 

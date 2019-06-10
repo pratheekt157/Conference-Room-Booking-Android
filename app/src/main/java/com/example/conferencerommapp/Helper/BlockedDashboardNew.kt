@@ -6,23 +6,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.annotation.Nullable
-import androidx.cardview.widget.CardView
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.Optional
 import com.example.conferencerommapp.Blocked
 import com.example.conferencerommapp.R
 
 
 class BlockedDashboardNew(private val blockedList: List<Blocked>, val mContext: Context, val listener: UnblockRoomListener) : androidx.recyclerview.widget.RecyclerView.Adapter<BlockedDashboardNew.ViewHolder>() {
 
-    private var currentPosition = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.block_dashboard_list, parent, false)
         return ViewHolder(view)

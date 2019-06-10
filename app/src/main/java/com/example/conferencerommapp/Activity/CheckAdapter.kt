@@ -1,28 +1,40 @@
 package com.example.conferencerommapp.Activity
 
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.ScrollView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.example.conferencerommapp.Helper.RoomAdapter
 import com.example.conferencerommapp.Helper.RoomAdapterNew
-import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
 import kotlinx.android.synthetic.main.check_recycler_view.*
-import kotlinx.android.synthetic.main.check_recycler_view.view.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import javax.xml.datatype.DatatypeConstants.SECONDS
+
+
+
+
 
 class CheckAdapter : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.check_recycler_view)
-        search_room.setOnClickListener {
-            var list = mutableListOf<String>("A","B", "C", "D")
-                //, "B", "C", "D", "E", "F", "G", "H")
-            setAdapter(list)
-        }
+        beepForAnHour()
     }
+
+    fun beepForAnHour() {
+        val scheduler = Executors.newScheduledThreadPool(1)
+        val beeper = Runnable {
+            Log.i("--------------", "beep")
+        }
+        scheduler.scheduleAtFixedRate(beeper, 0, 60, TimeUnit.SECONDS)
+//        scheduler.schedule({
+//            beeperHandle.cancel(true)
+//        }, 60 * 60, TimeUnit.SECONDS)
+    }
+
+
+
     private fun setAdapter(mListOfRooms: List<String>) {
 
         var customAdapter =
