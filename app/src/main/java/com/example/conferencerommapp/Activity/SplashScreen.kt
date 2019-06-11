@@ -8,14 +8,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.conferencerommapp.Helper.Constants
-import com.example.conferencerommapp.Helper.GetProgress
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.GetProgress
 import com.example.conferencerommapp.Helper.NetworkState
-import com.example.conferencerommapp.Helper.ShowToast
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel

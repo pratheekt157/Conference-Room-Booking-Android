@@ -3,7 +3,7 @@ package com.example.conferencerommapp.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.Blocked
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Repository.BlockDashboardRepository
 
 class BlockedDashboardViewModel : ViewModel() {
@@ -16,7 +16,8 @@ class BlockedDashboardViewModel : ViewModel() {
 
     fun getBlockedList(token: String) {
         mBlockDashboardRepository = BlockDashboardRepository.getInstance()
-        mBlockDashboardRepository!!.getBlockedList(token, object : ResponseListener {
+        mBlockDashboardRepository!!.getBlockedList(token, object :
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mBlockedRoomList.value = success as List<Blocked>
             }
@@ -39,7 +40,8 @@ class BlockedDashboardViewModel : ViewModel() {
 
     fun unBlockRoom(token: String, bookingId: Int) {
         mBlockDashboardRepository = BlockDashboardRepository.getInstance()
-        mBlockDashboardRepository!!.unblockRoom(token, bookingId, object: ResponseListener {
+        mBlockDashboardRepository!!.unblockRoom(token, bookingId, object:
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuccessCodeForBlockRoom.value = success as Int
             }

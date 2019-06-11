@@ -4,15 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,14 +20,13 @@ import com.example.conferencerommapp.Model.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 import kotlinx.android.synthetic.main.fragment_upcoming_booking.*
-import java.text.SimpleDateFormat
 
 class UpcomingBookingFragment : Fragment() {
     private var mGoogleSignInClient: GoogleSignInClient? = null

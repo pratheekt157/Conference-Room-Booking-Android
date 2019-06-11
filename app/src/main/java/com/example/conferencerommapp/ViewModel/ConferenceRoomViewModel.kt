@@ -2,8 +2,8 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.InputDetailsForRoom
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.Model.InputDetailsForRoom
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.Repository.ConferenceRoomRepository
 
@@ -44,7 +44,8 @@ class ConferenceRoomViewModel : ViewModel() {
         if (mConferenceRoomRepository == null) {
             mConferenceRoomRepository = ConferenceRoomRepository.getInstance()
         }
-        mConferenceRoomRepository!!.getConferenceRoomList(token, mInputDetailsForRoom, object: ResponseListener {
+        mConferenceRoomRepository!!.getConferenceRoomList(token, mInputDetailsForRoom, object:
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mConferenceRoomList.value = success as List<RoomDetails>
             }
@@ -64,7 +65,8 @@ class ConferenceRoomViewModel : ViewModel() {
         if (mConferenceRoomRepository == null) {
             mConferenceRoomRepository = ConferenceRoomRepository.getInstance()
         }
-        mConferenceRoomRepository!!.getSuggestedRooms(token, mInputDetailsForRoom, object: ResponseListener {
+        mConferenceRoomRepository!!.getSuggestedRooms(token, mInputDetailsForRoom, object:
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuggestedConferenceRoomList.value = success as List<RoomDetails>
             }

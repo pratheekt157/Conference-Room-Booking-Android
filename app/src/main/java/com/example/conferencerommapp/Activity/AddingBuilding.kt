@@ -2,7 +2,6 @@ package com.example.conferencerommapp.Activity
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -19,8 +18,11 @@ import butterknife.OnClick
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.Model.AddBuilding
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.AddBuildingViewModel
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.GetProgress
+import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_adding_building.*
@@ -139,7 +141,7 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuildingViewModel.returnFailureForAddBuilding().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, AddingBuilding())
             } else {
                 ShowToast.show(this, it as Int)
             }
@@ -201,30 +203,30 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuildingViewModel.addBuildingDetails(mBuilding, GetPreference.getTokenFromPreference(this))
     }
 
-    /**
-     * show dialog when session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
-    }
+//    /**
+//     * show dialog when session expired
+//     */
+//    private fun showAlert() {
+//        val dialog = GetAleretDialog.getDialog(
+//            this, getString(R.string.session_expired), "Your session is expired!\n" +
+//                    getString(R.string.session_expired_messgae)
+//        )
+//        dialog.setPositiveButton(R.string.ok) { _, _ ->
+//            signOut()
+//        }
+//        val builder = GetAleretDialog.showDialog(dialog)
+//        ColorOfDialogButton.setColorOfDialogButton(builder)
+//    }
+//    /**
+//     * sign out from application
+//     */
+//    private fun signOut() {
+//        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
+//        mGoogleSignInClient.signOut()
+//            .addOnCompleteListener(this) {
+//                startActivity(Intent(applicationContext, SignIn::class.java))
+//                finish()
+//            }
+//    }
 
 }

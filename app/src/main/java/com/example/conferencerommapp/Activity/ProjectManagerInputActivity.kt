@@ -27,7 +27,7 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
-import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import kotlinx.android.synthetic.main.activity_project_manager_input.*
 import java.text.SimpleDateFormat

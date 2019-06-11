@@ -2,7 +2,7 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Repository.HrConferenceRoomRepository
 import com.example.myapplication.Models.ConferenceList
 
@@ -14,7 +14,8 @@ class HrConferenceRoomViewModel : ViewModel() {
 
     fun getConferenceRoomList(buildingId: Int, token: String) {
         mHrConferenceRoomRepository = HrConferenceRoomRepository.getInstance()
-        mHrConferenceRoomRepository!!.getConferenceRoomList(buildingId, token,  object : ResponseListener {
+        mHrConferenceRoomRepository!!.getConferenceRoomList(buildingId, token,  object :
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mHrConferenceRoomList.value = success as List<ConferenceList>
             }

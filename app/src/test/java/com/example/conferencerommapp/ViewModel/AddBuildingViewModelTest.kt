@@ -2,8 +2,6 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.example.conferencerommapp.Activity.AddingBuilding
-import com.example.conferencerommapp.Helper.Constants
 import com.example.conferencerommapp.Model.AddBuilding
 import junit.framework.Assert.assertSame
 import org.junit.Before

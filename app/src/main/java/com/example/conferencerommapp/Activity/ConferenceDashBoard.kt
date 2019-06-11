@@ -19,9 +19,9 @@ import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.HrConferenceRoomViewModel
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
-import kotlinx.android.synthetic.main.activity_building_dashboard.*
 import kotlinx.android.synthetic.main.activity_conference_dash_board.*
 
 

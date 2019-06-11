@@ -22,7 +22,7 @@ import com.example.conferencerommapp.Model.UpdateBooking
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.UpdateBookingViewModel
-import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
 

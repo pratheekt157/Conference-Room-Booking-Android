@@ -1,12 +1,10 @@
 package com.example.conferencerommapp.ViewModel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.*
 import com.example.conferencerommapp.Repository.BookingDashboardRepository
-import com.example.conferencerommapp.Repository.UpdateBookingRepository
 
 class BookingDashboardViewModel : ViewModel() {
 
@@ -76,7 +74,8 @@ class BookingDashboardViewModel : ViewModel() {
      */
     fun cancelBooking(token: String, meetingId: Int) {
         mBookingDashboardRepository = BookingDashboardRepository.getInstance()
-        mBookingDashboardRepository!!.cancelBooking(token, meetingId, object : ResponseListener {
+        mBookingDashboardRepository!!.cancelBooking(token, meetingId, object :
+            ResponseListener {
             override fun onFailure(failure: Any) {
                 mFailureForCancelBooking.value = failure
             }
@@ -112,7 +111,8 @@ class BookingDashboardViewModel : ViewModel() {
      */
     fun getPasscode(token: String) {
         mBookingDashboardRepository = BookingDashboardRepository.getInstance()
-        mBookingDashboardRepository!!.getPasscode(token, object : ResponseListener {
+        mBookingDashboardRepository!!.getPasscode(token, object :
+            ResponseListener {
             override fun onFailure(failure: Any) {
                 mFailureForPasscode.value = failure
             }

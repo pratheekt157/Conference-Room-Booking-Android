@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.Helper
+package com.example.conferencerommapp.utils
 
 import android.app.Activity
 import android.app.AlertDialog

@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.Helper
+package com.example.conferencerommapp.Model
 
 import com.google.gson.annotations.SerializedName
 import java.util.*

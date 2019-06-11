@@ -2,7 +2,7 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.ManagerConference
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.Repository.ManagerConferenceRoomRepository
@@ -52,7 +52,8 @@ class ManagerConferenceRoomViewModel : ViewModel() {
         if (mManagerConferenceRoomRepository == null) {
             mManagerConferenceRoomRepository = ManagerConferenceRoomRepository.getInstance()
         }
-        mManagerConferenceRoomRepository!!.getSuggestedRooms(token, mInputDetailsForRoom, object: ResponseListener {
+        mManagerConferenceRoomRepository!!.getSuggestedRooms(token, mInputDetailsForRoom, object:
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuggestedConferenceRoomList.value = success as List<RoomDetails>
             }

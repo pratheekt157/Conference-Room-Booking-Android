@@ -1,10 +1,9 @@
 package com.example.conferencerommapp.ViewModel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.AddConferenceRoom
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Repository.AddConferenceRepository
 
 class AddConferenceRoomViewModel : ViewModel() {
@@ -24,7 +23,8 @@ class AddConferenceRoomViewModel : ViewModel() {
      */
     fun addConferenceDetails(token: String, mAddConference: AddConferenceRoom) {
         mAddConferenceRepository = AddConferenceRepository.getInstance()
-        mAddConferenceRepository!!.addConferenceDetails(mAddConference, token, object : ResponseListener {
+        mAddConferenceRepository!!.addConferenceDetails(mAddConference, token, object :
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuccessForAddingRoom.value = success as Int
             }

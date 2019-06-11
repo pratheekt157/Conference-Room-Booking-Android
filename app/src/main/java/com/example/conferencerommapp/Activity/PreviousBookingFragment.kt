@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,14 +20,12 @@ import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 import kotlinx.android.synthetic.main.fragment_previous_booking.*
-import kotlinx.android.synthetic.main.fragment_upcoming_booking.*
-import java.text.FieldPosition
 
 class PreviousBookingFragment : Fragment() {
     private var mGoogleSignInClient: GoogleSignInClient? = null

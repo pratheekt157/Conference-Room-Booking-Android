@@ -1,6 +1,6 @@
 package com.example.conferencerommapp.Repository
 
-import com.example.conferencerommapp.Helper.Constants
+import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.Model.Building
 import com.example.globofly.services.ServiceBuilder
 import retrofit2.Call

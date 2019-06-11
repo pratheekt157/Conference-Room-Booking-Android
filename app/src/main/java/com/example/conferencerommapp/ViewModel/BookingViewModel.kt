@@ -2,13 +2,9 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.Booking
-import com.example.conferencerommapp.Model.Employee
-import com.example.conferencerommapp.Model.EmployeeList
 import com.example.conferencerommapp.Repository.BookingRepository
-import com.example.conferencerommapp.Repository.EmployeeRepository
-import java.util.*
 
 class BookingViewModel: ViewModel() {
 
@@ -31,7 +27,8 @@ class BookingViewModel: ViewModel() {
      */
     fun addBookingDetails(mBooking: Booking, token: String) {
         mBookingRepository = BookingRepository.getInstance()
-        mBookingRepository!!.addBookingDetails(mBooking, token, object: ResponseListener {
+        mBookingRepository!!.addBookingDetails(mBooking, token, object:
+            ResponseListener {
             override fun onFailure(failure: Any) {
                 mErrorCodeFromServerFromBooking.value = failure
             }

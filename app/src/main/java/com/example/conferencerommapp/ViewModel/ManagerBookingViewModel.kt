@@ -1,12 +1,9 @@
 package com.example.conferencerommapp.ViewModel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.ResponseListener
-import com.example.conferencerommapp.Model.EmployeeList
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.ManagerBooking
-import com.example.conferencerommapp.Repository.EmployeeRepository
 import com.example.conferencerommapp.Repository.ManagerBookingRepository
 
 class ManagerBookingViewModel: ViewModel() {
@@ -28,7 +25,8 @@ class ManagerBookingViewModel: ViewModel() {
      */
     fun addBookingDetails(mBooking: ManagerBooking, token: String) {
         mManagerBookingRepository = ManagerBookingRepository.getInstance()
-        mManagerBookingRepository!!.addBookingDetails(mBooking, token, object: ResponseListener {
+        mManagerBookingRepository!!.addBookingDetails(mBooking, token, object:
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuccessCode.value = success as Int
             }

@@ -1,7 +1,7 @@
 package com.example.conferenceroomtabletversion.utils
 
 import android.content.Context
-import com.example.conferencerommapp.Helper.Constants
+import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.R
 
 class GetPreference {
@@ -16,7 +16,8 @@ class GetPreference {
         }
 
         fun getDeviceIdFromPreference(mContext: Context): String {
-            return mContext.getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString(Constants.DEVICE_ID, mContext.getString(R.string.not_set))!!
+            return mContext.getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString(
+                Constants.DEVICE_ID, mContext.getString(R.string.not_set))!!
         }
     }
 }

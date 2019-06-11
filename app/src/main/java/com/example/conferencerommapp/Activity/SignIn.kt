@@ -16,6 +16,10 @@ import com.example.conferencerommapp.Activity.NoInternetConnectionActivity
 import com.example.conferencerommapp.Activity.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.GetAleretDialog
+import com.example.conferencerommapp.utils.GetProgress
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

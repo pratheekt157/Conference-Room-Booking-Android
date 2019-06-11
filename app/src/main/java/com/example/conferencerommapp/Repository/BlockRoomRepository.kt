@@ -1,7 +1,7 @@
 package com.example.conferencerommapp.Repository
 
-import com.example.conferencerommapp.Helper.Constants
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.BlockRoom
 import com.example.conferencerommapp.Model.BlockingConfirmation
 import com.example.globofly.services.ServiceBuilder

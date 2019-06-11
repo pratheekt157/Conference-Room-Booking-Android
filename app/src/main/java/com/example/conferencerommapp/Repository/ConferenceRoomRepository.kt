@@ -1,8 +1,8 @@
 package com.example.conferencerommapp.Repository
 
-import com.example.conferencerommapp.Helper.Constants
-import com.example.conferencerommapp.Helper.InputDetailsForRoom
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.Model.InputDetailsForRoom
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.globofly.services.ServiceBuilder
 import retrofit2.Call
@@ -30,7 +30,7 @@ class ConferenceRoomRepository {
      * function will initialize the MutableLivedata Object and than make API Call
      * Passing the Context and model and call API, In return sends the status of LiveData
      */
-    fun getConferenceRoomList(token: String,mInputDetailsForRoom: InputDetailsForRoom, listener: ResponseListener) {
+    fun getConferenceRoomList(token: String, mInputDetailsForRoom: InputDetailsForRoom, listener: ResponseListener) {
         /**
          * api call using Retrofit
          */
@@ -57,7 +57,7 @@ class ConferenceRoomRepository {
      * function will initialize the MutableLivedata Object and than make API Call
      * Passing the Context and model and call API, In return sends the status of LiveData
      */
-    fun getSuggestedRooms(token: String,mInputDetailsForRoom: InputDetailsForRoom, listener: ResponseListener) {
+    fun getSuggestedRooms(token: String, mInputDetailsForRoom: InputDetailsForRoom, listener: ResponseListener) {
         /**
          * api call using Retrofit
          */

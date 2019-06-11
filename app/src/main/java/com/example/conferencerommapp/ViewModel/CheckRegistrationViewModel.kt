@@ -1,9 +1,8 @@
 package com.example.conferencerommapp.ViewModel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Repository.CheckRegistrationRepository
 
 class CheckRegistrationViewModel : ViewModel() {
@@ -25,7 +24,8 @@ class CheckRegistrationViewModel : ViewModel() {
      */
     fun checkRegistration(token: String, deviceId: String){
         mCheckRegistrationRepository = CheckRegistrationRepository.getInstance()
-        mCheckRegistrationRepository!!.checkRegistration(token, deviceId, object: ResponseListener {
+        mCheckRegistrationRepository!!.checkRegistration(token, deviceId, object:
+            ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuccessCode.value = success as Int
             }

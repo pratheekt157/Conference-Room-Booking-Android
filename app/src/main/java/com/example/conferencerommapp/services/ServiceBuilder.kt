@@ -1,13 +1,10 @@
 package com.example.globofly.services
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.util.Log
-import com.example.conferencerommapp.Helper.Constants
+import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ConferenceService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

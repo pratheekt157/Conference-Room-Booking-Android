@@ -2,7 +2,6 @@ package com.example.conferencerommapp.Activity
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -28,11 +27,8 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
-import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
-import com.shawnlin.numberpicker.NumberPicker
-import kotlinx.android.synthetic.main.activity_adding_conference.*
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 import kotlinx.android.synthetic.main.activity_project_manager_input.*
 import java.text.SimpleDateFormat
 import java.util.*

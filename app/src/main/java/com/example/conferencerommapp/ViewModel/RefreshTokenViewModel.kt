@@ -2,7 +2,7 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.RefreshToken
 import com.example.conferencerommapp.Repository.GetAccessTokenRepository
 
@@ -28,7 +28,8 @@ class RefreshTokenViewModel: ViewModel() {
      */
     fun getAccessAndRefreshToken(mRefreshToken: RefreshToken) {
         mRefreshTokenRepository = GetAccessTokenRepository.getInstance()
-        mRefreshTokenRepository!!.getAccessToken(mRefreshToken, object: ResponseListener {
+        mRefreshTokenRepository!!.getAccessToken(mRefreshToken, object:
+            ResponseListener {
             override fun onFailure(failure: Any) {
                 errorCodeFromServerForToken.value = failure
             }

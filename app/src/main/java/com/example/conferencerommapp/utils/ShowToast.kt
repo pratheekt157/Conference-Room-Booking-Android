@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.Helper
+package com.example.conferencerommapp.utils
 
 import android.content.Context
 import android.widget.Toast
@@ -11,15 +11,14 @@ import es.dmoral.toasty.Toasty
 class ShowToast {
     companion object {
         fun show(mContext: Context, errorCode: Int) {
-            Toasty.info(mContext, showMessageAccordingToCode(mContext, errorCode), Toast.LENGTH_SHORT, true).show()
+            Toasty.info(mContext,
+                showMessageAccordingToCode(mContext, errorCode), Toast.LENGTH_SHORT, true).show()
         }
-
-
         fun showMessageAccordingToCode(mContext: Context, errorCode: Int): String {
             var message = mContext.getString(R.string.something_went_wrong)
             when (errorCode) {
                 Constants.NOT_ACCEPTABLE -> {
-                    message = "Not Acceptable"
+                    message = mContext.getString(R.string.parameter_missing)
                 }
                 Constants.NO_CONTENT_FOUND -> {
                     message = mContext.getString(R.string.no_booking_available)

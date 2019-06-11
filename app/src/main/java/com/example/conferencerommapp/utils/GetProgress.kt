@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.conferencerommapp.Helper
+package com.example.conferencerommapp.utils
 
 import android.app.ProgressDialog
 import android.content.Context

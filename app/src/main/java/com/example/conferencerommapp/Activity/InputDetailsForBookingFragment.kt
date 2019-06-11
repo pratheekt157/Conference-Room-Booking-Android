@@ -2,7 +2,6 @@ package com.example.conferencerommapp.Activity
 
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -26,11 +25,13 @@ import butterknife.ButterKnife
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.Model.Building
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
+import com.example.conferencerommapp.Model.InputDetailsForRoom
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ConferenceRoomViewModel
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.utils.FormatDate
 import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
 import java.text.SimpleDateFormat
 

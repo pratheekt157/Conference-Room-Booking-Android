@@ -1,15 +1,8 @@
 package com.example.conferencerommapp.Repository
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
-import com.example.conferencerommapp.Helper.Constants
-import com.example.conferencerommapp.Helper.ResponseListener
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.globofly.services.ServiceBuilder
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
-import org.jetbrains.anko.doAsync
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
