@@ -71,9 +71,15 @@ interface ConferenceService {
     @PUT("api/CancelBooking")
     fun cancelBookedRoom(
         @Header("Token") token: String,
-        @Body MeetId: Int?
+        @Query("MeetId") MeetId: Int?
     ): Call<ResponseBody>
 
+    @PUT("api/CancelBooking")
+    fun cancelRecurringBooking(
+            @Header("Token") token: String,
+            @Query("MeetId") MeetId: Int?,
+            @Query("RecurringMeetId") RecurringMeetId:String
+    ): Call<ResponseBody>
 
     @GET("api/getPasscode")
     fun getPasscode(

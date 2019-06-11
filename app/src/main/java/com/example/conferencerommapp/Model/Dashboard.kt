@@ -44,7 +44,12 @@ data class Dashboard (
     var organizer: String? = null,
 
     @SerializedName("IsTagged")
-    var isTagged: Boolean? = false
+    var isTagged: Boolean? = false,
+
+    @SerializedName("RecurringMeetId")
+    var recurringmeetingId:String?= null
+
+
 )
 
 data class PaginationMetaData(

@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,13 +24,14 @@ import com.example.conferencerommapp.Model.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
-import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 import kotlinx.android.synthetic.main.fragment_upcoming_booking.*
+import java.text.SimpleDateFormat
 
 class UpcomingBookingFragment : Fragment() {
     private var mGoogleSignInClient: GoogleSignInClient? = null
@@ -36,6 +41,7 @@ class UpcomingBookingFragment : Fragment() {
     private lateinit var progressDialog: ProgressDialog
     private lateinit var mBookingListAdapter: UpcomingBookingAdapter
     private var bookingId = 0
+    private var recurringmeetingId: String ?=null
     private var makeApiCallOnResume = false
     var pagination: Int = 1
     var hasMoreItem: Boolean = false
@@ -254,12 +260,73 @@ class UpcomingBookingFragment : Fragment() {
      * if ok button is pressed than cancelBooking function is called
      */
     fun showConfirmDialogForCancelMeeting(position: Int) {
+        if (finalList[position].recurringmeetingId==null){
+            singleCancellationMeeting(position)
+        }
+        else{
+            recurringCancellationMetting(position)
+        }
+
+    }
+
+    private fun recurringCancellationMetting(position: Int) {
+        var selectedList = mutableListOf<Int>()
+        val items = arrayOf<CharSequence>(" Cancel All ")
+        val builder =
+                GetAleretDialog.getDialogforRecurring(
+                        activity!!,
+                        "Do you want to cancel the meeting"
+                )
+        builder.setMultiChoiceItems(items,null, DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
+            if(isChecked){
+                selectedList.add(which)
+            }
+            else if (selectedList.contains(which)){
+                selectedList.remove(which)
+            }
+        })
+        builder.setPositiveButton("OK", DialogInterface.OnClickListener{ _, _->
+            if(selectedList.isEmpty()){
+                bookingId = finalList[position].bookingId!!
+                if (NetworkState.appIsConnectedToInternet(activity!!)) {
+                    cancelBooking(finalList[position].bookingId!!)
+                } else {
+                    val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
+                    startActivityForResult(i, Constants.RES_CODE2)
+                }
+            }
+            else if(selectedList.any()){
+                bookingId = finalList[position].bookingId!!
+                recurringmeetingId = finalList[position].recurringmeetingId
+                if (NetworkState.appIsConnectedToInternet(activity!!)) {
+                    recurringCancelBooking(bookingId,recurringmeetingId)
+                } else {
+                    val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
+                    startActivityForResult(i, Constants.RES_CODE2)
+                }
+            }
+
+        })
+
+        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+
+        })
+        val dialog = GetAleretDialog.showDialog(builder)
+        ColorOfDialogButton.setColorOfDialogButton(dialog)
+    }
+
+    private fun recurringCancelBooking(bookingId: Int, recurringmeetingId: String?) {
+        progressDialog.show()
+        mBookingDashBoardViewModel.recurringCancelBooking(GetPreference.getTokenFromPreference(activity!!), bookingId,recurringmeetingId!!)
+    }
+
+    private fun singleCancellationMeeting(position: Int) {
         val mBuilder =
-            GetAleretDialog.getDialog(
-                activity!!,
-                getString(R.string.cancel),
-                getString(R.string.sure_cancel_meeting)
-            )
+                GetAleretDialog.getDialog(
+                        activity!!,
+                        getString(R.string.cancel),
+                        getString(R.string.sure_cancel_meeting)
+                )
         mBuilder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             /**
              * object which is required for the API call
@@ -276,7 +343,6 @@ class UpcomingBookingFragment : Fragment() {
         }
         val dialog = GetAleretDialog.showDialog(mBuilder)
         ColorOfDialogButton.setColorOfDialogButton(dialog)
-
     }
 
     /**
@@ -286,6 +352,8 @@ class UpcomingBookingFragment : Fragment() {
         progressDialog.show()
         mBookingDashBoardViewModel.cancelBooking(GetPreference.getTokenFromPreference(activity!!), mBookingId)
     }
+
+
 
 
     /**
