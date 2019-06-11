@@ -16,6 +16,7 @@ import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.navigation.NavigationView
@@ -24,6 +25,9 @@ import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.activity_user_dashboard.*
 import kotlinx.android.synthetic.main.app_bar_main2.*
 import kotlinx.android.synthetic.main.nav_header_main2.view.*
+import android.util.Log
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -70,14 +74,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
 
     private fun getPasscode() {
         mProgressDialog.show()
-        mBookingDashBoardViewModel.getPasscode(getTokenFromPreference())
-    }
-
-    /**
-     * get token and userId from local storage
-     */
-    private fun getTokenFromPreference(): String {
-        return getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("Token", "Not Set")!!
+        mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -221,6 +218,8 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         super.onBackPressed()
         finishAffinity()
     }
+
+
 }
 
 

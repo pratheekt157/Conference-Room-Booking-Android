@@ -187,4 +187,7 @@
     <string name="please_check_internet_connection">Please check network connection!</string>
     <string name="permission_required">Permission Required To Book Room</string>
     <string name="do_not_share">DO NOT SHARE</string>
+    <string name="already_selected">Already Selected!</string>
+    <string name="block_room">block room</string>
+    <string name="unblock_room_confirmation_message">Are you sure you want to unblock the Room?</string>
 </resources>

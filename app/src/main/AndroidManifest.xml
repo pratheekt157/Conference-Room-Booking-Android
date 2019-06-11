@@ -16,6 +16,10 @@
             android:roundIcon="@drawable/nine"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".Activity.MainActivityTest">
+
+        </activity>
+
         <service
                 android:name=".NotificationService"
                 android:enabled="true"
@@ -24,8 +28,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-        <activity android:name=".Activity.CheckAdapter">
 
+        <activity android:name=".Activity.CheckAdapter">
         </activity>
         <activity
                 android:name=".Activity.NoInternetConnectionActivity"
@@ -70,7 +74,6 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
         <activity
                 android:name=".SignIn"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -110,4 +113,5 @@
                 android:screenOrientation="portrait">
         </activity>
     </application>
+
 </manifest>

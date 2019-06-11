@@ -2,6 +2,7 @@ package com.example.conferencerommapp.Activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -55,6 +56,7 @@ class BlockedDashboard : AppCompatActivity() {
         observeData()
 
     }
+
     /**
      * Initialize late init fields
      */
@@ -94,7 +96,7 @@ class BlockedDashboard : AppCompatActivity() {
     /**
      * observing data for BlockDashboardList
      */
-    private fun observeData(){
+    private fun observeData() {
         /**
          * observing data for BlockDashboardList
          */
@@ -124,7 +126,7 @@ class BlockedDashboard : AppCompatActivity() {
         })
         /**
          * observing data for Unblocking
-          */
+         */
         mBlockedDashboardViewModel.returnSuccessCodeForUnBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
             Toasty.success(this, getString(R.string.room_unblocked), Toast.LENGTH_SHORT, true).show()
@@ -132,9 +134,9 @@ class BlockedDashboard : AppCompatActivity() {
         })
         mBlockedDashboardViewModel.returnFailureCodeForUnBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
-            if(it == Constants.INVALID_TOKEN) {
+            if (it == Constants.INVALID_TOKEN) {
                 showAlert()
-            }else {
+            } else {
                 ShowToast.show(this, it as Int)
             }
         })
@@ -145,10 +147,10 @@ class BlockedDashboard : AppCompatActivity() {
         blockedAdapter = BlockedDashboardNew(
             mBlockRoomList,
             this,
-            object: BlockedDashboardNew.UnblockRoomListener {
+            object : BlockedDashboardNew.UnblockRoomListener {
                 override fun onClickOfUnblock(mBookingId: Int) {
                     if (NetworkState.appIsConnectedToInternet(this@BlockedDashboard)) {
-                        unblockRoom(mBookingId)
+                        confirmAlertDialogToUnblockRoom(mBookingId)
                     } else {
                         val i = Intent(this@BlockedDashboard, NoInternetConnectionActivity::class.java)
                         startActivityForResult(i, Constants.RES_CODE2)
@@ -158,6 +160,22 @@ class BlockedDashboard : AppCompatActivity() {
         recyclerView.adapter = blockedAdapter
     }
 
+    private fun confirmAlertDialogToUnblockRoom(mBookingId: Int) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.confirm))
+        builder.setMessage(getString(R.string.unblock_room_confirmation_message))
+        builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
+            unblockRoom(mBookingId)
+        }
+        builder.setNegativeButton(getString(R.string.no)) { _, _ ->
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.setCancelable(false)
+        dialog.show()
+        ColorOfDialogButton.setColorOfDialogButton(dialog)
+    }
+
+
     @OnClick(R.id.maintenance)
     fun blockConferenceActivity() {
         val maintenanceIntent = Intent(applicationContext, BlockConferenceRoomActivity::class.java)
@@ -166,7 +184,7 @@ class BlockedDashboard : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        if(NetworkState.appIsConnectedToInternet(this)) {
+        if (NetworkState.appIsConnectedToInternet(this)) {
             loadBlocking()
         } else {
             val i = Intent(this@BlockedDashboard, NoInternetConnectionActivity::class.java)
@@ -202,8 +220,10 @@ class BlockedDashboard : AppCompatActivity() {
      * show dialog for session expired
      */
     private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(this, getString(R.string.session_expired), "Your session is expired!\n" +
-                getString(R.string.session_expired_messgae))
+        val dialog = GetAleretDialog.getDialog(
+            this, getString(R.string.session_expired), "Your session is expired!\n" +
+                    getString(R.string.session_expired_messgae)
+        )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
             signOut()
         }

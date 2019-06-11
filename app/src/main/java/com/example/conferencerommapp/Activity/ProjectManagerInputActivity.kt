@@ -28,6 +28,7 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
+import com.example.conferencerommapp.dateTimeFormat.FormatTimeAccordingToZone
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.shawnlin.numberpicker.NumberPicker
 import kotlinx.android.synthetic.main.activity_adding_conference.*
@@ -174,8 +175,8 @@ class ProjectManagerInputActivity : AppCompatActivity() {
         fromTimeList.clear()
         toTimeList.clear()
         for (item in dataList) {
-            fromTimeList.add("$item $start")
-            toTimeList.add("$item $end")
+            fromTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $start"))
+            toTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $end"))
         }
     }
 

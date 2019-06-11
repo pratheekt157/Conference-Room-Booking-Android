@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.conferencerommapp.Blocked
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.dateTimeFormat.FormatTimeAccordingToZone
 
 
 class BlockedDashboardNew(private val blockedList: List<Blocked>, val mContext: Context, val listener: UnblockRoomListener) : androidx.recyclerview.widget.RecyclerView.Adapter<BlockedDashboardNew.ViewHolder>() {
@@ -20,9 +21,8 @@ class BlockedDashboardNew(private val blockedList: List<Blocked>, val mContext: 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         setDataToFields(holder, position)
-        setFunctionOnButton(holder, position)
-        holder.itemView.setOnClickListener {
-            blockedList[position].roomId
+        holder.unblock.setOnClickListener {
+            unBlockRoom(blockedList[position].bookingId!!)
         }
     }
     override fun getItemCount(): Int {
@@ -40,33 +40,19 @@ class BlockedDashboardNew(private val blockedList: List<Blocked>, val mContext: 
 
     @SuppressLint("SetTextI18n")
     fun setDataToFields(holder: ViewHolder, position: Int) {
+        val startTimeInUTC = blockedList[position].fromTime!!.split("T")[0] + " " + blockedList[position].fromTime!!.split("T")[1]
+        val endTimeInUTC = blockedList[position].fromTime!!.split("T")[0] + " " + blockedList[position].toTime!!.split("T")[1]
+        val startTimeInLocalTimeFormat = FormatTimeAccordingToZone.formatDateAsIndianStandardTime(startTimeInUTC)
+        val endTimeInLocalTimeFormat = FormatTimeAccordingToZone.formatDateAsIndianStandardTime(endTimeInUTC)
         holder.blocked = blockedList[position]
         holder.conferenceName.text = blockedList[position].roomName + ", " + blockedList[position].buildingName
         holder.purpose.text = blockedList[position].purpose
-        holder.date.text = blockedList[position].fromTime!!.split("T")[0]
-        holder.fromtime.text = blockedList[position].fromTime!!.split("T")[1] + " - " + blockedList[position].toTime!!.split("T")[1]
-
+        holder.date.text = startTimeInLocalTimeFormat.split(" ")[0]
+        holder.fromtime.text = FormatDate.changeFormateFromDateTimeToTime(startTimeInLocalTimeFormat) + " - " + FormatDate.changeFormateFromDateTimeToTime(endTimeInLocalTimeFormat)
     }
 
     private fun unBlockRoom(bookingId: Int){
         listener.onClickOfUnblock(bookingId)
-    }
-
-    private fun setFunctionOnButton(holder: ViewHolder, position: Int){
-        holder.unblock.setOnClickListener {
-            val builder = AlertDialog.Builder(mContext)
-            builder.setTitle("Confirm ")
-            builder.setMessage("Are you sure you want to unblock the Room?")
-            builder.setPositiveButton("Yes"){_,_ ->
-                unBlockRoom(blockedList[position].bookingId!!)
-            }
-            builder.setNegativeButton("No"){_, _ ->
-            }
-            val dialog: AlertDialog = builder.create()
-            dialog.setCancelable(false)
-            dialog.show()
-            ColorOfDialogButton.setColorOfDialogButton(dialog)
-        }
     }
 
     interface UnblockRoomListener {

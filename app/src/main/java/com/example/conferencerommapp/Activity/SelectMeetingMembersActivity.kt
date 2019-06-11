@@ -3,7 +3,6 @@ package com.example.conferencerommapp.Activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -28,12 +27,12 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingViewModel
 import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
+import com.example.conferencerommapp.dateTimeFormat.FormatTimeAccordingToZone
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.chip.Chip
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 import kotlinx.android.synthetic.main.activity_select_meeting_members.*
 import java.util.regex.Pattern
 
@@ -65,10 +64,6 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_meeting_members)
         ButterKnife.bind(this)
-
-        val actionBar = supportActionBar
-        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.select_participipants) + "</font>")
-
         init()
         observeData()
         setClickListenerOnEditText()
@@ -76,6 +71,11 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         searchEditText.onRightDrawableClicked {
             it.text.clear()
         }
+    }
+    private fun initToolBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.select_participipants) + "</font>")
+
     }
 
     @OnClick(R.id.add_email)
@@ -92,6 +92,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
      * initialize all lateinit fields
      */
     fun init() {
+        initToolBar()
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         mGetIntentDataFromActivity = getIntentData()
         selectedCapacity = (mGetIntentDataFromActivity.capacity!!.toInt() + 1)
@@ -180,8 +181,8 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         mBooking.purpose = mBookingDetails.purpose
         mBooking.roomId = mBookingDetails.roomId!!.toInt()
         mBooking.buildingId = mBookingDetails.buildingId!!.toInt()
-        mBooking.fromTime = mBookingDetails.fromTime!!
-        mBooking.toTime = mBookingDetails.toTime!!
+        mBooking.fromTime = FormatTimeAccordingToZone.formatDateAsUTC(mBookingDetails.fromTime!!)
+        mBooking.toTime = FormatTimeAccordingToZone.formatDateAsUTC(mBookingDetails.toTime!!)
     }
 
     /**
@@ -247,7 +248,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
             selectedEmail.add(email)
             count++
         } else {
-            Toast.makeText(this, "Already Selected!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.already_selected), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -343,12 +344,10 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
                 finish()
             }
     }
-
+    // function checks for correct email format
     private fun validateEmailFormat(): Boolean {
         var email = searchEditText.text.toString().trim()
         val pat = Pattern.compile(Constants.MATCHER)
         return pat.matcher(email).matches()
     }
-
-
 }

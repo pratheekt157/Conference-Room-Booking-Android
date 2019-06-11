@@ -1,6 +1,5 @@
 package com.example.conferencerommapp.Helper
 
-import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 
 class FormatDate {
@@ -26,6 +25,12 @@ class FormatDate {
             var simpleDateFormat = SimpleDateFormat("HH:mm:ss")
             var simpleDateFormat1 = SimpleDateFormat("HH:mm")
             return simpleDateFormat1.format(simpleDateFormat.parse(time))
+        }
+
+        fun changeFormateFromDateTimeToTime(dateTime: String): String {
+            var simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            var simpleTimeFormat = SimpleDateFormat("HH:mm")
+            return simpleTimeFormat.format(simpleDateFormat.parse(dateTime))
         }
     }
 }

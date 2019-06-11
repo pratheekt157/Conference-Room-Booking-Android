@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.dateTimeFormat.FormatTimeAccordingToZone
 import java.text.SimpleDateFormat
 
 @Suppress("NAME_SHADOWING")
@@ -47,8 +48,11 @@ class CancelledBookingAdpter(
         val toDate = toTime!!.split("T")
 
         holder.dateTextView.text = formatDate(fromDate[0])
-        holder.fromTimeTextView.text = FormatDate.changeFormat(fromDate[1]) + " - " + FormatDate.changeFormat(toDate[1])
         setDataToFields(holder, position)
+
+        var localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
+        var localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
+        holder.fromTimeTextView.text = FormatDate.changeFormateFromDateTimeToTime(localStartTime) + " - " + FormatDate.changeFormateFromDateTimeToTime(localEndTime)
     }
 
 

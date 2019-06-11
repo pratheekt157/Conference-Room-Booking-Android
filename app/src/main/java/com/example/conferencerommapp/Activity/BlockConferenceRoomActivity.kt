@@ -27,6 +27,7 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BlockRoomViewModel
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
+import com.example.conferencerommapp.dateTimeFormat.FormatTimeAccordingToZone
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -214,12 +215,13 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      */
     private fun addDataToObject() {
         val acct = GoogleSignIn.getLastSignedInAccount(applicationContext)
+        val startTime = dateEditText.text.toString() + " " + fromTimeEditText.text.toString()
+        val endTime = dateEditText.text.toString() + " " + toTimeEditText.text.toString()
         room.email = acct!!.email
         room.purpose = purposeEditText.text.toString()
-        room.fromTime = dateEditText.text.toString() + " " + fromTimeEditText.text.toString()
-        room.toTime = dateEditText.text.toString() + " " + toTimeEditText.text.toString()
-        room.status = "abc"
-
+        room.fromTime = FormatTimeAccordingToZone.formatDateAsUTC(startTime)
+        room.toTime = FormatTimeAccordingToZone.formatDateAsUTC(endTime)
+        room.status = getString(R.string.block_room)
     }
 
     /**
