@@ -4,7 +4,9 @@ import android.util.Log
 import com.example.conferencerommapp.Helper.Constants
 import com.example.conferencerommapp.Helper.ResponseListener
 import com.example.conferencerommapp.Model.BookingDashboardInput
+import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.Model.DashboardDetails
+import com.example.conferencerommapp.services.ConferenceService
 import com.example.conferencerommapp.utils.GetCurrentTimeInUTC
 import com.example.globofly.services.ServiceBuilder
 import okhttp3.ResponseBody
@@ -89,6 +91,29 @@ class BookingDashboardRepository {
         })
     }
 
+    /**
+     * function will make the API Call and call the interface method with data from srver
+     */
+    fun recurringCancelBooking(token: String,meetId:Int,recurringMeetingId:String,listener: ResponseListener){
+        /**
+         * api call using rerofit
+         */
+        val service:ConferenceService = ServiceBuilder.getObject()
+        val requestCall: Call<ResponseBody> = service.cancelRecurringBooking(token,meetId,recurringMeetingId)
+        requestCall.enqueue(object : Callback<ResponseBody> {
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                listener.onFailure(Constants.INVALID_TOKEN)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
+                    listener.onSuccess(response.code())
+                } else {
+                    listener.onFailure(response.code())
+                }
+            }
+        })
+    }
     fun getPasscode(token: String, listener: ResponseListener) {
         /**
          * api call using retrofit

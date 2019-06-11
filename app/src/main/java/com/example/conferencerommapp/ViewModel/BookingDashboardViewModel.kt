@@ -137,4 +137,33 @@ class BookingDashboardViewModel : ViewModel() {
     fun returnPasscodeFailed(): MutableLiveData<Any> {
         return mFailureForPasscode
     }
+
+    //----------------------------------------------------------------------------------------------
+    fun recurringCancelBooking(token: String, meetingId: Int,recurringMeetId:String) {
+        mBookingDashboardRepository = BookingDashboardRepository.getInstance()
+        mBookingDashboardRepository!!.recurringCancelBooking(token, meetingId,recurringMeetId, object : ResponseListener {
+            override fun onFailure(failure: Any) {
+                mFailureForCancelBooking.value = failure
+            }
+
+            override fun onSuccess(success: Any) {
+                mSuccessForCancelBooking.value = success as Int
+            }
+
+        })
+    }
+
+    /**
+     * function will return the MutableLiveData of Int
+     */
+    fun returnRecurringCancelledSuccess(): MutableLiveData<Int> {
+        return mSuccessForCancelBooking
+    }
+
+    /**
+     * function will return the MutableLiveData of Int if something went wrong at server
+     */
+    fun returnRecurringCancelFailed(): MutableLiveData<Any> {
+        return mFailureForCancelBooking
+    }
 }

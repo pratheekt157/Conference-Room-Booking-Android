@@ -3,6 +3,7 @@ package com.example.conferencerommapp.Helper
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.core.content.ContextCompat.startActivity
 import com.example.conferencerommapp.SignIn
@@ -22,6 +23,13 @@ class GetAleretDialog {
             dialog.show()
             dialog.setCanceledOnTouchOutside(false)
             return dialog
+        }
+
+        fun getDialogforRecurring(mContext: Context,title: String):AlertDialog.Builder{
+            val mDialog = AlertDialog.Builder(mContext)
+            mDialog.setTitle(title)
+
+            return mDialog
         }
     }
 }
