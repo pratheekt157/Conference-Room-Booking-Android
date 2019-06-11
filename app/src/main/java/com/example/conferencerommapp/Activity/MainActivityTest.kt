@@ -16,18 +16,12 @@ class MainActivityTest : AppCompatActivity() {
         setContentView(R.layout.activity_main_test)
         formatDateAsUTC()
     }
+
     @SuppressLint("SimpleDateFormat")
     fun formatDateAsUTC() {
-
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-
-        var d = simpleDateFormat.parse("2019-06-10 19:25")
-
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss'Z'")
-
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm'Z'")
         sdf.timeZone = TimeZone.getTimeZone("UTC")
-
-        Log.i("Time----------" , sdf.format(d))
+        Log.i("Time----------" , "" + sdf.parse(sdf.format(Date())))
 
 
         var pstFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")

@@ -3,7 +3,6 @@ package com.example.conferencerommapp.Activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -23,16 +22,14 @@ import com.example.conferencerommapp.Model.UpdateBooking
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.UpdateBookingViewModel
+import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
 import com.example.conferenceroomtabletversion.utils.GetPreference
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import es.dmoral.toasty.Toasty
 
 class UpdateBookingActivity : AppCompatActivity() {
 
     private lateinit var mUpdateBookingViewModel: UpdateBookingViewModel
     private var mUpdateBooking = UpdateBooking()
-    private var oldFromTime: String? = null
-    private var oldToTime: String? = null
 
     @BindView(R.id.Purpose)
     lateinit var purpose: EditText
@@ -68,11 +65,10 @@ class UpdateBookingActivity : AppCompatActivity() {
         setEditTextPicker()
     }
 
-
     private fun addDataToObjects(mIntentDataFromActivity: GetIntentDataFromActvity) {
         mUpdateBooking.bookingId = mIntentDataFromActivity.bookingId
-        mUpdateBooking.newFromTime = (mIntentDataFromActivity.date + " " + newFromTime.text.toString()).trim()
-        mUpdateBooking.newtotime = (mIntentDataFromActivity.date + " " + newToTime.text.toString()).trim()
+        mUpdateBooking.newFromTime = FormatTimeAccordingToZone.formatDateAsUTC(mIntentDataFromActivity.date + " " + newFromTime.text.toString().trim())
+        mUpdateBooking.newtotime = (FormatTimeAccordingToZone.formatDateAsUTC(mIntentDataFromActivity.date + " " + newToTime.text.toString().trim()))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -227,14 +223,18 @@ class UpdateBookingActivity : AppCompatActivity() {
         val simpleDateFormatForTime1 = java.text.SimpleDateFormat("HH:mm")
         val mdate = mIntentDataFromActivity.date!!
         val mfromtime = mIntentDataFromActivity.fromTime!!.split("T")
-        oldFromTime = mfromtime[1]
-        val mtotime = mIntentDataFromActivity.toTime!!.split("T")
-        oldToTime = mtotime[1]
+
         purpose.text = mIntentDataFromActivity.purpose!!.toEditable()
-        newFromTime.text = simpleDateFormatForTime1.format(simpleDateFormatForTime.parse(mfromtime[1]))
-            .toEditable()
-        newToTime.text = simpleDateFormatForTime1.format(simpleDateFormatForTime.parse(mtotime[1])).toEditable()
-        date.text = FormatDate.formatDate(mdate).toEditable()
+
+//        newFromTime.text = simpleDateFormatForTime1.format(simpleDateFormatForTime.parse(mfromtime[1]))
+//            .toEditable()
+//
+//        newToTime.text = simpleDateFormatForTime1.format(simpleDateFormatForTime.parse(mtotime[1])).toEditable()
+        newFromTime.text = mIntentDataFromActivity.fromTime!!.toEditable()
+        newToTime.text = mIntentDataFromActivity.toTime!!.toEditable()
+
+        date.text = FormatDate.formatDate(mIntentDataFromActivity.date!!).toEditable()
+
         buildingName.text = mIntentDataFromActivity.buildingName!!.toEditable()
         roomName.text = mIntentDataFromActivity.roomName!!.toEditable()
     }

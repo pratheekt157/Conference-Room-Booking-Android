@@ -17,12 +17,12 @@
             android:layout_height="wrap_content">
 
         <LinearLayout
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/linear_layout_icon">
             <TextView
                     android:text="Cancelled"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_cancel"
                     android:textColor="@color/textColorGray"

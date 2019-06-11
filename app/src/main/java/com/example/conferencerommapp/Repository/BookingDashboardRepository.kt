@@ -5,6 +5,7 @@ import com.example.conferencerommapp.Helper.Constants
 import com.example.conferencerommapp.Helper.ResponseListener
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.DashboardDetails
+import com.example.conferencerommapp.utils.GetCurrentTimeInUTC
 import com.example.globofly.services.ServiceBuilder
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -45,7 +46,7 @@ class BookingDashboardRepository {
         var dateDate = dateFormat.parse(dateFormat.format(date))
         Log.d("date------", dateDate.toString())
 
-        mBookingDashboardInput.currentDatTime = date
+        mBookingDashboardInput.currentDatTime = GetCurrentTimeInUTC.getCurrentTimeInUTC()
         val service = ServiceBuilder.getObject()
         val requestCall: Call<DashboardDetails> = service.getDashboard(token, mBookingDashboardInput)
         requestCall.enqueue(object : Callback<DashboardDetails> {

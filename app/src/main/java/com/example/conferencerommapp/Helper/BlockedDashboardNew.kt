@@ -1,7 +1,6 @@
 package com.example.conferencerommapp.Helper
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.conferencerommapp.Blocked
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.dateTimeFormat.FormatTimeAccordingToZone
+import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
 
 
 class BlockedDashboardNew(private val blockedList: List<Blocked>, val mContext: Context, val listener: UnblockRoomListener) : androidx.recyclerview.widget.RecyclerView.Adapter<BlockedDashboardNew.ViewHolder>() {

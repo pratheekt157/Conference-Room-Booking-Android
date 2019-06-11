@@ -18,7 +18,7 @@ data class BookingDashboardInput (
     var pageNumber: Int? = null,
 
     @SerializedName("CurrentDateTime")
-    var currentDatTime: Date? = null
+    var currentDatTime: String? = null
 
 
     )

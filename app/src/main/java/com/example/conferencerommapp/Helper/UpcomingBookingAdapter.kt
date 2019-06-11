@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.dateTimeFormat.FormatTimeAccordingToZone
+import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
 import java.text.SimpleDateFormat
 
 @Suppress("NAME_SHADOWING")
@@ -21,6 +21,8 @@ class UpcomingBookingAdapter(
     private val mShowMembers: ShowMembersListener,
     private val mEditBooking: EditBookingListener
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<UpcomingBookingAdapter.ViewHolder>() {
+
+    var mIntentData = GetIntentDataFromActvity()
 
     /**
      * a variable which will hold the 'Instance' of interface
@@ -62,7 +64,7 @@ class UpcomingBookingAdapter(
             holder.cancelButton.text = " Cancel "
             holder.purposeTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_edit_black_24dp, 0)
             holder.purposeTextView.onRightDrawableClicked {
-                editActivity(position, mContext)
+                editActivity(position)
             }
         }
         if (dashboardItemList[position].status == Constants.BOOKING_DASHBOARD_PENDING) {
@@ -99,8 +101,15 @@ class UpcomingBookingAdapter(
         setDataToFields(holder, position)
         var localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
         var localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
-        holder.fromTimeTextView.text = FormatDate.changeFormateFromDateTimeToTime(localStartTime) + " - " + FormatDate.changeFormateFromDateTimeToTime(localEndTime)
-        setFunctionOnButton(holder, position, mContext)
+        mIntentData.date = localStartTime.split(" ")[0]
+        holder.dateTextView.text = formatDate(localStartTime.split(" ")[0])
+        holder.fromTimeTextView.text =
+            FormatDate.changeFormateFromDateTimeToTime(localStartTime) + " - " + FormatDate.changeFormateFromDateTimeToTime(
+                localEndTime
+            )
+        mIntentData.fromTime = FormatDate.changeFormateFromDateTimeToTime(localStartTime)
+        mIntentData.toTime = FormatDate.changeFormateFromDateTimeToTime(localEndTime)
+        setFunctionOnButton(holder, position)
     }
 
     fun setDrawable(amitie: String, targetTextView: TextView) {
@@ -185,8 +194,7 @@ class UpcomingBookingAdapter(
      */
     private fun setFunctionOnButton(
         holder: ViewHolder,
-        position: Int,
-        context: Context
+        position: Int
     ) {
         holder.cancelButton.setOnClickListener {
             if (holder.cancelButton.text != "Attendee") {
@@ -195,20 +203,14 @@ class UpcomingBookingAdapter(
         }
     }
 
-    private fun editActivity(position: Int, mContext: Context) {
-        val mGetIntentDataFromActivity = GetIntentDataFromActvity()
-        val fromTime = dashboardItemList[position].fromTime
-        val fromDate = fromTime!!.split("T")
-        mGetIntentDataFromActivity.purpose = dashboardItemList[position].purpose
-        mGetIntentDataFromActivity.buildingName = dashboardItemList[position].buildingName
-        mGetIntentDataFromActivity.roomName = dashboardItemList[position].roomName
-        mGetIntentDataFromActivity.roomId = dashboardItemList[position].roomId
-        mGetIntentDataFromActivity.date = fromDate[0]
-        mGetIntentDataFromActivity.bookingId = dashboardItemList[position].bookingId
-        mGetIntentDataFromActivity.fromTime = dashboardItemList[position].fromTime
-        mGetIntentDataFromActivity.toTime = dashboardItemList[position].toTime
-        mGetIntentDataFromActivity.cCMail = dashboardItemList[position].cCMail
-        mEditBookingListener!!.editBooking(mGetIntentDataFromActivity)
+    private fun editActivity(position: Int) {
+        mIntentData.purpose = dashboardItemList[position].purpose
+        mIntentData.buildingName = dashboardItemList[position].buildingName
+        mIntentData.roomName = dashboardItemList[position].roomName
+        mIntentData.roomId = dashboardItemList[position].roomId
+        mIntentData.bookingId = dashboardItemList[position].bookingId
+        mIntentData.cCMail = dashboardItemList[position].cCMail
+        mEditBookingListener!!.editBooking(mIntentData)
     }
 
 

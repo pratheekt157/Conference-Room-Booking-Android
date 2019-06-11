@@ -40,6 +40,7 @@ class UpcomingBookingFragment : Fragment() {
     private lateinit var progressDialog: ProgressDialog
     private lateinit var mBookingListAdapter: UpcomingBookingAdapter
     private var bookingId = 0
+    private var makeApiCallOnResume = false
     var pagination: Int = 1
     var hasMoreItem: Boolean = false
     var mBookingDashboardInput = BookingDashboardInput()
@@ -89,7 +90,10 @@ class UpcomingBookingFragment : Fragment() {
 
     private fun getViewModel() {
         progressDialog.show()
-        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+        mBookingDashBoardViewModel.getBookingList(
+            GetPreference.getTokenFromPreference(activity!!),
+            mBookingDashboardInput
+        )
     }
 
     private fun initRecyclerView() {
@@ -123,7 +127,10 @@ class UpcomingBookingFragment : Fragment() {
                         pagination++
                         mBookingDashboardInput.pageNumber = pagination
                         upcoming_booking_progress_bar.visibility = View.VISIBLE
-                        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+                        mBookingDashBoardViewModel.getBookingList(
+                            GetPreference.getTokenFromPreference(activity!!),
+                            mBookingDashboardInput
+                        )
                     }
                 }
             }
@@ -139,7 +146,10 @@ class UpcomingBookingFragment : Fragment() {
             pagination = 1
             mBookingDashboardInput.pageNumber = pagination
             if (NetworkState.appIsConnectedToInternet(activity!!)) {
-                mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+                mBookingDashBoardViewModel.getBookingList(
+                    GetPreference.getTokenFromPreference(activity!!),
+                    mBookingDashboardInput
+                )
             } else {
                 val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE)
@@ -236,6 +246,7 @@ class UpcomingBookingFragment : Fragment() {
      * function will send intent to the UpdateActivity with data which is required for updation
      */
     fun intentToUpdateBookingActivity(mGetIntentDataFromActivity: GetIntentDataFromActvity) {
+        makeApiCallOnResume = true
         val updateActivityIntent = Intent(activity!!, UpdateBookingActivity::class.java)
         updateActivityIntent.putExtra(Constants.EXTRA_INTENT_DATA, mGetIntentDataFromActivity)
         startActivity(updateActivityIntent)
@@ -293,6 +304,18 @@ class UpcomingBookingFragment : Fragment() {
                 activity!!.finish()
             }
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (makeApiCallOnResume) {
+            finalList.clear()
+            pagination = 1
+            mBookingDashboardInput.pageNumber = pagination
+            getViewModel()
+            makeApiCallOnResume = false
+        }
+    }
+
 
     /**
      * show dialog for session expired

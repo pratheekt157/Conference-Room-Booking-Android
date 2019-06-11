@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.dateTimeFormat
+package com.example.conferencerommapp.utils
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
