@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html.fromHtml
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -82,13 +83,8 @@ class ProjectManagerInputActivity : AppCompatActivity() {
         mManagerConferecneRoomViewModel = ViewModelProviders.of(this).get(ManagerConferenceRoomViewModel::class.java)
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         mIntentDataFromActivity = GetIntentDataFromActvity()
+        addTextChangeListener()
         setPickerToEditTexts()
-        textChangeListenerOnFromTimeEditText()
-        textChangeListenerOnToTimeEditText()
-        textChangeListenerOnFromDateEditText()
-        textChangeListenerOnToDateEditText()
-        textChangeListenerOnRoomCapacity()
-        textChangeListenerOnPurposeEditText()
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModelForBuildingList()
         } else {
@@ -97,6 +93,15 @@ class ProjectManagerInputActivity : AppCompatActivity() {
         }
     }
 
+    private fun addTextChangeListener() {
+        textChangeListenerOnFromTimeEditText()
+        textChangeListenerOnToTimeEditText()
+        textChangeListenerOnFromDateEditText()
+        textChangeListenerOnToDateEditText()
+        textChangeListenerOnRoomCapacity()
+        textChangeListenerOnPurposeEditText()
+
+    }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -112,9 +117,6 @@ class ProjectManagerInputActivity : AppCompatActivity() {
             applyValidationOnDateAndTime()
         }
     }
-
-
-
     /**
      * get all date for each day selected by user in between from date and To date
      */
@@ -173,6 +175,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
             fromTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $start"))
             toTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $end"))
         }
+        Log.i("------from time list", "" + fromTimeList)
     }
 
 

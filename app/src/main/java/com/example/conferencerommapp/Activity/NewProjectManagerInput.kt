@@ -28,6 +28,7 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
+import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.shawnlin.numberpicker.NumberPicker
 import kotlinx.android.synthetic.main.activity_adding_conference.*
@@ -80,7 +81,7 @@ class NewProjectManagerInput : AppCompatActivity() {
 
     private fun init() {
         val actionBar = supportActionBar
-        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Buildings) + "</font>")
+        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Booking_Details) + "</font>")
         mManagerBuildingViewModel = ViewModelProviders.of(this).get(ManagerBuildingViewModel::class.java)
         mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
         mManagerConferecneRoomViewModel = ViewModelProviders.of(this).get(ManagerConferenceRoomViewModel::class.java)
@@ -174,13 +175,11 @@ class NewProjectManagerInput : AppCompatActivity() {
         fromTimeList.clear()
         toTimeList.clear()
         for (item in dataList) {
-            fromTimeList.add("$item $start")
-            toTimeList.add("$item $end")
+            fromTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $start"))
+            toTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $end"))
         }
+        Log.i("------from time list", "" + fromTimeList)
     }
-
-
-
     //observe data from view model
     private fun observerData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
