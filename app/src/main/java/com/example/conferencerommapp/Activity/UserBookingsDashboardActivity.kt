@@ -47,7 +47,6 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
                 R.id.nav_previous -> selectedFragment = PreviousBookingFragment()
                 R.id.nav_cancelled -> selectedFragment = CancelledBookingFragment()
                 R.id.nav_new_booking -> selectedFragment = InputDetailsForBookingFragment()
-
             }
             if (selectedFragment != null) {
                 supportFragmentManager.beginTransaction().replace(
@@ -162,12 +161,9 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
      * else the role is normal user
      */
     private fun setItemInDrawerByRole() {
-        val pref = getSharedPreferences(getString(R.string.preference), Context.MODE_PRIVATE)
-        val code = pref.getInt("Code", Constants.EMPLOYEE_CODE)
+        val pref = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
+        val code = pref.getInt(Constants.ROLE_CODE, Constants.EMPLOYEE_CODE)
         val navMenu = nav_view.menu
-        if (code != Constants.HR_CODE) {
-
-        }
         if (code != Constants.MANAGER_CODE) {
             navMenu.findItem(R.id.project_manager).isVisible = false
         }
@@ -218,8 +214,6 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         super.onBackPressed()
         finishAffinity()
     }
-
-
 }
 
 
