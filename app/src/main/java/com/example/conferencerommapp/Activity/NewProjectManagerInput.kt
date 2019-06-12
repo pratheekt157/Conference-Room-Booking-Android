@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +30,6 @@ import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 import kotlinx.android.synthetic.main.activity_project_manager_input.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,6 +51,9 @@ class NewProjectManagerInput : AppCompatActivity() {
     lateinit var buildingSpineer: Spinner
     @BindView(R.id.manager_room_capacity)
     lateinit var roomCapacityEditText: EditText
+    @BindView(R.id.reurring_booking_scroll_view)
+    lateinit var scrollView: NestedScrollView
+
     @BindView(R.id.manager_event_name_text_view)
     lateinit var purposeEditText: EditText
     private lateinit var mManagerConferecneRoomViewModel: ManagerConferenceRoomViewModel
@@ -196,7 +199,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             fromTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $start"))
             toTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $end"))
         }
-
+        Log.i("------from time list", "" + fromTimeList)
     }
     //observe data from view model
     private fun observerData() {
@@ -292,8 +295,8 @@ class NewProjectManagerInput : AppCompatActivity() {
                 }
             })
         mRecyclerView.adapter = customAdapter
-        nested_scroll_view.post {
-            nested_scroll_view.smoothScrollTo(0, mRecyclerView.top)
+        reurring_booking_scroll_view.post {
+            scrollView.smoothScrollTo(0, mRecyclerView.top)
         }
     }
 
