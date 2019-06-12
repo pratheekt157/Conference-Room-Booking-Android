@@ -36,10 +36,9 @@
 
             <TextView
                     android:id="@+id/status_text_view"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:gravity="bottom"
                     android:text="Pending"
-                    android:background="@drawable/border_arround_text_view"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/btnCancel"
                     android:layout_width="wrap_content"

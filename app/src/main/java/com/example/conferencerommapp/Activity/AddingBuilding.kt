@@ -202,31 +202,4 @@ class AddingBuilding : AppCompatActivity() {
         progressDialog.show()
         mAddBuildingViewModel.addBuildingDetails(mBuilding, GetPreference.getTokenFromPreference(this))
     }
-
-//    /**
-//     * show dialog when session expired
-//     */
-//    private fun showAlert() {
-//        val dialog = GetAleretDialog.getDialog(
-//            this, getString(R.string.session_expired), "Your session is expired!\n" +
-//                    getString(R.string.session_expired_messgae)
-//        )
-//        dialog.setPositiveButton(R.string.ok) { _, _ ->
-//            signOut()
-//        }
-//        val builder = GetAleretDialog.showDialog(dialog)
-//        ColorOfDialogButton.setColorOfDialogButton(builder)
-//    }
-//    /**
-//     * sign out from application
-//     */
-//    private fun signOut() {
-//        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-//        mGoogleSignInClient.signOut()
-//            .addOnCompleteListener(this) {
-//                startActivity(Intent(applicationContext, SignIn::class.java))
-//                finish()
-//            }
-//    }
-
 }

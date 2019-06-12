@@ -130,7 +130,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
         mSelectMemberViewModel.returnFailureForEmployeeList().observe(this, Observer {
             progressDialog.dismiss()
             if (it == getString(R.string.invalid_token)) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, ManagerSelectMeetingMembers())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -145,7 +145,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
         mManagerBookingViewModel.returnFailureForBooking().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, ManagerSelectMeetingMembers())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -297,32 +297,6 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
         }
     }
 
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
-    }
 
 
     private fun validateEmailFormat(): Boolean {

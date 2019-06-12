@@ -28,12 +28,12 @@ class ShowDialogForSessionExpired {
         /**
          * sign out from application
          */
-        fun signOut(mConext: Context, activity: Activity) {
-            val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(activity)
+        fun signOut(mContext: Context, activity: Activity) {
+            val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(mContext)
             mGoogleSignInClient.signOut()
                 .addOnCompleteListener(activity) {
-                    mConext.startActivity(Intent(activity, SignIn::class.java))
-                    (mConext as Activity).finish()
+                    mContext.startActivity(Intent(mContext, SignIn::class.java))
+                    (mContext as Activity).finish()
                 }
         }
     }

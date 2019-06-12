@@ -150,7 +150,7 @@ class InputDetailsForBookingFragment : Fragment() {
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
             mProgressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else {
                 ShowToast.show(activity!!, it as Int)
 
@@ -165,7 +165,7 @@ class InputDetailsForBookingFragment : Fragment() {
         mConferenceRoomViewModel.returnFailure().observe(this, Observer {
             mProgressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else {
                 ShowToast.show(activity!!, it as Int)
             }
@@ -186,7 +186,7 @@ class InputDetailsForBookingFragment : Fragment() {
         mConferenceRoomViewModel.returnFailureForSuggestedRooms().observe(this, Observer {
             mProgressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else {
                 ShowToast.show(activity!!, it as Int)
 
@@ -564,32 +564,5 @@ class InputDetailsForBookingFragment : Fragment() {
             val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE2)
         }
-    }
-
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            activity!!, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(activity!!)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(activity!!) {
-                startActivity(Intent(activity!!, SignIn::class.java))
-                activity!!.finish()
-            }
     }
 }

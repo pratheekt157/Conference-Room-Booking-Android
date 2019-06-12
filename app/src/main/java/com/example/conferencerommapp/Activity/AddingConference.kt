@@ -92,7 +92,7 @@ class AddingConference : AppCompatActivity() {
         mAddConferenceRoomViewModel.returnFailureForAddingRoom().observe(this, Observer {
             progressDialog.dismiss()
             if (it == getString(R.string.invalid_token)) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, AddingConference())
             } else {
                 ShowToast.show(this, it as Int)
             }
@@ -189,33 +189,6 @@ class AddingConference : AppCompatActivity() {
     private fun addRoom() {
         progressDialog.show()
         mAddConferenceRoomViewModel.addConferenceDetails(GetPreference.getTokenFromPreference(this), mConferenceRoom)
-    }
-
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
     }
 
     /**
