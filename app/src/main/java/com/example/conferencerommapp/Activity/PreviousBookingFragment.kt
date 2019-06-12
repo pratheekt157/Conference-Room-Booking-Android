@@ -147,7 +147,7 @@ class PreviousBookingFragment : Fragment() {
             previous__booking_refresh_layout.isRefreshing = false
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else if (it == Constants.NO_CONTENT_FOUND && finalList.size == 0) {
                 previous__empty_view.visibility = View.VISIBLE
             } else {
@@ -182,36 +182,6 @@ class PreviousBookingFragment : Fragment() {
     private fun setFilteredDataToAdapter(dashboardItemList: List<Dashboard>) {
         finalList.addAll(dashboardItemList)
         previous__recyclerView.adapter?.notifyDataSetChanged()
-    }
-
-
-    /**
-     * function will sign out the current user and send control to SignInActivity
-     */
-    private fun signOut() {
-        mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(activity!!)
-        mGoogleSignInClient!!.signOut()
-            .addOnCompleteListener(activity!!) {
-                // doubt
-                Toast.makeText(activity, getString(R.string.sign_out), Toast.LENGTH_SHORT).show()
-                startActivity(Intent(activity, SignIn::class.java))
-                //finish
-            }
-    }
-
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            activity!!, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
     }
 }
 

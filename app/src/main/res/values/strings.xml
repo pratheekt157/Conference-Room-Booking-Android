@@ -191,4 +191,7 @@
     <string name="block_room">block room</string>
     <string name="unblock_room_confirmation_message">Are you sure you want to unblock the Room?</string>
     <string name="parameter_missing">Some parameters are missing</string>
+    <string name="unavailable">Unavailable</string>
+    <string name="messgae_for_day_selector_when_nothing_selected">No dates founds for selected days!</string>
+    <string name="invalid_details">Details are Invalid!!!</string>
 </resources>

@@ -113,7 +113,7 @@ class BlockedDashboard : AppCompatActivity() {
             refreshLayout.isRefreshing = false
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, BlockedDashboard())
             } else if (it == Constants.NO_CONTENT_FOUND) {
                 empty_view_blocked.visibility = View.VISIBLE
                 r2_block_dashboard.setBackgroundColor(Color.parseColor("#FFFFFF"))
@@ -134,7 +134,7 @@ class BlockedDashboard : AppCompatActivity() {
         mBlockedDashboardViewModel.returnFailureCodeForUnBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, BlockedDashboard())
             } else {
                 ShowToast.show(this, it as Int)
             }
@@ -214,32 +214,4 @@ class BlockedDashboard : AppCompatActivity() {
         progressDialog.show()
         mBlockedDashboardViewModel.unBlockRoom(GetPreference.getTokenFromPreference(this), mBookingId)
     }
-
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
-    }
-
 }

@@ -89,7 +89,7 @@ class ConferenceDashBoard : AppCompatActivity() {
         mHrConferenceRoomViewModel.returnFailureForConferenceRoom().observe(this, Observer {
             progressDialog.dismiss()
             when (it) {
-                Constants.INVALID_TOKEN -> showAlert()
+                Constants.INVALID_TOKEN -> ShowDialogForSessionExpired.signOut(this, ConferenceDashBoard())
                 else -> {
                     ShowToast.show(this, it as Int)
                     finish()
@@ -147,33 +147,6 @@ class ConferenceDashBoard : AppCompatActivity() {
         // todo pass pagination to backend
         progressDialog.show()
         mHrConferenceRoomViewModel.getConferenceRoomList(buildingId, GetPreference.getTokenFromPreference(this))
-    }
-
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
     }
 }
 

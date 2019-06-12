@@ -80,20 +80,42 @@ class NewProjectManagerInput : AppCompatActivity() {
     }
 
     private fun init() {
+        initActionBar()
+        initLateInitVariables()
+        setPickerToEditTexts()
+        setTextChangeListener()
+        makeApiCall()
+    }
+    //set action bar properties
+    private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Booking_Details) + "</font>")
+
+    }
+
+    // initialize late init properties
+    private fun initLateInitVariables() {
         mManagerBuildingViewModel = ViewModelProviders.of(this).get(ManagerBuildingViewModel::class.java)
         mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
         mManagerConferecneRoomViewModel = ViewModelProviders.of(this).get(ManagerConferenceRoomViewModel::class.java)
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         mIntentDataFromActivity = GetIntentDataFromActvity()
-        setPickerToEditTexts()
+
+    }
+
+    //set textChangeListener for edit texts
+    private fun setTextChangeListener() {
         textChangeListenerOnFromTimeEditText()
         textChangeListenerOnToTimeEditText()
         textChangeListenerOnFromDateEditText()
         textChangeListenerOnToDateEditText()
         textChangeListenerOnRoomCapacity()
         textChangeListenerOnPurposeEditText()
+
+    }
+
+    //make api call if connection is alive
+    private fun makeApiCall() {
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModelForBuildingList()
         } else {
@@ -101,7 +123,6 @@ class NewProjectManagerInput : AppCompatActivity() {
             startActivityForResult(i, Constants.RES_CODE)
         }
     }
-
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -189,7 +210,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
             } else {
                 ShowToast.show(this, it as Int)
             }
@@ -204,7 +225,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mManagerConferecneRoomViewModel.returnFailure().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -226,7 +247,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mManagerConferecneRoomViewModel.returnFailureForSuggestedRooms().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -236,7 +257,7 @@ class NewProjectManagerInput : AppCompatActivity() {
     private fun checkForStatusOfRooms(mListOfRooms: List<RoomDetails>?) {
         var count = 0
         for (room in mListOfRooms!!) {
-            if (room.status == "Unavailable") {
+            if (room.status == getString(R.string.unavailable)) {
                 count++
             }
         }
@@ -440,7 +461,7 @@ class NewProjectManagerInput : AppCompatActivity() {
      * validate building spinner
      */
     private fun validateBuildingSpinner(): Boolean {
-        return if (mBuildingName == "Select Building") {
+        return if (mBuildingName == getString(R.string.select_building)) {
             manager_text_view_error_spinner_building.visibility = View.VISIBLE
             false
         } else {
@@ -526,7 +547,7 @@ class NewProjectManagerInput : AppCompatActivity() {
                 ColorOfDialogButton.setColorOfDialogButton(dialog)
             }
         } catch (e: Exception) {
-            Toast.makeText(this@NewProjectManagerInput, "Details are Invalid!!!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@NewProjectManagerInput, getString(R.string.invalid_details), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -550,7 +571,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mRoom.capacity = roomCapacityEditText.text.toString().toInt()
         mRoom.buildingId = mBuildingId
         if (dataList.isEmpty()) {
-            Toast.makeText(this, "No dates founds for selected days!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.messgae_for_day_selector_when_nothing_selected), Toast.LENGTH_SHORT).show()
         } else {
             getConferenceRoomViewModel()
         }
@@ -683,38 +704,11 @@ class NewProjectManagerInput : AppCompatActivity() {
             true
         }
     }
-
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
-    }
     private fun setBuildingSpinner(mBuildingList: List<Building>) {
         var buildingNameList = mutableListOf<String>()
         var buildingIdList = mutableListOf<Int>()
 
-        buildingNameList.add("Select Building")
+        buildingNameList.add(getString(R.string.select_building))
         buildingIdList.add(-1)
         for (mBuilding in mBuildingList) {
             buildingNameList.add(mBuilding.buildingName!!)
@@ -730,7 +724,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>) {
-                mBuildingName = "Select Building"
+                mBuildingName = getString(R.string.select_building)
             }
         }
     }

@@ -114,13 +114,13 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
 
         mBuildingViewModel.returnMBuildingFailure().observe(this, Observer {
             progressDialog.dismiss()
-            if (it == Constants.INVALID_TOKEN) {
-                showAlert()
-            } else if (it == Constants.NO_CONTENT_FOUND) {
-                Toast.makeText(this, getString(R.string.empty_building_list), Toast.LENGTH_SHORT).show()
-            } else {
-                ShowToast.show(this, it as Int)
-                finish()
+            when (it) {
+                Constants.INVALID_TOKEN -> ShowDialogForSessionExpired.showAlert(this, BlockConferenceRoomActivity())
+                Constants.NO_CONTENT_FOUND -> Toast.makeText(this, getString(R.string.empty_building_list), Toast.LENGTH_SHORT).show()
+                else -> {
+                    ShowToast.show(this, it as Int)
+                    finish()
+                }
             }
 
         })
@@ -135,7 +135,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         mBlockRoomViewModel.returnResponseErrorForBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, BlockConferenceRoomActivity())
             } else {
                 ShowToast.show(this, it as Int)
             }
@@ -172,7 +172,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         mBlockRoomViewModel.returnResponseErrorForConfirmation().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, BlockConferenceRoomActivity())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -189,7 +189,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         mBlockRoomViewModel.returnResponseErrorForConferenceRoom().observe(this, Observer {
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, BlockConferenceRoomActivity())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -507,32 +507,6 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         blocking(room)
     }
 
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
-        )
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
-
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
-    }
     /**
      * add text change listener for the start time edit text
      */

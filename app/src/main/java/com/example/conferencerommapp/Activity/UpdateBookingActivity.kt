@@ -185,7 +185,7 @@ class UpdateBookingActivity : AppCompatActivity() {
         mUpdateBookingViewModel.returnUpdateFailed().observe(this, Observer {
             progressDialog.dismiss()
             if(it == Constants.INVALID_TOKEN) {
-                showAlert()
+                ShowDialogForSessionExpired.showAlert(this, UpdateBookingActivity())
             }else {
                 ShowToast.show(this, it as Int)
             }
@@ -219,17 +219,8 @@ class UpdateBookingActivity : AppCompatActivity() {
 
     @SuppressLint("SimpleDateFormat")
     private fun setValuesInEditText(mIntentDataFromActivity: GetIntentDataFromActvity) {
-        val simpleDateFormatForTime = java.text.SimpleDateFormat("HH:mm:ss")
-        val simpleDateFormatForTime1 = java.text.SimpleDateFormat("HH:mm")
-        val mdate = mIntentDataFromActivity.date!!
-        val mfromtime = mIntentDataFromActivity.fromTime!!.split("T")
-
         purpose.text = mIntentDataFromActivity.purpose!!.toEditable()
 
-//        newFromTime.text = simpleDateFormatForTime1.format(simpleDateFormatForTime.parse(mfromtime[1]))
-//            .toEditable()
-//
-//        newToTime.text = simpleDateFormatForTime1.format(simpleDateFormatForTime.parse(mtotime[1])).toEditable()
         newFromTime.text = mIntentDataFromActivity.fromTime!!.toEditable()
         newToTime.text = mIntentDataFromActivity.toTime!!.toEditable()
 
@@ -244,30 +235,7 @@ class UpdateBookingActivity : AppCompatActivity() {
         return intent.extras!!.get(Constants.EXTRA_INTENT_DATA) as GetIntentDataFromActvity
     }
 
-    /**
-     * show dialog for session expired
-     */
-    private fun showAlert() {
-        val dialog = GetAleretDialog.getDialog(this, getString(R.string.session_expired), "Your session is expired!\n" +
-                getString(R.string.session_expired_messgae))
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
-            signOut()
-        }
-        val builder = GetAleretDialog.showDialog(dialog)
-        ColorOfDialogButton.setColorOfDialogButton(builder)
-    }
 
-    /**
-     * sign out from application
-     */
-    private fun signOut() {
-        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient.signOut()
-            .addOnCompleteListener(this) {
-                startActivity(Intent(applicationContext, SignIn::class.java))
-                finish()
-            }
-    }
 
 
 }
