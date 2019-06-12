@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
@@ -50,6 +51,9 @@ class NewProjectManagerInput : AppCompatActivity() {
     lateinit var buildingSpineer: Spinner
     @BindView(R.id.manager_room_capacity)
     lateinit var roomCapacityEditText: EditText
+    @BindView(R.id.reurring_booking_scroll_view)
+    lateinit var scrollView: NestedScrollView
+
     @BindView(R.id.manager_event_name_text_view)
     lateinit var purposeEditText: EditText
     private lateinit var mManagerConferecneRoomViewModel: ManagerConferenceRoomViewModel
@@ -270,6 +274,9 @@ class NewProjectManagerInput : AppCompatActivity() {
                 }
             })
         mRecyclerView.adapter = customAdapter
+        reurring_booking_scroll_view.post {
+            scrollView.smoothScrollTo(0, mRecyclerView.top)
+        }
     }
 
     private fun goToSelectMeetingMembersActivity() {
