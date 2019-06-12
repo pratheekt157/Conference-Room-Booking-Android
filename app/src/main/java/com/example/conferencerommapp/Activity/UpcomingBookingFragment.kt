@@ -24,6 +24,7 @@ import com.example.conferencerommapp.Model.*
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -308,9 +309,9 @@ class UpcomingBookingFragment : Fragment() {
 
         })
 
-        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which ->
+        builder.setNegativeButton("Cancel") { _, _ ->
 
-        })
+        }
         val dialog = GetAleretDialog.showDialog(builder)
         ColorOfDialogButton.setColorOfDialogButton(dialog)
     }
@@ -395,7 +396,5 @@ class UpcomingBookingFragment : Fragment() {
         val builder = GetAleretDialog.showDialog(dialog)
         ColorOfDialogButton.setColorOfDialogButton(builder)
     }
-
-
 }
 

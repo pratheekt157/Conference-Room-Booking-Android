@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -68,7 +69,7 @@ class SplashScreen : AppCompatActivity() {
      */
     fun init() {
         progressDialog =  GetProgress.getProgressDialog(getString(R.string.progress_message), this)
-        prefs = getSharedPreferences(getString(R.string.preference), Context.MODE_PRIVATE)
+        prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
         mCheckRegistrationViewModel = ViewModelProviders.of(this).get(CheckRegistrationViewModel::class.java)
     }
 
@@ -83,6 +84,7 @@ class SplashScreen : AppCompatActivity() {
                 signIn()
                 finish()
             }else {
+                Toast.makeText(this, "" + it, Toast.LENGTH_SHORT).show()
                 ShowToast.show(this, it as Int)
                 finish()
             }

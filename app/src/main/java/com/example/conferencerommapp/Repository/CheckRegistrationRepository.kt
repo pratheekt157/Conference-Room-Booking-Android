@@ -1,5 +1,6 @@
 package com.example.conferencerommapp.Repository
 
+import android.util.Log
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.globofly.services.ServiceBuilder
@@ -39,7 +40,6 @@ class CheckRegistrationRepository {
             override fun onFailure(call: Call<Int>, t: Throwable) {
                 listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
             }
-
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.body()!!)
