@@ -29,6 +29,7 @@ import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 import kotlinx.android.synthetic.main.activity_project_manager_input.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -195,7 +196,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             fromTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $start"))
             toTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $end"))
         }
-        Log.i("------from time list", "" + fromTimeList)
+
     }
     //observe data from view model
     private fun observerData() {
@@ -291,6 +292,9 @@ class NewProjectManagerInput : AppCompatActivity() {
                 }
             })
         mRecyclerView.adapter = customAdapter
+        nested_scroll_view.post {
+            nested_scroll_view.smoothScrollTo(0, mRecyclerView.top)
+        }
     }
 
     private fun goToSelectMeetingMembersActivity() {

@@ -2,6 +2,7 @@ package com.example.conferencerommapp.Helper
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -99,18 +100,16 @@ class UpcomingBookingAdapter(
                 }
             }
         }
-
         setDataToFields(holder, position)
+
         var localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
         var localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
-        mIntentData.date = localStartTime.split(" ")[0]
+
         holder.dateTextView.text = formatDate(localStartTime.split(" ")[0])
         holder.fromTimeTextView.text =
             FormatDate.changeFormateFromDateTimeToTime(localStartTime) + " - " + FormatDate.changeFormateFromDateTimeToTime(
                 localEndTime
             )
-        mIntentData.fromTime = FormatDate.changeFormateFromDateTimeToTime(localStartTime)
-        mIntentData.toTime = FormatDate.changeFormateFromDateTimeToTime(localEndTime)
         setFunctionOnButton(holder, position)
     }
 
@@ -154,7 +153,6 @@ class UpcomingBookingAdapter(
     }
 
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-        //var buildingNameTextView: TextView = itemView.findViewById(R.id.building_name)
         var roomNameTextView: TextView = itemView.findViewById(R.id.conferenceRoomName)
         var fromTimeTextView: TextView = itemView.findViewById(R.id.from_time)
         var dateTextView: TextView = itemView.findViewById(R.id.date)
@@ -206,6 +204,15 @@ class UpcomingBookingAdapter(
     }
 
     private fun editActivity(position: Int) {
+        val fromDate = dashboardItemList[position].fromTime!!.split("T")
+        val toDate = dashboardItemList[position].toTime!!.split("T")
+
+        var localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
+        var localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
+
+        mIntentData.date = localStartTime.split(" ")[0]
+        mIntentData.fromTime = localStartTime.split(" ")[1]
+        mIntentData.toTime = localEndTime.split(" ")[1]
         mIntentData.purpose = dashboardItemList[position].purpose
         mIntentData.buildingName = dashboardItemList[position].buildingName
         mIntentData.roomName = dashboardItemList[position].roomName

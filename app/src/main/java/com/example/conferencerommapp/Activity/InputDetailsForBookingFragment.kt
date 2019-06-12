@@ -556,8 +556,8 @@ class InputDetailsForBookingFragment : Fragment() {
     private fun setDataForApiCallToFetchRoomDetails() {
         mInputDetailsForRoom.capacity = roomCapacityEditText.text.toString().toInt()
         mInputDetailsForRoom.buildingId = mBuildingId
-        mInputDetailsForRoom.fromTime = dateEditText.text.toString() + " " + fromTimeEditText.text.toString()
-        mInputDetailsForRoom.toTime = dateEditText.text.toString() + " " + toTimeEditText.text.toString()
+        mInputDetailsForRoom.fromTime = FormatTimeAccordingToZone.formatDateAsUTC(dateEditText.text.toString() + " " + fromTimeEditText.text.toString())
+        mInputDetailsForRoom.toTime = FormatTimeAccordingToZone.formatDateAsUTC(dateEditText.text.toString() + " " + toTimeEditText.text.toString())
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModelForConferenceRoomList(mInputDetailsForRoom)
         } else {

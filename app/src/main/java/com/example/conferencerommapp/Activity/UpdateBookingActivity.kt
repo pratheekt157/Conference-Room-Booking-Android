@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -67,8 +68,10 @@ class UpdateBookingActivity : AppCompatActivity() {
 
     private fun addDataToObjects(mIntentDataFromActivity: GetIntentDataFromActvity) {
         mUpdateBooking.bookingId = mIntentDataFromActivity.bookingId
-        mUpdateBooking.newFromTime = FormatTimeAccordingToZone.formatDateAsUTC(mIntentDataFromActivity.date + " " + newFromTime.text.toString().trim())
-        mUpdateBooking.newtotime = (FormatTimeAccordingToZone.formatDateAsUTC(mIntentDataFromActivity.date + " " + newToTime.text.toString().trim()))
+        mUpdateBooking.newFromTime =
+            FormatTimeAccordingToZone.formatDateAsUTC(mIntentDataFromActivity.date + " " + newFromTime.text.toString().trim())
+        mUpdateBooking.newtotime =
+            (FormatTimeAccordingToZone.formatDateAsUTC(mIntentDataFromActivity.date + " " + newToTime.text.toString().trim()))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -184,9 +187,9 @@ class UpdateBookingActivity : AppCompatActivity() {
         })
         mUpdateBookingViewModel.returnUpdateFailed().observe(this, Observer {
             progressDialog.dismiss()
-            if(it == Constants.INVALID_TOKEN) {
+            if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, UpdateBookingActivity())
-            }else {
+            } else {
                 ShowToast.show(this, it as Int)
             }
         })
@@ -221,21 +224,19 @@ class UpdateBookingActivity : AppCompatActivity() {
     private fun setValuesInEditText(mIntentDataFromActivity: GetIntentDataFromActvity) {
         purpose.text = mIntentDataFromActivity.purpose!!.toEditable()
 
+
         newFromTime.text = mIntentDataFromActivity.fromTime!!.toEditable()
         newToTime.text = mIntentDataFromActivity.toTime!!.toEditable()
-
         date.text = FormatDate.formatDate(mIntentDataFromActivity.date!!).toEditable()
 
         buildingName.text = mIntentDataFromActivity.buildingName!!.toEditable()
         roomName.text = mIntentDataFromActivity.roomName!!.toEditable()
     }
+
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun getIntentData(): GetIntentDataFromActvity {
         return intent.extras!!.get(Constants.EXTRA_INTENT_DATA) as GetIntentDataFromActvity
     }
-
-
-
 
 }

@@ -35,7 +35,6 @@ import kotlinx.android.synthetic.main.fragment_upcoming_booking.*
 import java.text.SimpleDateFormat
 
 class UpcomingBookingFragment : Fragment() {
-    private var mGoogleSignInClient: GoogleSignInClient? = null
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     private lateinit var acct: GoogleSignInAccount
@@ -353,8 +352,6 @@ class UpcomingBookingFragment : Fragment() {
         progressDialog.show()
         mBookingDashBoardViewModel.cancelBooking(GetPreference.getTokenFromPreference(activity!!), mBookingId)
     }
-
-
 
     override fun onResume() {
         super.onResume()
