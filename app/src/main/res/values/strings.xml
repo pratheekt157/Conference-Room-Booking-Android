@@ -194,4 +194,6 @@
     <string name="unavailable">Unavailable</string>
     <string name="messgae_for_day_selector_when_nothing_selected">No dates founds for selected days!</string>
     <string name="invalid_details">Details are Invalid!!!</string>
+    <string name="cancel_recurring_meeting_message">Check to cancel all recurring meetings</string>
+    <string name="title_for_cancel_recurring_meeting">Do you want to cancel the meeting</string>
 </resources>
