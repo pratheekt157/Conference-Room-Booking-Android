@@ -23,6 +23,7 @@
                 android:ems="10"
                 android:singleLine="true"
                 android:maxLines="1"
+            android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_local_offer_black_24dp"
                 android:drawablePadding="5dp"
                 android:maxLength="50"
@@ -44,7 +45,8 @@
                 android:textColor="@color/nonEditableValues"
                 android:id="@+id/buildingname"
                 android:hint="Building Name"
-                android:drawableStart="@drawable/ic_building_black_24dp"
+            android:drawableTint="@color/nonEditableValues"
+            android:drawableStart="@drawable/ic_building_black_24dp"
                 android:drawablePadding="5dp"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -62,8 +64,8 @@
                 android:textColor="@color/nonEditableValues"
                 android:id="@+id/conferenceRoomName"
                 android:hint="Room name"
+                android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_room_black_24dp"
-                android:drawableLeft="@drawable/ic_room_black_24dp"
                 android:drawablePadding="5dp"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -81,8 +83,8 @@
                 android:editable="false"
                 android:id="@+id/date_update"
                 android:hint="Date"
+                android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_today_black_24dp"
-                android:drawableLeft="@drawable/ic_today_black_24dp"
                 android:drawablePadding="5dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
