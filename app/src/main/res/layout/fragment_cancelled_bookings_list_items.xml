@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="1dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp">
+    <RelativeLayout
+            android:padding="16dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:elevation="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+
+                android:text="Uber Client Meeting"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/cancelled_purpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <ImageView
+                android:layout_toRightOf="@id/cancelled_purpose"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/ic_cancelled_dashboard"
+                android:id="@+id/event_status_icon_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <ImageView
+                android:src="@drawable/ic_show_members"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        <TextView
+                android:drawablePadding="8dp"
+                android:textColor="#333333"
+                android:textSize="12sp"
+                android:drawableStart="@drawable/ic_business_black_24dp"
+                android:layout_marginTop="16dp"
+                android:id="@+id/cancelled_building_name"
+                android:text="Rajas, Main Building"
+                android:layout_below="@id/cancelled_purpose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_below="@id/cancelled_building_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:drawablePadding="8dp"
+                    android:textColor="#333333"
+                    android:textSize="12sp"
+                    android:id="@+id/cancelled_date"
+                    android:drawableStart="@drawable/ic_today_resized"
+                    android:layout_marginTop="8dp"
+                    android:text="30 June, 2019"
+                    android:layout_below="@id/cancelled_building_name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+            <TextView
+                    android:id="@+id/cancelled_time"
+                    android:drawablePadding="8dp"
+                    android:textColor="#333333"
+                    android:textSize="12sp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="32dp"
+                    android:layout_toRightOf="@id/cancelled_date"
+                    android:drawableStart="@drawable/ic_time_dashboard"
+                    android:layout_marginTop="8dp"
+                    android:text="07:30 - 08:30"
+                    android:layout_below="@id/cancelled_building_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

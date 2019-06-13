@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/dashBord_recyclerView1"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/dashboard_list"/>
+                tools:listitem="@layout/fragment_upcoming_booking_list_items"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <ProgressBar
             android:id="@+id/upcoming_booking_progress_bar"

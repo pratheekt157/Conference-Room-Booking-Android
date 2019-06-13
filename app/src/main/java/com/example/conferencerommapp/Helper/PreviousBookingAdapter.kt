@@ -31,7 +31,7 @@ class PreviousBookingAdapter(
      * this override function will set a view for the recyclerview items
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.previous_booking_dashboard_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_previous_booking_list_items, parent, false)
         return ViewHolder(view)
     }
 

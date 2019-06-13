@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
@@ -14,6 +15,7 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.FormatDate
 import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
+import org.jetbrains.anko.find
 import java.text.SimpleDateFormat
 
 @Suppress("NAME_SHADOWING")
@@ -40,7 +42,7 @@ class UpcomingBookingAdapter(
      * this override function will set a view for the recyclerview items
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.dashboard_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_upcoming_booking_list_items, parent, false)
         return ViewHolder(view)
     }
 
@@ -59,16 +61,17 @@ class UpcomingBookingAdapter(
         val toDate = toTime!!.split("T")
 
         if (dashboardItemList[position].isTagged == true) {
-            holder.cancelButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_attendee, 0, 0)
-            holder.purposeTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
-            holder.cancelButton.text = "Attendee"
+            holder.attendeeTextView.visibility = View.VISIBLE
+            holder.actionLayout.visibility = View.GONE
         } else {
-            holder.cancelButton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_cancel_booking, 0, 0)
-            holder.cancelButton.text = " Cancel "
-            holder.purposeTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_edit_black_24dp, 0)
-            holder.purposeTextView.onRightDrawableClicked {
+            holder.attendeeTextView.visibility = View.GONE
+            holder.actionLayout.visibility = View.VISIBLE
+            holder.editTextView.setOnClickListener {
                 editActivity(position)
             }
+//            holder.purposeTextView.onRightDrawableClicked {
+//
+//            }
         }
         if (dashboardItemList[position].status == Constants.BOOKING_DASHBOARD_PENDING) {
             holder.statusTextView.visibility = View.VISIBLE
@@ -160,6 +163,9 @@ class UpcomingBookingAdapter(
         var cancelButton: TextView = itemView.findViewById(R.id.btnCancel)
         var showButton: TextView = itemView.findViewById(R.id.btnshow)
         var statusTextView: TextView = itemView.findViewById(R.id.status_text_view)
+        var editTextView: TextView = itemView.findViewById(R.id.editBtn)
+        var attendeeTextView: TextView = itemView.findViewById(R.id.status_text_view)
+        var actionLayout: LinearLayout = itemView.findViewById(R.id.action_button_linear_layout)
         var amenity1: TextView = itemView.findViewById(R.id.ani_1)
         var amenity2: TextView = itemView.findViewById(R.id.ani_2)
         var amenity3: TextView = itemView.findViewById(R.id.ani_3)

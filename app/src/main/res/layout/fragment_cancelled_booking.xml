@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/cancelled_recyclerView"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/cancelled_booking_dashboard_list"/>
+                tools:listitem="@layout/fragment_cancelled_bookings_list_items"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <ImageView
             android:id="@+id/cancelled_empty_view"

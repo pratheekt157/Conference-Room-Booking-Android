@@ -275,11 +275,11 @@ class UpcomingBookingFragment : Fragment() {
 
     private fun recurringCancellationMetting(position: Int) {
         var selectedList = mutableListOf<Int>()
-        val items = arrayOf<CharSequence>(getString(R.string.cancel_recurring_meeting_message))
+        val items = arrayOf<CharSequence>("sfkjsjfkjsfhks")
         val builder =
                 GetAleretDialog.getDialogforRecurring(
                         activity!!,
-                        getString(R.string.title_for_cancel_recurring_meeting)
+                        "Delete"
                 )
         builder.setMultiChoiceItems(items,null, DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
             if(isChecked){

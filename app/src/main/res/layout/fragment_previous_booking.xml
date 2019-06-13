@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/previous__recyclerView"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/previous_booking_dashboard_list"/>
+                tools:listitem="@layout/fragment_previous_booking_list_items"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <ProgressBar
             android:layout_alignParentBottom="true"
