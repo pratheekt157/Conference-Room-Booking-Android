@@ -14,6 +14,7 @@
     <color name="lightOrange">#fdf2df</color>
     <color name="nonEditableValues">#56585A</color>
     <color name="textColorGray">#696969</color>
+    <color name="lightGrayBackground">#F7F7F7</color>
 
     <color name="dayPressed">#303F9F</color>
     <color name="daySelected">#0072bc</color>

@@ -49,11 +49,19 @@ class BlockedDashboard : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blocked_dashboard)
         ButterKnife.bind(this)
-        val actionBar = supportActionBar
-        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Blocked_Rooms) + "</font>")
         init()
         observeData()
 
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Blocked_Rooms) + "</font>")
+    }
+
+    private fun initLateInitializerVariables() {
+        mBlockedDashboardViewModel = ViewModelProviders.of(this).get(BlockedDashboardViewModel::class.java)
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
     }
 
     /**
@@ -61,8 +69,8 @@ class BlockedDashboard : AppCompatActivity() {
      */
     @SuppressLint("ResourceAsColor")
     fun init() {
-        mBlockedDashboardViewModel = ViewModelProviders.of(this).get(BlockedDashboardViewModel::class.java)
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
+        initActionBar()
+        initLateInitializerVariables()
         refreshLayout.setColorSchemeColors(colorPrimary)
         if (NetworkState.appIsConnectedToInternet(this)) {
             loadBlocking()

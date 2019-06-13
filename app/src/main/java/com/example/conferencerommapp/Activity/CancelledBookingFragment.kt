@@ -27,7 +27,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 
 class CancelledBookingFragment : Fragment() {
-    private var mGoogleSignInClient: GoogleSignInClient? = null
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     private lateinit var acct: GoogleSignInAccount
@@ -53,21 +52,25 @@ class CancelledBookingFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     fun init() {
         initRecyclerView()
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
-        acct = GoogleSignIn.getLastSignedInAccount(activity)!!
-        mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
+        initLateInitializerVariables()
         cancelled_booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
         refreshOnPullDown()
-        mBookingDashboardInput.pageSize = 5
-        mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_CANCELLED
-        mBookingDashboardInput.pageNumber = pagination
-        mBookingDashboardInput.email = acct.email.toString()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModel()
         } else {
             val i = Intent(activity, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initLateInitializerVariables() {
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
+        acct = GoogleSignIn.getLastSignedInAccount(activity)!!
+        mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
+        mBookingDashboardInput.pageSize = 5
+        mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_CANCELLED
+        mBookingDashboardInput.pageNumber = pagination
+        mBookingDashboardInput.email = acct.email.toString()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

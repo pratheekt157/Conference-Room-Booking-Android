@@ -51,14 +51,12 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     var room = BlockRoom()
     private lateinit var mBuildingViewModel: BuildingViewModel
     private lateinit var progressDialog: ProgressDialog
-    private var mBuildingName = "Select Building"
-    private var mRoomName = "Select Room"
+    private var mBuildingName = getString(R.string.select_building)
+    private var mRoomName = getString(R.string.select_room)
     private var mBuildingId = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spinner)
-        val actionBar = supportActionBar
-        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Block) + "</font>")
         ButterKnife.bind(this)
         init()
         observeData()
@@ -69,19 +67,34 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      * initialize all lateinit variables
      */
     fun init() {
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
-        mBuildingViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
-        mBlockRoomViewModel = ViewModelProviders.of(this).get(BlockRoomViewModel::class.java)
-        textChangeListenerOnDateEditText()
-        textChangeListenerOnFromTimeEditText()
-        textChangeListenerOnToTimeEditText()
-        textChangeListenerOnPurposeEditText()
+        initActionBar()
+        initTextChangeListener()
+        initLateInitializerVariables()
         if(NetworkState.appIsConnectedToInternet(this)) {
             getBuilding()
         } else {
             val i = Intent(this@BlockConferenceRoomActivity, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Block) + "</font>")
+    }
+
+    private fun initTextChangeListener() {
+        textChangeListenerOnDateEditText()
+        textChangeListenerOnFromTimeEditText()
+        textChangeListenerOnToTimeEditText()
+        textChangeListenerOnPurposeEditText()
+
+    }
+
+    private fun initLateInitializerVariables() {
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
+        mBuildingViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
+        mBlockRoomViewModel = ViewModelProviders.of(this).get(BlockRoomViewModel::class.java)
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -289,7 +302,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     private fun sendDataForSpinner(it: List<Building>) {
         val items = mutableListOf<String>()
         val itemsId = mutableListOf<Int>()
-        items.add("Select Building")
+        items.add(getString(R.string.select_building))
         itemsId.add(-1)
         for (item in it) {
             items.add(item.buildingName!!)
@@ -325,10 +338,10 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         val conferencename = mutableListOf<String>()
         val conferenceid = mutableListOf<Int>()
         if (it.isEmpty()) {
-            conferencename.add("No Room in the Buildings")
+            conferencename.add(getString(R.string.no_room_in_building))
             conferenceid.add(-1)
         } else {
-            conferencename.add("Select Room")
+            conferencename.add(getString(R.string.select_room))
         }
         conferenceid.add(-1)
         for (item in it) {
@@ -417,7 +430,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      * validate building spinner
      */
     private fun validateBuildingSpinner(): Boolean {
-        return if (mBuildingName == "Select Building") {
+        return if (mBuildingName == getString(R.string.select_building)) {
             error_spinner_building_text_view.visibility = View.VISIBLE
             false
         } else {
@@ -430,7 +443,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      * validate conference room spinner
      */
     private fun validateRoomSpinner(): Boolean {
-        return if (mRoomName == "Select Room") {
+        return if (mRoomName == getString(R.string.select_room)) {
             error_spinner_room_text_view.visibility = View.VISIBLE
             false
         } else {

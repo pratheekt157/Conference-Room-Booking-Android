@@ -83,8 +83,9 @@ interface ConferenceService {
 
     @GET("api/getPasscode")
     fun getPasscode(
-        @Header("token") token: String
-    ): Call<Int>
+        @Header("token") token: String,
+        @Query("GenerateNewPasscode") generateNewPasscode: Boolean
+    ): Call<String>
 
     @GET("api/Employee")
     fun getEmployees(

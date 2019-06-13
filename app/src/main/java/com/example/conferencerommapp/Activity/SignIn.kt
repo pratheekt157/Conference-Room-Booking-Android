@@ -105,7 +105,7 @@ class SignIn : AppCompatActivity() {
                 startActivityForResult(i, Constants.RES_CODE)
             }
         } catch (e: ApiException) {
-            Log.w("Google Sign In Error", "signInResult:failed code=" + e.statusCode)
+            Log.w(getString(R.string.sign_in_error), "signInResult:failed code=" + e.statusCode)
         }
 
     }

@@ -56,14 +56,17 @@ class UpdateBookingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_booking)
-        val actionBar = supportActionBar
-        actionBar!!.title = Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.update) + "</font>")
         ButterKnife.bind(this)
         mIntentDataFromActivity = getIntentData()
         init()
         observerData()
         setValuesInEditText(mIntentDataFromActivity)
         setEditTextPicker()
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title = Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.update) + "</font>")
     }
 
     private fun addDataToObjects(mIntentDataFromActivity: GetIntentDataFromActvity) {
@@ -99,7 +102,7 @@ class UpdateBookingActivity : AppCompatActivity() {
          * If the field contains no values we show a toast to user saying that the value is invalid for particular field
          */
         if (validate()) {
-            val minMilliseconds: Long = 600000
+            val minMilliseconds: Long = Constants.MIN_MEETING_DURATION
 
             /**
              * Get the start and end time of meeting from the input fields
@@ -172,6 +175,12 @@ class UpdateBookingActivity : AppCompatActivity() {
      * initialize all lateinit variables
      */
     fun init() {
+        initActionBar()
+        initLateInitializerVariables()
+
+    }
+
+    private fun initLateInitializerVariables() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
         mUpdateBookingViewModel = ViewModelProviders.of(this).get(UpdateBookingViewModel::class.java)
     }

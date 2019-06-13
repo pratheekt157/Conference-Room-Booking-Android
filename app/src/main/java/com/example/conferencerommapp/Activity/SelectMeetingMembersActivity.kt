@@ -93,6 +93,16 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
      */
     fun init() {
         initToolBar()
+        initLateInitializerVariables()
+        if (NetworkState.appIsConnectedToInternet(this)) {
+            getViewModel()
+        } else {
+            val i = Intent(this, NoInternetConnectionActivity::class.java)
+            startActivityForResult(i, Constants.RES_CODE)
+        }
+    }
+
+    private fun initLateInitializerVariables() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         mGetIntentDataFromActivity = getIntentData()
         selectedCapacity = (mGetIntentDataFromActivity.capacity!!.toInt() + 1)
@@ -100,12 +110,6 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         acct = GoogleSignIn.getLastSignedInAccount(applicationContext)!!
         // getting view model object
         mBookingViewModel = ViewModelProviders.of(this).get(BookingViewModel::class.java)
-        if (NetworkState.appIsConnectedToInternet(this)) {
-            getViewModel()
-        } else {
-            val i = Intent(this, NoInternetConnectionActivity::class.java)
-            startActivityForResult(i, Constants.RES_CODE)
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -212,8 +216,8 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         mBooking.cCMail = emailString
         //mGetIntentDataFromActivity.emailOfSelectedEmployees = emailString
         // show alert before booking
-        val dialog = GetAleretDialog.getDialog(this, "Confirm", "Are you sure want to book room?")
-        dialog.setPositiveButton("Book") { _, _ ->
+        val dialog = GetAleretDialog.getDialog(this, getString(R.string.confirm), getString(R.string.book_confirmation_message))
+        dialog.setPositiveButton(getString(R.string.book)) { _, _ ->
             if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject()
                 addBooking()

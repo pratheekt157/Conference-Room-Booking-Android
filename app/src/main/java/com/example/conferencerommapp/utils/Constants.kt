@@ -30,7 +30,11 @@ class Constants {
         /**
          * ip address for api call
          */
-        var IP_ADDRESS = "http://192.168.43.219/CRB/"
+        var IP_ADDRESS = "http://192.168.1.192/CRB/"
+
+        const val DATE_FORMAAT_Y_D_M = "yyyy-MM-dd"
+
+        const val MIN_MEETING_DURATION: Long = 900000
 
         const val SOME_EXCEPTION = 400
 

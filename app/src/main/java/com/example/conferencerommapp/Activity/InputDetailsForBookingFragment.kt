@@ -63,7 +63,7 @@ class InputDetailsForBookingFragment : Fragment() {
     private var mSuggestedRoomApiIsCallled = false
     private lateinit var acct: GoogleSignInAccount
     var mSetIntentData = GetIntentDataFromActvity()
-    var mBuildingName = "Select Building"
+    var mBuildingName = getString(R.string.select_building)
     var mBuildingId = -1
     var capacity = 0
     var buildingId = 0
@@ -77,6 +77,9 @@ class InputDetailsForBookingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         init()
         observeData()
+    }
+
+    private fun clickListenerOnSearchButton() {
         search_room.setOnClickListener {
             suggestions.visibility = View.GONE
             purposeEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
@@ -84,25 +87,35 @@ class InputDetailsForBookingFragment : Fragment() {
             validationOnDataEnteredByUser()
         }
     }
-    private fun init() {
-        setPickerToEditText()
+
+    private fun initTextChangeListener() {
         textChangeListenerOnDateEditText()
         textChangeListenerOnFromTimeEditText()
         textChangeListenerOnToTimeEditText()
         textChangeListenerOnPurposeEditText()
         textChangeListenerOnRoomCapacity()
-        acct = GoogleSignIn.getLastSignedInAccount(activity)!!
-        mInputDetailsForRoom.email = acct.email.toString()
-        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
-        mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
-        mConferenceRoomViewModel = ViewModelProviders.of(this).get(ConferenceRoomViewModel::class.java)
-        mSetDataFromActivity = GetIntentDataFromActvity()
+    }
+
+    private fun init() {
+        setPickerToEditText()
+        initTextChangeListener()
+        initLateInitializerVariables()
+        clickListenerOnSearchButton()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModelForBuildingList()
         } else {
             val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initLateInitializerVariables() {
+        acct = GoogleSignIn.getLastSignedInAccount(activity)!!
+        mInputDetailsForRoom.email = acct.email.toString()
+        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
+        mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
+        mConferenceRoomViewModel = ViewModelProviders.of(this).get(ConferenceRoomViewModel::class.java)
+        mSetDataFromActivity = GetIntentDataFromActvity()
     }
 
     /**
@@ -259,7 +272,7 @@ class InputDetailsForBookingFragment : Fragment() {
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>) {
-                mBuildingName = "Select Building"
+                mBuildingName = getString(R.string.select_building)
             }
         }
     }
@@ -458,7 +471,7 @@ class InputDetailsForBookingFragment : Fragment() {
      * validate building spinner
      */
     private fun validateBuildingSpinner(): Boolean {
-        return if (mBuildingName == "Select Building") {
+        return if (mBuildingName == getString(R.string.select_building)) {
             text_view_error_spinner_building.visibility = View.VISIBLE
             false
         } else {
@@ -495,7 +508,7 @@ class InputDetailsForBookingFragment : Fragment() {
 
 
     private fun validateTime(startTime: String, endTime: String) {
-        val minMilliseconds: Long = 600000
+        val minMilliseconds: Long = Constants.MIN_MEETING_DURATION
         /**
          * setting a alert dialog instance for the current context
          */
@@ -548,7 +561,6 @@ class InputDetailsForBookingFragment : Fragment() {
 
             }
         } catch (e: Exception) {
-            Log.i("-------------", e.message)
             Toast.makeText(activity!!, getString(R.string.details_invalid), Toast.LENGTH_LONG).show()
         }
     }

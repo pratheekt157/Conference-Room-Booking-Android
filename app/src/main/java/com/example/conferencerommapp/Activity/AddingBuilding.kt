@@ -48,16 +48,19 @@ class AddingBuilding : AppCompatActivity() {
         setContentView(R.layout.activity_adding_building)
         ButterKnife.bind(this)
         init()
+        observeData()
+    }
+
+    private fun initTextChangeListener() {
         textChangeListenerOnBuildingName()
         textChangeListenerOnBuildingPlace()
-        observeData()
     }
 
     /**
      * add text change listener for the building Name
      */
     private fun textChangeListenerOnBuildingName() {
-        buildingNameEditText.addTextChangedListener(object: TextWatcher {
+        buildingNameEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // nothing here
             }
@@ -76,7 +79,7 @@ class AddingBuilding : AppCompatActivity() {
      * add text change listener for the building place
      */
     private fun textChangeListenerOnBuildingPlace() {
-        buildingPlaceEditText.addTextChangedListener(object: TextWatcher {
+        buildingPlaceEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // nothing here
             }
@@ -98,7 +101,7 @@ class AddingBuilding : AppCompatActivity() {
     @OnClick(R.id.button_add_building)
     fun getBuildingDetails() {
         if (validateInputs()) {
-            if(NetworkState.appIsConnectedToInternet(this)) {
+            if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject(mAddBuilding)
                 addBuild(mAddBuilding)
             } else {
@@ -110,13 +113,22 @@ class AddingBuilding : AppCompatActivity() {
     }
 
 
-
     /**
      * initialize all lateinit variables
      */
     fun init() {
+        initActionBar()
+        initTextChangeListener()
+        initLateInitializerVariables()
+    }
+
+    private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Add_Buildings) + "</font>")
+
+    }
+
+    private fun initLateInitializerVariables() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
         mAddBuildingViewModel = ViewModelProviders.of(this).get(AddBuildingViewModel::class.java)
     }
@@ -147,6 +159,7 @@ class AddingBuilding : AppCompatActivity() {
             }
         })
     }
+
     /**
      *  set values to the different properties of object which is required for api call
      */
@@ -154,6 +167,7 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuilding.buildingName = buildingNameEditText.text.toString().trim()
         mAddBuilding.place = buildingPlaceEditText.text.toString().trim()
     }
+
     /**
      * validation for field building name for empty condition
      */
@@ -167,6 +181,7 @@ class AddingBuilding : AppCompatActivity() {
             true
         }
     }
+
     /**
      * validation for building place for empty condition
      */
@@ -191,6 +206,7 @@ class AddingBuilding : AppCompatActivity() {
         }
         return true
     }
+
     /**
      * function calls the ViewModel of addingBuilding and send data to the backend
      */

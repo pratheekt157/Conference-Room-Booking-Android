@@ -44,17 +44,25 @@ class ConferenceDashBoard : AppCompatActivity() {
     }
 
     fun init() {
-        val actionBar = supportActionBar
-        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Conference_Rooms) + "</font>")
-        buildingId = getIntentData()
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
-        mHrConferenceRoomViewModel = ViewModelProviders.of(this).get(HrConferenceRoomViewModel::class.java)
+        initActionBar()
+        initLateInitalizerVariables()
         if (NetworkState.appIsConnectedToInternet(this)) {
             getConference(buildingId)
         } else {
             val i = Intent(this, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initLateInitalizerVariables(){
+        buildingId = getIntentData()
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
+        mHrConferenceRoomViewModel = ViewModelProviders.of(this).get(HrConferenceRoomViewModel::class.java)
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Conference_Rooms) + "</font>")
     }
 
     override fun onRestart() {

@@ -60,11 +60,8 @@ class BuildingDashboard : AppCompatActivity() {
      * initialize objects
      */
     private fun init() {
-        val actionBar = supportActionBar
-        actionBar!!.title =
-            Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Building_Dashboard) + "</font>")
-        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
-        mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
+        initActionBar()
+        initLateInitializerVariables()
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModel()
         } else {
@@ -73,6 +70,17 @@ class BuildingDashboard : AppCompatActivity() {
         }
 
     }
+    private fun  initLateInitializerVariables() {
+        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
+        mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title =
+            Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Building_Dashboard) + "</font>")
+    }
+
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {

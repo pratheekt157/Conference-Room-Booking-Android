@@ -71,7 +71,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
 
     private fun getPasscode() {
         mProgressDialog.show()
-        mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this))
+        mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), false)
     }
 
     /**
@@ -100,13 +100,17 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     /**
      * show dialog for passcode
      */
-    private fun showAlertForPasscode(passcode: Int) {
+    private fun showAlertForPasscode(passcode: String) {
         val dialog = GetAleretDialog.getDialog(
             this,
             getString(R.string.do_not_share),
             "Your passcode is " + passcode + ". You can use this passcode to book a room from tablet placed inside conference room."
         )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
+        }
+        dialog.setNeutralButton(getString(R.string.get_new_passcode)) { _, _ ->
+            mProgressDialog.show()
+            mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), true)
         }
         val builder = GetAleretDialog.showDialog(dialog)
         ColorOfDialogButton.setColorOfDialogButton(builder)

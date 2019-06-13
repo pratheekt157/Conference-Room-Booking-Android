@@ -28,7 +28,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.fragment_previous_booking.*
 
 class PreviousBookingFragment : Fragment() {
-    private var mGoogleSignInClient: GoogleSignInClient? = null
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     private lateinit var acct: GoogleSignInAccount
@@ -55,6 +54,18 @@ class PreviousBookingFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     fun init() {
         initRecyclerView()
+        initLateInitializerVariables()
+        if (NetworkState.appIsConnectedToInternet(activity!!)) {
+            getViewModel()
+        } else {
+            val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
+            startActivityForResult(i, Constants.RES_CODE)
+        }
+        refreshOnPullDown()
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun initLateInitializerVariables() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
         acct = GoogleSignIn.getLastSignedInAccount(activity)!!
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
@@ -63,13 +74,6 @@ class PreviousBookingFragment : Fragment() {
         mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_PREVIOUS
         mBookingDashboardInput.pageNumber = pagination
         mBookingDashboardInput.email = acct.email.toString()
-        if (NetworkState.appIsConnectedToInternet(activity!!)) {
-            getViewModel()
-        } else {
-            val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
-            startActivityForResult(i, Constants.RES_CODE)
-        }
-        refreshOnPullDown()
     }
 
 
@@ -162,7 +166,7 @@ class PreviousBookingFragment : Fragment() {
      */
     fun showMeetingMembers(mEmployeeList: List<String>, position: Int) {
         val arrayListOfNames = ArrayList<String>()
-        arrayListOfNames.add(finalList[position].organizer!! + "(organizer)")
+        arrayListOfNames.add(finalList[position].organizer!! + getString(R.string.organizer))
         for (item in mEmployeeList) {
             arrayListOfNames.add(item)
         }

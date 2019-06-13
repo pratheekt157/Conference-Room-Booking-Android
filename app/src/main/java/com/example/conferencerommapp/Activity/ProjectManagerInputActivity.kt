@@ -64,7 +64,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
     var mRoom = ManagerConference()
     var mSetIntentData = GetIntentDataFromActvity()
     private var mSuggestedRoomApiIsCallled = false
-    var mBuildingName = "Select Building"
+    var mBuildingName = getString(R.string.select_building)
     var mBuildingId = -1
     var buildingId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,13 +76,8 @@ class ProjectManagerInputActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val actionBar = supportActionBar
-        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Buildings) + "</font>")
-        mManagerBuildingViewModel = ViewModelProviders.of(this).get(ManagerBuildingViewModel::class.java)
-        mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
-        mManagerConferecneRoomViewModel = ViewModelProviders.of(this).get(ManagerConferenceRoomViewModel::class.java)
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
-        mIntentDataFromActivity = GetIntentDataFromActvity()
+        initActionBar()
+        initLateInitializervariables()
         addTextChangeListener()
         setPickerToEditTexts()
         if (NetworkState.appIsConnectedToInternet(this)) {
@@ -91,6 +86,19 @@ class ProjectManagerInputActivity : AppCompatActivity() {
             val i = Intent(this@ProjectManagerInputActivity, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initLateInitializervariables() {
+        mManagerBuildingViewModel = ViewModelProviders.of(this).get(ManagerBuildingViewModel::class.java)
+        mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
+        mManagerConferecneRoomViewModel = ViewModelProviders.of(this).get(ManagerConferenceRoomViewModel::class.java)
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
+        mIntentDataFromActivity = GetIntentDataFromActvity()
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Buildings) + "</font>")
     }
 
     private fun addTextChangeListener() {
@@ -129,7 +137,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
     ) {
         dataList.clear()
         try {
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val simpleDateFormat = SimpleDateFormat(Constants.DATE_FORMAAT_Y_D_M, Locale.US)
             val d1 = simpleDateFormat.parse(fromDate)
             val d2 = simpleDateFormat.parse(toDate)
             val c1 = Calendar.getInstance()
@@ -175,7 +183,6 @@ class ProjectManagerInputActivity : AppCompatActivity() {
             fromTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $start"))
             toTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $end"))
         }
-        Log.i("------from time list", "" + fromTimeList)
     }
 
 
@@ -237,7 +244,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
     private fun checkForStatusOfRooms(mListOfRooms: List<RoomDetails>?) {
         var count = 0
         for (room in mListOfRooms!!) {
-            if (room.status == "Unavailable") {
+            if (room.status == getString(R.string.unavailable)) {
                 count++
             }
         }
@@ -438,7 +445,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
      * validate building spinner
      */
     private fun validateBuildingSpinner(): Boolean {
-        return if (mBuildingName == "Select Building") {
+        return if (mBuildingName == getString(R.string.select_building)) {
             manager_text_view_error_spinner_building.visibility = View.VISIBLE
             false
         } else {
@@ -466,7 +473,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
      *  if above both conditions are true than entered time is correct and user is allowed to go to the next actvity
      */
     private fun applyValidationOnDateAndTime() {
-        val minMilliseconds: Long = 600000
+        val minMilliseconds: Long = Constants.MIN_MEETING_DURATION
         /**
          * Get the start and end time of meeting from the input fields
          */
@@ -541,10 +548,10 @@ class ProjectManagerInputActivity : AppCompatActivity() {
             dateToEditText.text.toString(),
             listOfDays
         )
-        mRoom.fromTime!!.clear()
-        mRoom.toTime!!.clear()
-        mRoom.fromTime!!.addAll(fromTimeList)
-        mRoom.toTime!!.addAll(toTimeList)
+        mRoom.fromTime.clear()
+        mRoom.toTime.clear()
+        mRoom.fromTime.addAll(fromTimeList)
+        mRoom.toTime.addAll(toTimeList)
         mRoom.capacity = roomCapacityEditText.text.toString().toInt()
         mRoom.buildingId = mBuildingId
         if (dataList.isEmpty()) {
@@ -712,7 +719,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
         var buildingNameList = mutableListOf<String>()
         var buildingIdList = mutableListOf<Int>()
 
-        buildingNameList.add("Select Building")
+        buildingNameList.add(getString(R.string.select_building))
         buildingIdList.add(-1)
         for (mBuilding in mBuildingList) {
             buildingNameList.add(mBuilding.buildingName!!)
@@ -728,7 +735,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(adapterView: AdapterView<*>) {
-                mBuildingName = "Select Building"
+                mBuildingName = getString(R.string.select_building)
             }
         }
     }

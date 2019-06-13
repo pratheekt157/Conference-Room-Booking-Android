@@ -26,6 +26,7 @@ import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_adding_conference.*
+import kotlin.system.measureNanoTime
 
 @Suppress("DEPRECATION")
 class AddingConference : AppCompatActivity() {
@@ -72,12 +73,24 @@ class AddingConference : AppCompatActivity() {
      * initialize all lateinit variables
      */
     fun init() {
-        val actionBar = supportActionBar
-        actionBar!!.title = Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Add_Room) + "</font>")
+        initActionBar()
+        initTextChangeListener()
+        initLateInitializerVariables()
+    }
+
+    private fun initTextChangeListener() {
         textChangeListenerOnRoomName()
         textChangeListenerOnRoomCapacity()
+    }
+
+    private fun initLateInitializerVariables() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
         mAddConferenceRoomViewModel = ViewModelProviders.of(this).get(AddConferenceRoomViewModel::class.java)
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title = Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Add_Room) + "</font>")
     }
 
     /**

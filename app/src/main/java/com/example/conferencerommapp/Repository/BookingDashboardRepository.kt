@@ -114,18 +114,18 @@ class BookingDashboardRepository {
             }
         })
     }
-    fun getPasscode(token: String, listener: ResponseListener) {
+    fun getPasscode(token: String, generateNewPasscode: Boolean, listener: ResponseListener) {
         /**
          * api call using retrofit
          */
         val service = ServiceBuilder.getObject()
-        var requestCall: Call<Int> = service.getPasscode(token)
-        requestCall.enqueue(object : Callback<Int> {
-            override fun onFailure(call: Call<Int>, t: Throwable) {
+        var requestCall: Call<String> = service.getPasscode(token, generateNewPasscode)
+        requestCall.enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
                 listener.onFailure(Constants.INVALID_TOKEN)
             }
 
-            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.body()!!)
                 } else {

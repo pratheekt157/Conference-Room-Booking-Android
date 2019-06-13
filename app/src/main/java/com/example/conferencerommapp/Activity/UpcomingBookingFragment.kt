@@ -73,21 +73,25 @@ class UpcomingBookingFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     fun init() {
         initRecyclerView()
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
-        acct = GoogleSignIn.getLastSignedInAccount(activity)!!
-        mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
+        initLateInitializerVariables()
         booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
         refreshOnPullDown()
-        mBookingDashboardInput.pageSize = 5
-        mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_UPCOMING
-        mBookingDashboardInput.pageNumber = pagination
-        mBookingDashboardInput.email = acct.email.toString()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModel()
         } else {
             val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initLateInitializerVariables() {
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
+        acct = GoogleSignIn.getLastSignedInAccount(activity)!!
+        mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
+        mBookingDashboardInput.pageSize = 5
+        mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_UPCOMING
+        mBookingDashboardInput.pageNumber = pagination
+        mBookingDashboardInput.email = acct.email.toString()
     }
 
     private fun getViewModel() {
@@ -221,7 +225,7 @@ class UpcomingBookingFragment : Fragment() {
      */
     fun showMeetingMembers(mEmployeeList: List<String>, position: Int) {
         val arrayListOfNames = ArrayList<String>()
-        arrayListOfNames.add(finalList[position].organizer + "(Organizer)")
+        arrayListOfNames.add(finalList[position].organizer + getString(R.string.organizer))
         for (item in mEmployeeList) {
             arrayListOfNames.add(item)
         }
@@ -285,7 +289,7 @@ class UpcomingBookingFragment : Fragment() {
                 selectedList.remove(which)
             }
         })
-        builder.setPositiveButton("OK", DialogInterface.OnClickListener{ _, _->
+        builder.setPositiveButton(getString(R.string.ok), DialogInterface.OnClickListener{ _, _->
             if(selectedList.isEmpty()){
                 bookingId = finalList[position].bookingId!!
                 if (NetworkState.appIsConnectedToInternet(activity!!)) {
@@ -308,7 +312,7 @@ class UpcomingBookingFragment : Fragment() {
 
         })
 
-        builder.setNegativeButton("Cancel") { _, _ ->
+        builder.setNegativeButton(getString(R.string.no)) { _, _ ->
 
         }
         val dialog = GetAleretDialog.showDialog(builder)
@@ -363,8 +367,5 @@ class UpcomingBookingFragment : Fragment() {
             makeApiCallOnResume = false
         }
     }
-
-
-
 }
 

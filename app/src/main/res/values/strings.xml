@@ -187,11 +187,20 @@
     <string name="please_check_internet_connection">Please check network connection!</string>
     <string name="permission_required">Permission Required To Book Room</string>
     <string name="do_not_share">DO NOT SHARE</string>
-    <string name="already_selected">Already Selected!</string>
     <string name="block_room">block room</string>
     <string name="unblock_room_confirmation_message">Are you sure you want to unblock the Room?</string>
     <string name="parameter_missing">Some parameters are missing</string>
     <string name="unavailable">Unavailable</string>
     <string name="messgae_for_day_selector_when_nothing_selected">No dates founds for selected days!</string>
     <string name="invalid_details">Details are Invalid!!!</string>
+    <string name="get_new_passcode">Get new passcode</string>
+    <string name="select_room">Select Room</string>
+    <string name="no_room_in_building">No Room in the Buildings</string>
+    <string name="book">Book</string>
+    <string name="already_selected">Already Selected!</string>
+    <string name="book_confirmation_message">Are you sure want to book room?</string>
+    <string name="no_rooms_available">No Rooms Available</string>
+    <string name="suggestion_message">No Room Available.Have look on suggestions</string>
+    <string name="organizer">(organiser)</string>
+    <string name="sign_in_error">Google Sign In Error</string>
 </resources>

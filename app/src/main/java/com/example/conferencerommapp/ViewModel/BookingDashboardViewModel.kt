@@ -27,7 +27,7 @@ class BookingDashboardViewModel : ViewModel() {
     var mFailureForCancelBooking = MutableLiveData<Any>()
 
     // mutablelivedata variable which will hold response from server for passcode
-    var mSuccessForPasscode = MutableLiveData<Int>()
+    var mSuccessForPasscode = MutableLiveData<String>()
     var mFailureForPasscode = MutableLiveData<Any>()
     /**
      * function will initialize the repository object and calls the method of repository which will make the api call
@@ -109,25 +109,24 @@ class BookingDashboardViewModel : ViewModel() {
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will return the value for MutableLivedata
      */
-    fun getPasscode(token: String) {
+    fun getPasscode(token: String, generateNewPasscode: Boolean) {
         mBookingDashboardRepository = BookingDashboardRepository.getInstance()
-        mBookingDashboardRepository!!.getPasscode(token, object :
+        mBookingDashboardRepository!!.getPasscode(token, generateNewPasscode, object :
             ResponseListener {
             override fun onFailure(failure: Any) {
                 mFailureForPasscode.value = failure
             }
 
             override fun onSuccess(success: Any) {
-                mSuccessForPasscode.value = success as Int
+                mSuccessForPasscode.value = success as String
             }
-
         })
     }
 
     /**
      * function will return the MutableLiveData of Int
      */
-    fun returnPasscode(): MutableLiveData<Int> {
+    fun returnPasscode(): MutableLiveData<String> {
         return mSuccessForPasscode
     }
 

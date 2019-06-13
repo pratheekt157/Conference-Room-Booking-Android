@@ -86,19 +86,29 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
      * initialize all lateinit fields
      */
     fun init() {
-        val actionBar = supportActionBar
-        actionBar!!.title =
-            Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.select_participipants) + "</font>")
-        acct = GoogleSignIn.getLastSignedInAccount(applicationContext)!!
-        mManagerBookingViewModel = ViewModelProviders.of(this).get(ManagerBookingViewModel::class.java)
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
-        mSelectMemberViewModel = ViewModelProviders.of(this).get(SelectMemberViewModel::class.java)
+        initActionBar()
+        initLateInitializerVariables()
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModel()
         } else {
             val i = Intent(this, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initActionBar() {
+        val actionBar = supportActionBar
+        actionBar!!.title =
+            Html.fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.select_participipants) + "</font>")
+
+
+    }
+
+    private fun initLateInitializerVariables() {
+        acct = GoogleSignIn.getLastSignedInAccount(applicationContext)!!
+        mManagerBookingViewModel = ViewModelProviders.of(this).get(ManagerBookingViewModel::class.java)
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
+        mSelectMemberViewModel = ViewModelProviders.of(this).get(SelectMemberViewModel::class.java)
     }
 
     private fun getViewModel() {
@@ -187,8 +197,8 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
             }
         }
         mManagerBooking.cCMail = emailString
-        val dialog = GetAleretDialog.getDialog(this, "Confirm", "Press Ok to book Room.")
-        dialog.setPositiveButton(R.string.ok) { _, _ ->
+        val dialog = GetAleretDialog.getDialog(this, getString(R.string.confirm), getString(R.string.book_confirmation_message))
+        dialog.setPositiveButton(getString(R.string.book)) { _, _ ->
             if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject()
                 addBooking()
@@ -226,7 +236,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
             selectedName.add(name)
             selectedEmail.add(email)
         } else {
-            Toast.makeText(this, "Already Selected!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.already_selected), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -79,7 +79,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     app:errorEnabled="true"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -168,7 +168,7 @@
                     android:id="@+id/search_room"
                     android:layout_below="@id/text_view_error_spinner_building"
                     android:text="Search"
-                    android:layout_margin="20dp"
+                    android:layout_margin="10dp"
                     android:layout_centerHorizontal="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

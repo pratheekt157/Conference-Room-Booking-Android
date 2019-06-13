@@ -237,9 +237,9 @@ class NewProjectManagerInput : AppCompatActivity() {
             manager_horizontal_line_below_search_button.visibility = View.VISIBLE
             manager_suggestions.visibility = View.VISIBLE
             if(it.isEmpty()) {
-                manager_suggestions.text = "No Rooms Available"
+                manager_suggestions.text = getString(R.string.no_rooms_available)
             } else {
-                manager_suggestions.text = "No Room Available.Have look on suggestions"
+                manager_suggestions.text = getString(R.string.suggestion_message)
             }
             setAdapter(it)
         })
@@ -489,7 +489,7 @@ class NewProjectManagerInput : AppCompatActivity() {
      *  if above both conditions are true than entered time is correct and user is allowed to go to the next actvity
      */
     private fun applyValidationOnDateAndTime() {
-        val minMilliseconds: Long = 600000
+        val minMilliseconds: Long = Constants.MIN_MEETING_DURATION
         /**
          * Get the start and end time of meeting from the input fields
          */
