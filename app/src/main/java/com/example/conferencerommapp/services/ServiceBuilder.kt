@@ -19,8 +19,8 @@ object ServiceBuilder {
     // private lateinit var mContext: Context
     private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder()
         .addInterceptor(logger)
-        //.connectTimeout(900, TimeUnit.SECONDS)
-        //.readTimeout(900, TimeUnit.SECONDS)
+        .connectTimeout(900, TimeUnit.SECONDS)
+        .readTimeout(900, TimeUnit.SECONDS)
         .addNetworkInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
                 return chain.proceed(chain.request().newBuilder().addHeader("Connection", "close").build())

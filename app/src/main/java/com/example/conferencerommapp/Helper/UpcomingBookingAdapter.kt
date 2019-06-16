@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.conferencerommapp.Model.Dashboard
@@ -69,10 +70,7 @@ class UpcomingBookingAdapter(
             holder.editTextView.setOnClickListener {
                 editActivity(position)
             }
-//            holder.purposeTextView.onRightDrawableClicked {
-//
-//            }
-        }
+     }
         if (dashboardItemList[position].status == Constants.BOOKING_DASHBOARD_PENDING) {
             holder.statusTextView.visibility = View.VISIBLE
         } else {
@@ -161,7 +159,7 @@ class UpcomingBookingAdapter(
         var dateTextView: TextView = itemView.findViewById(R.id.date)
         var purposeTextView: TextView = itemView.findViewById(R.id.purpose)
         var cancelButton: TextView = itemView.findViewById(R.id.btnCancel)
-        var showButton: TextView = itemView.findViewById(R.id.btnshow)
+        var showButton: ImageView = itemView.findViewById(R.id.btnshow)
         var statusTextView: TextView = itemView.findViewById(R.id.status_text_view)
         var editTextView: TextView = itemView.findViewById(R.id.editBtn)
         var attendeeTextView: TextView = itemView.findViewById(R.id.status_text_view)

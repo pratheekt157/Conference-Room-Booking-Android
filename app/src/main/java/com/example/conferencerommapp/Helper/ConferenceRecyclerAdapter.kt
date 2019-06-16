@@ -1,5 +1,6 @@
 package com.example.conferencerommapp.Helper
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +21,11 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.conferencelist = conferencceList[position]
-        holder.buildingName.text = conferencceList[position].buildingName
-        holder.conferenceName.text = conferencceList[position].roomName
-        holder.conferenceCapacity.text = conferencceList[position].capacity.toString()
-        if(conferencceList[position].amenities!!.isEmpty()) {
-            holder.resourceDetail.visibility = View.VISIBLE
-        } else {
-            holder.resourceDetail.visibility = View.GONE
+        holder.conferenceName.text = conferencceList[position].roomName + " [${conferencceList[position].capacity} people]"
+        if(conferencceList[position].amenities!!.isNotEmpty()) {
             for(i in conferencceList[position].amenities!!.indices) {
                 when(i) {
                     0 -> {
@@ -59,9 +56,6 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
 
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val conferenceName: TextView = itemView.findViewById(R.id.room_name_show)
-        val conferenceCapacity: TextView = itemView.findViewById(R.id.conference_room_capacity_show)
-        val buildingName: TextView = itemView.findViewById(R.id.dashboard_building_name)
-        var resourceDetail: TextView = itemView.findViewById(R.id.dashboard_no_resource_detail_found)
         var amenity1: TextView = itemView.findViewById(R.id.dashboard_ani_1)
         var amenity2: TextView = itemView.findViewById(R.id.dashboard_ani_2)
         var amenity3: TextView = itemView.findViewById(R.id.dashboard_ani_3)

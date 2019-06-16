@@ -5,9 +5,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.FormatDate
 import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
 import java.text.SimpleDateFormat
@@ -21,7 +23,8 @@ class PreviousBookingAdapter(
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<PreviousBookingAdapter.ViewHolder>() {
 
     /**
-     * a variable which will hold the 'Instance' of interface
+     * a variable which will ho
+     * ld the 'Instance' of interface
      */
     companion object {
         var mShowMembersListener: ShowMembersListener? = null
@@ -58,7 +61,7 @@ class PreviousBookingAdapter(
      */
     @SuppressLint("SimpleDateFormat")
     private fun formatDate(date: String): String {
-        val simpleDateFormatInput = SimpleDateFormat("yyyy-MM-dd")
+        val simpleDateFormatInput = SimpleDateFormat(Constants.DATE_FORMAAT_Y_D_M)
         val simpleDateFormatOutput = SimpleDateFormat("dd MMMM yyyy")
         return simpleDateFormatOutput.format(simpleDateFormatInput.parse(date.split("T")[0]))
     }
@@ -76,7 +79,7 @@ class PreviousBookingAdapter(
         var fromTimeTextView: TextView = itemView.findViewById(R.id.previous_time)
         var dateTextView: TextView = itemView.findViewById(R.id.previous_date)
         var purposeTextView: TextView = itemView.findViewById(R.id.previous_purpose)
-        var showButton: TextView = itemView.findViewById(R.id.previous_btnshow)
+        var showButton: ImageView = itemView.findViewById(R.id.previous_btnshow)
         var dashboard: Dashboard? = null
     }
 

@@ -19,6 +19,8 @@
         <TextView
 
                 android:text="Uber Client Meeting"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_cancelled_dashboard"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -28,20 +30,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <ImageView
-                android:layout_toRightOf="@id/cancelled_purpose"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="6dp"
-                android:src="@drawable/ic_cancelled_dashboard"
-                android:id="@+id/event_status_icon_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <ImageView
+                android:id="@+id/cancelled_btnshow"
                 android:src="@drawable/ic_show_members"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
-                android:drawablePadding="8dp"
+                android:drawablePadding="16dp"
                 android:textColor="#333333"
                 android:textSize="12sp"
                 android:drawableStart="@drawable/ic_business_black_24dp"
@@ -60,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                    android:drawablePadding="8dp"
+                    android:drawablePadding="16dp"
                     android:textColor="#333333"
                     android:textSize="12sp"
                     android:id="@+id/cancelled_date"
@@ -73,7 +68,7 @@
                     android:layout_height="wrap_content"/>
             <TextView
                     android:id="@+id/cancelled_time"
-                    android:drawablePadding="8dp"
+                    android:drawablePadding="16dp"
                     android:textColor="#333333"
                     android:textSize="12sp"
                     android:layout_weight="1"

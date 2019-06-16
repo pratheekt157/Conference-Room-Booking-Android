@@ -63,7 +63,7 @@ class InputDetailsForBookingFragment : Fragment() {
     private var mSuggestedRoomApiIsCallled = false
     private lateinit var acct: GoogleSignInAccount
     var mSetIntentData = GetIntentDataFromActvity()
-    var mBuildingName = getString(R.string.select_building)
+    var mBuildingName = "Select Building"
     var mBuildingId = -1
     var capacity = 0
     var buildingId = 0

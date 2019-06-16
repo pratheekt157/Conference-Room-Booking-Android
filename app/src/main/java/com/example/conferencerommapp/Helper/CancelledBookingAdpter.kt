@@ -3,9 +3,11 @@ package com.example.conferencerommapp.Helper
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
@@ -80,7 +82,7 @@ class CancelledBookingAdpter(
         var fromTimeTextView: TextView = itemView.findViewById(R.id.cancelled_time)
         var dateTextView: TextView = itemView.findViewById(R.id.cancelled_date)
         var purposeTextView: TextView = itemView.findViewById(R.id.cancelled_purpose)
-        var showButton: TextView = itemView.findViewById(R.id.cancelled_btnshow)
+        var showButton: ImageView = itemView.findViewById(R.id.cancelled_btnshow)
         var dashboard: Dashboard? = null
     }
 

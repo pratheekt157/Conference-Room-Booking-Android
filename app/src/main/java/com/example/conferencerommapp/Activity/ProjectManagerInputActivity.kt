@@ -64,7 +64,7 @@ class ProjectManagerInputActivity : AppCompatActivity() {
     var mRoom = ManagerConference()
     var mSetIntentData = GetIntentDataFromActvity()
     private var mSuggestedRoomApiIsCallled = false
-    var mBuildingName = getString(R.string.select_building)
+    var mBuildingName = "Select Building"
     var mBuildingId = -1
     var buildingId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
