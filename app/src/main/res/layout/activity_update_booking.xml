@@ -23,7 +23,7 @@
                 android:ems="10"
                 android:singleLine="true"
                 android:maxLines="1"
-            android:drawableTint="@color/nonEditableValues"
+                android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_local_offer_black_24dp"
                 android:drawablePadding="5dp"
                 android:maxLength="50"

@@ -295,6 +295,11 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
                 /**
                  * Nothing here
                  */
+                if(charSequence.isEmpty()) {
+                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_search,0)
+                } else {
+                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_clear,0)
+                }
             }
 
             override fun afterTextChanged(editable: Editable) {

@@ -35,14 +35,13 @@
                 android:layout_width="1dp"
                 android:layout_toRightOf="@+id/linear_layout_icon"
                 android:layout_height="match_parent"
-                android:background="#B9B9B9"/>
+                android:background="@color/colorPrimary"/>
         <LinearLayout
                 android:layout_toEndOf="@+id/linear_layout_icon"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:padding="8dp">
+                android:layout_marginStart="8dp">
 
             <TextView
                     android:text="Ac Under Maintenance"

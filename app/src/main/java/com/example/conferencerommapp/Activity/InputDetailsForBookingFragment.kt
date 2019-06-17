@@ -68,7 +68,7 @@ class InputDetailsForBookingFragment : Fragment() {
     var capacity = 0
     var buildingId = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_input_details_for_bookings, container, false)
+        val view = inflater.inflate(R.layout.activity_booking_input, container, false)
         ButterKnife.bind(this, view)
         return view
     }
