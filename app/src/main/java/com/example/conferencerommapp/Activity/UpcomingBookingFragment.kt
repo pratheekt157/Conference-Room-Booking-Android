@@ -88,7 +88,7 @@ class UpcomingBookingFragment : Fragment() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
         acct = GoogleSignIn.getLastSignedInAccount(activity)!!
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
-        mBookingDashboardInput.pageSize = 5
+        mBookingDashboardInput.pageSize = Constants.PAGE_SIZE
         mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_UPCOMING
         mBookingDashboardInput.pageNumber = pagination
         mBookingDashboardInput.email = acct.email.toString()

@@ -180,7 +180,7 @@ class AddingConference : AppCompatActivity() {
                 room_capacity_layout.error = getString(R.string.room_capacity_must_be_more_than_0)
                 false
             } else {
-                room_name_layout_name.error = null
+                room_capacity_layout.error = null
                 true
             }
         }

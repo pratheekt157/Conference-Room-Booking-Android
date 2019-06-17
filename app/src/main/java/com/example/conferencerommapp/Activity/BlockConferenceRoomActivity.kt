@@ -51,8 +51,8 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     var room = BlockRoom()
     private lateinit var mBuildingViewModel: BuildingViewModel
     private lateinit var progressDialog: ProgressDialog
-    private var mBuildingName = getString(R.string.select_building)
-    private var mRoomName = getString(R.string.select_room)
+    private var mBuildingName = "Select Building"
+    private var mRoomName = "Select Room"
     private var mBuildingId = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

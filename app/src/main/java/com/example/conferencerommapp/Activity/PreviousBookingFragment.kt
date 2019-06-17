@@ -70,7 +70,7 @@ class PreviousBookingFragment : Fragment() {
         acct = GoogleSignIn.getLastSignedInAccount(activity)!!
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
         previous__booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
-        mBookingDashboardInput.pageSize = 5
+        mBookingDashboardInput.pageSize = Constants.PAGE_SIZE
         mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_PREVIOUS
         mBookingDashboardInput.pageNumber = pagination
         mBookingDashboardInput.email = acct.email.toString()

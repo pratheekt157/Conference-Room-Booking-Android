@@ -3,178 +3,173 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="1dp"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="5dp">
-
-    <LinearLayout
-            android:orientation="horizontal"
+    <RelativeLayout
+            android:padding="16dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:elevation="2dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
+            android:layout_height="match_parent">
+        <TextView
+                android:drawableStart="@drawable/ic_completed"
+                android:drawablePadding="16dp"
+                android:text="Rajas(1st floor) [10 people]"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingRight="8dp"
+                android:id="@+id/room_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/linear_layout_icon">
-            <TextView
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/status_icon"
-                    android:layout_margin="8dp"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:text="Available"
-                    android:drawableTop="@drawable/ic_status_available"
-                    android:layout_width="65dp"/>
-        </LinearLayout>
-
-        <View
-                android:id="@+id/vertical_bar"
-                android:layout_width="1dp"
-                android:layout_toRightOf="@+id/linear_layout_icon"
-                android:layout_height="match_parent"
-                android:background="#B9B9B9"/>
-        <RelativeLayout
-                android:layout_toEndOf="@+id/linear_layout_icon"
-                android:orientation="vertical"
+                android:layout_height="wrap_content"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:weightSum="2"
+                android:id="@+id/linear_layout_0"
+                android:layout_below="@id/room_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:padding="8dp">
-
+                android:layout_height="wrap_content">
             <TextView
-                    android:id="@+id/room_name"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="1dp"
-                    android:layout_width="match_parent"
-                    android:hint="Prithvi(1st floor)"
-                    android:drawablePadding="16dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
-            <TextView
-                    android:layout_below="@id/room_name"
-                    android:layout_marginTop="2dp"
                     android:id="@+id/building_name"
-                    android:layout_width="match_parent"
-                    android:hint="Main Building"
-                    android:drawablePadding="16dp"
-                    android:textSize="12sp"
+                    android:paddingRight="4dp"
+                    android:hint="Pasta, Koramangala"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_location_on_black_24dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@color/black"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="16dp"
                     android:maxLines="1"
                     android:ellipsize="end"/>
-            <TextView
-                    android:layout_below="@id/building_name"
-                    android:layout_marginTop="4dp"
-                    android:id="@+id/ami_room1"
-                    android:layout_width="wrap_content"
-                    android:hint="Projector"
-                    android:visibility="gone"
-                    android:drawablePadding="5dp"
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_below="@id/building_name"
-                    android:layout_toRightOf="@+id/ami_room1"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/ami_room2"
-                    android:layout_width="wrap_content"
-                    android:hint="White Board"
-                    android:visibility="gone"
-                    android:drawablePadding="5dp"
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:layout_below="@id/ami_room1"
-                    android:layout_marginTop="4dp"
-                    android:id="@+id/ami_room3"
-                    android:layout_width="wrap_content"
-                    android:hint="Monitor"
-                    android:visibility="gone"
-                    android:drawablePadding="5dp"
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_below="@id/ami_room1"
-                    android:layout_toRightOf="@id/ami_room3"
-                    android:layout_marginTop="4dp"
-                    android:id="@+id/ami_room4"
-                    android:layout_marginStart="8dp"
-                    android:layout_width="wrap_content"
-                    android:hint="Extension Board"
-                    android:visibility="gone"
-                    android:drawablePadding="5dp"
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_height="wrap_content"/>
-
-            <TextView
-                    android:layout_below="@id/ami_room3"
-                    android:layout_marginTop="4dp"
-                    android:id="@+id/ami_room5"
-                    android:layout_width="wrap_content"
-                    android:hint="Speaker"
-                    android:visibility="gone"
-                    android:drawablePadding="5dp"
-                    android:textSize="12sp"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:layout_height="wrap_content"/>
-            <TextView
-                    android:id="@+id/capacity_label"
-                    android:layout_below="@id/ami_room4"
-                    android:layout_alignParentRight="true"
-                    android:drawableStart="@drawable/ic_show_members"
-                    android:drawablePadding="3dp"
-                    android:layout_width="wrap_content"
-                    android:textSize="19sp"
-                    android:padding="4dp"
-                    android:text="5"
-                    android:layout_height="wrap_content"
-            />
-            <TextView
-                    android:id="@+id/no_ami_details_found"
-                    android:visibility="gone"
-                    android:layout_marginTop="4dp"
-                    android:text="Details ae not available for Amenities"
-                    android:layout_below="@id/building_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
 
             <TextView
                     android:id="@+id/permission_required_text_view"
-                    android:visibility="gone"
-                    android:layout_marginTop="4dp"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:drawableLeft="@drawable/ic_point"
-                    android:drawablePadding="5dp"
-                    android:textColor="@color/textColorGray"
+                    android:paddingRight="4dp"
                     android:text="Permission Required"
-                    android:layout_below="@id/ami_room5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </RelativeLayout>
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_pending"
+                    android:drawableTint="@color/error_color"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@color/black"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="16dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+        </LinearLayout>
 
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:weightSum="2"
+                android:id="@+id/linear_layout_1"
+                android:layout_below="@id/linear_layout_0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:id="@+id/ami_room1"
+                    android:hint="Projector"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_projector"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="16dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:id="@+id/ami_room2"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="16dp"
+                    android:hint="WhiteBoard-Marker"
+                    android:drawableStart="@drawable/ic_white_board2"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:weightSum="2"
+                android:id="@+id/linear_layout_2"
+                android:layout_below="@id/linear_layout_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <TextView
+                    android:id="@+id/ami_room3"
+                    android:hint="Monitor"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_live_tv_black_24dp"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="16dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+            <TextView
+                    android:id="@+id/ami_room4"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="16dp"
+                    android:hint="Speaker"
+                    android:drawableStart="@drawable/ic_speaker"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:weightSum="2"
+                android:id="@+id/linear_layout_3"
+                android:layout_below="@id/linear_layout_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-
+            <TextView
+                    android:id="@+id/ami_room5"
+                    android:hint="Extension Board"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_extension_board"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="12sp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="16dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+        </LinearLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
+
+

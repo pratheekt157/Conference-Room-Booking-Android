@@ -43,7 +43,8 @@ class UpcomingBookingAdapter(
      * this override function will set a view for the recyclerview items
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_upcoming_booking_list_items, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_upcoming_booking_list_items, parent, false)
         return ViewHolder(view)
     }
 
@@ -70,7 +71,7 @@ class UpcomingBookingAdapter(
             holder.editTextView.setOnClickListener {
                 editActivity(position)
             }
-     }
+        }
         if (dashboardItemList[position].status == Constants.BOOKING_DASHBOARD_PENDING) {
             holder.statusTextView.visibility = View.VISIBLE
         } else {
@@ -162,7 +163,7 @@ class UpcomingBookingAdapter(
         var showButton: ImageView = itemView.findViewById(R.id.btnshow)
         var statusTextView: TextView = itemView.findViewById(R.id.status_text_view)
         var editTextView: TextView = itemView.findViewById(R.id.editBtn)
-        var attendeeTextView: TextView = itemView.findViewById(R.id.status_text_view)
+        var attendeeTextView: TextView = itemView.findViewById(R.id.attendee_text_view)
         var actionLayout: LinearLayout = itemView.findViewById(R.id.action_button_linear_layout)
         var amenity1: TextView = itemView.findViewById(R.id.ani_1)
         var amenity2: TextView = itemView.findViewById(R.id.ani_2)

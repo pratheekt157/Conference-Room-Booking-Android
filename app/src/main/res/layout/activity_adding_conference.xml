@@ -52,7 +52,7 @@
                     android:layout_marginTop="8dp"
                     app:errorEnabled="true"
                     app:counterEnabled="true"
-                    app:counterMaxLength="5"
+                    app:counterMaxLength="3"
                     android:focusableInTouchMode="true"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:maxLength="5"
+                        android:maxLength="3"
                         android:maxLines="1"
                         android:inputType="number"
                         android:drawableStart="@drawable/ic_room_black_24dp"

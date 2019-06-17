@@ -30,7 +30,7 @@ class Constants {
         /**
          * ip address for api call
          */
-        var IP_ADDRESS = "http://192.168.1.20/CRB/"
+        var IP_ADDRESS = "http://192.168.1.189/CRB/"
 
         const val DATE_FORMAAT_Y_D_M = "yyyy-MM-dd"
 
@@ -45,6 +45,8 @@ class Constants {
         const val MANAGER_CODE = 12
 
         const val EMPLOYEE_CODE = 10
+
+        const val PAGE_SIZE = 7
 
         const val BOOKING_DASHBOARD_TYPE_UPCOMING = "upcoming"
 

@@ -2,20 +2,19 @@ package com.example.conferencerommapp.Helper
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
-import org.w3c.dom.Text
+
 
 @Suppress("NAME_SHADOWING")
 class RoomAdapter(
     private val roomDetailsList: ArrayList<RoomDetails>,
     val mContext: Context,
-    val listener: RoomAdapter.ItemClickListener
+    val listener: ItemClickListener
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<RoomAdapter.ViewHolder>() {
 
     /**
@@ -61,15 +60,8 @@ class RoomAdapter(
             }
         }
         if (roomDetailsList[position].status == "Unavailable") {
-            holder.statusTextView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_status_unavailable, 0, 0)
-            holder.statusTextView.textSize = 11F
-            holder.statusTextView.text = "Unavailable"
+            holder.roomNameTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_unavailable, 0, 0, 0)
         }
-//        else {
-//            holder.statusTextView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_status_available, 0, 0)
-//            holder.statusTextView.textSize = 12F
-//            holder.statusTextView.text = "Available"
-//        }
         setDataToFields(holder, position)
         holder.itemView.setOnClickListener {
             if (roomDetailsList[position].status == "Available") {
@@ -82,6 +74,7 @@ class RoomAdapter(
             }
         }
     }
+
     private fun setDrawable(amitie: String, targetTextView: TextView) {
         when (amitie) {
             "Projector" -> {
@@ -115,15 +108,12 @@ class RoomAdapter(
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         var buildingNameTextView: TextView = itemView.findViewById(R.id.building_name)
         var roomNameTextView: TextView = itemView.findViewById(R.id.room_name)
-        var capacityTextView: TextView = itemView.findViewById(R.id.capacity_label)
-        var statusTextView: TextView = itemView.findViewById(R.id.status_icon)
         var permissionTextView: TextView = itemView.findViewById(R.id.permission_required_text_view)
         var amenity1: TextView = itemView.findViewById(R.id.ami_room1)
         var amenity2: TextView = itemView.findViewById(R.id.ami_room2)
         var amenity3: TextView = itemView.findViewById(R.id.ami_room3)
         var amenity4: TextView = itemView.findViewById(R.id.ami_room4)
         var amenity5: TextView = itemView.findViewById(R.id.ami_room5)
-
         var roomDetails: RoomDetails? = null
     }
 
@@ -134,8 +124,7 @@ class RoomAdapter(
     private fun setDataToFields(holder: ViewHolder, position: Int) {
         holder.roomDetails = roomDetailsList[position]
         holder.buildingNameTextView.text = roomDetailsList[position].buildingName + ", " + roomDetailsList[position].place
-        holder.roomNameTextView.text = roomDetailsList[position].roomName
-        holder.capacityTextView.text = roomDetailsList[position].capacity.toString()
+        holder.roomNameTextView.text = roomDetailsList[position].roomName + " [${roomDetailsList[position].capacity} people]"
     }
 
     /**
