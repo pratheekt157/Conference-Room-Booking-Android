@@ -8,6 +8,8 @@ import com.example.globofly.services.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class ConferenceRoomRepository {
 
@@ -38,7 +40,17 @@ class ConferenceRoomRepository {
         val requestCall: Call<List<RoomDetails>> = service.getConferenceRoomList(token, mInputDetailsForRoom)
         requestCall.enqueue(object : Callback<List<RoomDetails>> {
             override fun onFailure(call: Call<List<RoomDetails>>, t: Throwable) {
-                listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                when(t) {
+                    is SocketTimeoutException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    is UnknownHostException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    else -> {
+                        listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                    }
+                }
             }
             override fun onResponse(call: Call<List<RoomDetails>>, response: Response<List<RoomDetails>>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
@@ -65,7 +77,17 @@ class ConferenceRoomRepository {
         val requestCall: Call<List<RoomDetails>> = service.getSuggestedRooms(token, mInputDetailsForRoom)
         requestCall.enqueue(object : Callback<List<RoomDetails>> {
             override fun onFailure(call: Call<List<RoomDetails>>, t: Throwable) {
-                listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                when(t) {
+                    is SocketTimeoutException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    is UnknownHostException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    else -> {
+                        listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                    }
+                }
             }
             override fun onResponse(call: Call<List<RoomDetails>>, response: Response<List<RoomDetails>>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {

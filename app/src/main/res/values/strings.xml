@@ -203,4 +203,5 @@
     <string name="suggestion_message">No Room Available.Have look on suggestions</string>
     <string name="organizer">(organiser)</string>
     <string name="sign_in_error">Google Sign In Error</string>
+    <string name="poor_internet_connection">Poor internet connection!</string>
 </resources>

@@ -64,6 +64,8 @@ class Constants {
 
         const val NOT_FOUND = 400
 
+        const val  POOR_INTERNET_CONNECTION = 505
+
         const val SUCCESSFULLY_CREATED = 201
 
         const val INTERNAL_SERVER_ERROR = 500

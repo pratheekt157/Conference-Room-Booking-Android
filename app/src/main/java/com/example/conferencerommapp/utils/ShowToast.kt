@@ -32,6 +32,9 @@ class ShowToast {
                 Constants.UNAVAILABLE_SLOT -> {
                     message = mContext.getString(R.string.slot_unavailable)
                 }
+                Constants.POOR_INTERNET_CONNECTION -> {
+                    message = mContext.getString(R.string.poor_internet_connection)
+                }
             }
             return message
         }

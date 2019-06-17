@@ -7,6 +7,8 @@ import com.example.myapplication.Models.ConferenceList
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class HrConferenceRoomRepository {
 
@@ -28,7 +30,17 @@ class HrConferenceRoomRepository {
         val requestCall: Call<List<ConferenceList>> = service.conferencelist(token, buildingId)
         requestCall.enqueue(object : Callback<List<ConferenceList>> {
             override fun onFailure(call: Call<List<ConferenceList>>, t: Throwable) {
-                listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                when(t) {
+                    is SocketTimeoutException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    is UnknownHostException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    else -> {
+                        listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                    }
+                }
             }
 
             override fun onResponse(call: Call<List<ConferenceList>>, response: Response<List<ConferenceList>>) {

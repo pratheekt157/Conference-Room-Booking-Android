@@ -9,6 +9,8 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 
 class AddBuildingRepository {
@@ -37,7 +39,18 @@ class AddBuildingRepository {
         addBuildingRequestCall.enqueue(object : Callback<ResponseBody> {
             // Negative response
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                when(t) {
+                    is SocketTimeoutException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    is UnknownHostException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    else -> {
+                        listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                    }
+                }
+
             }
             //positive response
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
