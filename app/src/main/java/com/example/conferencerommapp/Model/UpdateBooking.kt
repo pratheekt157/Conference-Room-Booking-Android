@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class UpdateBooking(
 
-    @SerializedName("NewStartTime")
+    @SerializedName("newStartTime")
     var newFromTime: String? = null,
 
-    @SerializedName("NewEndTime")
+    @SerializedName("newEndTime")
     var newtotime: String? =null,
 
-    @SerializedName("MeetId")
+    @SerializedName("meetId")
     var bookingId: Int? = null
 )

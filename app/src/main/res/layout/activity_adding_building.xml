@@ -27,7 +27,6 @@
                 app:errorEnabled="true"
                 android:focusableInTouchMode="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_building_name"
                     android:layout_width="match_parent"

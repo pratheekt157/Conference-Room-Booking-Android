@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
+        android:id="@+id/main_card"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
@@ -29,53 +30,53 @@
                 android:id="@+id/room_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:weightSum="2"
-                android:id="@+id/linear_layout_0"
+        <TextView
+                android:id="@+id/building_name"
                 android:layout_below="@id/room_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <TextView
-                    android:id="@+id/building_name"
-                    android:paddingRight="4dp"
-                    android:hint="Pasta, Koramangala"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_location_on_black_24dp"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="@color/black"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:drawablePadding="16dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
+                android:paddingRight="4dp"
+                android:hint="Pasta, Koramangala"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_location_on_black_24dp"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:drawablePadding="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+        <TextView
+                android:layout_below="@+id/building_name"
+                android:id="@+id/permission_required_text_view"
+                android:paddingRight="4dp"
+                android:text="Permission Required"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_pending"
+                android:drawableTint="@color/error_color"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:drawablePadding="16dp"
+                android:maxLines="1"
+                android:ellipsize="end"/>
 
-            <TextView
-                    android:id="@+id/permission_required_text_view"
-                    android:paddingRight="4dp"
-                    android:text="Permission Required"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_pending"
-                    android:drawableTint="@color/error_color"
-                    android:textSize="12sp"
-                    android:visibility="gone"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="@color/black"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:drawablePadding="16dp"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
-        </LinearLayout>
+        <View
+                android:layout_below="@id/permission_required_text_view"
+                android:layout_marginTop="8dp"
+                android:id="@+id/view_landing_main"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e6e6e6"/>
 
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_marginTop="8dp"
                 android:weightSum="2"
                 android:id="@+id/linear_layout_1"
-                android:layout_below="@id/linear_layout_0"
+                android:layout_below="@id/view_landing_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
@@ -87,6 +88,7 @@
                     android:textSize="12sp"
                     android:textColor="#BDBDBD"
                     android:visibility="gone"
+                    android:drawableTint="@color/grey"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:drawablePadding="16dp"
@@ -96,6 +98,7 @@
                     android:id="@+id/ami_room2"
                     android:fontFamily="@font/roboto"
                     android:textSize="12sp"
+                    android:drawableTint="@color/grey"
                     android:textColor="#BDBDBD"
                     android:visibility="gone"
                     android:layout_width="0dp"
@@ -119,6 +122,7 @@
             <TextView
                     android:id="@+id/ami_room3"
                     android:hint="Monitor"
+                    android:drawableTint="@color/grey"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_live_tv_black_24dp"
                     android:fontFamily="@font/roboto"
@@ -134,6 +138,7 @@
                     android:id="@+id/ami_room4"
                     android:fontFamily="@font/roboto"
                     android:textSize="12sp"
+                    android:drawableTint="@color/grey"
                     android:textColor="#BDBDBD"
                     android:visibility="gone"
                     android:layout_width="0dp"
@@ -156,6 +161,7 @@
 
             <TextView
                     android:id="@+id/ami_room5"
+                    android:drawableTint="@color/grey"
                     android:hint="Extension Board"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_extension_board"

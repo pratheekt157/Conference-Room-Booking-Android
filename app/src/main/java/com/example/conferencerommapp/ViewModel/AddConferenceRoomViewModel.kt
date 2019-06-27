@@ -17,6 +17,10 @@ class AddConferenceRoomViewModel : ViewModel() {
     var mSuccessForAddingRoom = MutableLiveData<Int>()
     var mFailureForAddingRoom = MutableLiveData<Any>()
 
+
+    var mSuccessForUpdateRoom = MutableLiveData<Int>()
+    var mFailureForUpdateRoom = MutableLiveData<Any>()
+
     /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will return the value for MutableLivedata
@@ -40,6 +44,29 @@ class AddConferenceRoomViewModel : ViewModel() {
     }
     fun returnFailureForAddingRoom(): MutableLiveData<Any> {
         return mFailureForAddingRoom
+    }
+
+    //--------------------------------------------for update room details ------------------------------------------------
+
+    fun updateConferenceDetails(token: String, mAddConference: AddConferenceRoom) {
+        mAddConferenceRepository = AddConferenceRepository.getInstance()
+        mAddConferenceRepository!!.updateConferenceDetails(mAddConference, token, object :
+            ResponseListener {
+            override fun onSuccess(success: Any) {
+                mSuccessForUpdateRoom.value = success as Int
+            }
+
+            override fun onFailure(failure: Any) {
+                mFailureForUpdateRoom.value = failure
+            }
+        })
+    }
+
+    fun returnSuccessForUpdateRoom(): MutableLiveData<Int> {
+        return mSuccessForUpdateRoom
+    }
+    fun returnFailureForUpdateRoom(): MutableLiveData<Any> {
+        return mFailureForUpdateRoom
     }
 
 }

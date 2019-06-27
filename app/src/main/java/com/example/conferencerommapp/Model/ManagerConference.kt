@@ -3,15 +3,15 @@ package com.example.conferencerommapp.Model
 import com.google.gson.annotations.SerializedName
 
 class ManagerConference {
-    @SerializedName("StartTime")
+    @SerializedName("startTime")
     var fromTime = ArrayList<String>()
 
-    @SerializedName("EndTime")
+    @SerializedName("endTime")
     var toTime = ArrayList<String>()
 
-    @SerializedName("BuildingId")
+    @SerializedName("buildingId")
     var buildingId : Int? = 0
 
-    @SerializedName("Capacity")
+    @SerializedName("capacity")
     var capacity: Int? = 0
 }

@@ -4,30 +4,30 @@ import com.google.gson.annotations.SerializedName
 
 data class RoomDetails(
 
-    @SerializedName("RoomName")
+    @SerializedName("roomName")
     var roomName: String? = null,
 
-    @SerializedName("BuildingName")
+    @SerializedName("buildingName")
     var buildingName: String? = null,
 
-    @SerializedName("Place")
+    @SerializedName("place")
     var place: String? = null,
 
-    @SerializedName("RoomId")
+    @SerializedName("roomId")
     var roomId: Int? = null,
 
-    @SerializedName("BuildingId")
+    @SerializedName("buildingId")
     var buildingId: Int? = null,
 
-    @SerializedName("Status")
+    @SerializedName("status")
     var status: String? = null,
 
-    @SerializedName("Capacity")
+    @SerializedName("capacity")
     var capacity: Int? = null,
 
-    @SerializedName("Amenities")
+    @SerializedName("amenities")
     var amenities: List<String>? = null,
 
-    @SerializedName("Permission")
+    @SerializedName("permission")
     var permission: Int? = 0
 )

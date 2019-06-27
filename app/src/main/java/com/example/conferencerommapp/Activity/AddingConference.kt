@@ -23,6 +23,7 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.AddConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
+import com.example.myapplication.Models.ConferenceList
 import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_adding_conference.*
@@ -61,6 +62,9 @@ class AddingConference : AppCompatActivity() {
     private var mConferenceRoom = AddConferenceRoom()
     private lateinit var progressDialog: ProgressDialog
 
+    var flag = false
+    var roomId = 0
+    var mEditRoomDetails = EditRoomDetails()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adding_conference)
@@ -83,10 +87,32 @@ class AddingConference : AppCompatActivity() {
         textChangeListenerOnRoomCapacity()
     }
 
+    private fun getIntentData() {
+        flag = intent.getBooleanExtra(Constants.FLAG, false)
+        if (flag) {
+            mEditRoomDetails.mRoomDetail = intent.getSerializableExtra(Constants.EXTRA_INTENT_DATA) as ConferenceList
+            roomId = mEditRoomDetails.mRoomDetail!!.roomId!!
+            roomCapacity.text = mEditRoomDetails.mRoomDetail!!.capacity.toString().toEditable()
+            conferenceRoomEditText.text = mEditRoomDetails.mRoomDetail!!.roomName!!.toEditable()
+            switchButton.isChecked = mEditRoomDetails.mRoomDetail!!.permission!!
+            for (amenity in mEditRoomDetails.mRoomDetail!!.amenities!!) {
+                when (amenity) {
+                    Constants.PROJECTOR -> projector.isChecked = true
+                    Constants.MONITOR -> monitor.isChecked = true
+                    Constants.SPEAKER -> speaker.isChecked = true
+                    Constants.WHITEBOARD_MARKER -> whiteboard.isChecked = true
+                    Constants.EXTENSION_BOARD -> extensionBoard.isChecked = true
+                }
+            }
+        }
+    }
+
     private fun initLateInitializerVariables() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
         mAddConferenceRoomViewModel = ViewModelProviders.of(this).get(AddConferenceRoomViewModel::class.java)
     }
+
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun initActionBar() {
         val actionBar = supportActionBar
@@ -110,6 +136,20 @@ class AddingConference : AppCompatActivity() {
                 ShowToast.show(this, it as Int)
             }
         })
+
+        mAddConferenceRoomViewModel.returnSuccessForUpdateRoom().observe(this, Observer {
+            progressDialog.dismiss()
+            Toasty.success(this, getString(R.string.room_details_updated), Toast.LENGTH_SHORT, true).show()
+            finish()
+        })
+        mAddConferenceRoomViewModel.returnFailureForUpdateRoom().observe(this, Observer {
+            progressDialog.dismiss()
+            if (it == getString(R.string.invalid_token)) {
+                ShowDialogForSessionExpired.showAlert(this, AddingConference())
+            } else {
+                ShowToast.show(this, it as Int)
+            }
+        })
     }
 
     /**
@@ -120,7 +160,13 @@ class AddingConference : AppCompatActivity() {
         if (validateInputs()) {
             if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject(mConferenceRoom)
-                addRoom()
+                if (flag) {
+                    mConferenceRoom.roomId = roomId
+                    mConferenceRoom.newRoomName = conferenceRoomEditText.text.toString().trim()
+                    updateRoomDetails()
+                } else {
+                    addRoom()
+                }
             } else {
                 val i = Intent(this@AddingConference, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE)
@@ -128,6 +174,13 @@ class AddingConference : AppCompatActivity() {
 
         }
     }
+
+    // make api call with updated data to update room details
+    private fun updateRoomDetails() {
+        progressDialog.show()
+        mAddConferenceRoomViewModel.updateConferenceDetails(GetPreference.getTokenFromPreference(this), mConferenceRoom)
+    }
+
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {

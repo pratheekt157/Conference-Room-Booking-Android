@@ -57,8 +57,8 @@
     <string name="invalid_date">Invalid Date</string>
     <string name="invalid_capacity">Invalid capacity</string>
     <string name="invalid">Invalid</string>
-    <string name="time_validation_message">Meeting time must be more than
-        10 minutes or start time must be less than end time
+    <string name="time_validation_message">Meeting duration must be more than
+        15 minutes or start time must be less than end time
     </string>
     <string name="invalid_fromtime">Start time must be greater than the current time</string>
     <string name="status">Status</string>
@@ -107,7 +107,7 @@
     <string name="input_date_format_for_booking_dashboard">yyyy-MM-dd</string>
     <string name="ount_date_format_for_booking_dashboard">dd MMMM yyyy</string>
     <string name="asdfghjk">MMMM</string>
-    <string name="room_unblocked">Room unBlocked!</string>
+    <string name="room_unblocked">Room unblocked</string>
     <string name="booking_updated">Successfully updated</string>
     <string name="select_week_days">Select Week Days</string>
     <string name="select_day">Select Days</string>
@@ -204,4 +204,10 @@
     <string name="organizer">(organiser)</string>
     <string name="sign_in_error">Google Sign In Error</string>
     <string name="poor_internet_connection">Poor internet connection!</string>
+    <string name="already_part_of_meeting">You are already a part of this meeting!</string>
+    <string name="not_modified_message">Previous meeting time and new meeting time is same!</string>
+    <string name="building_name_hint">Main Building</string>
+    <string name="building_place_hint">Koramangala</string>
+    <string name="building_details_updated">Building Details Updated</string>
+    <string name="room_details_updated">Room Details Updated</string>
 </resources>

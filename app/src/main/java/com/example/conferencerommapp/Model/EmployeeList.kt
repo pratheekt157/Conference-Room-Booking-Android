@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class EmployeeList (
 
-    @SerializedName("EmailId")
+    @SerializedName("emailId")
     var email: String? = null,
 
-    @SerializedName("Name")
+    @SerializedName("name")
     var name: String? = null
 )

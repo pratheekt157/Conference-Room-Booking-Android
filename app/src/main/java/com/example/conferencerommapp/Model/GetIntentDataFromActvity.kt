@@ -17,6 +17,5 @@ class GetIntentDataFromActvity(
     var toTimeList: ArrayList<String> = ArrayList(),
     var purpose: String? = null,
     var cCMail: List<String>? = null,
-    var emailOfSelectedEmployees: String? = null,
     var bookingId: Int? = null
 ) : Serializable

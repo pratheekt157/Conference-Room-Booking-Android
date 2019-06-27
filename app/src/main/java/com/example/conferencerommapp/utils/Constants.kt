@@ -30,8 +30,9 @@ class Constants {
         /**
          * ip address for api call
          */
-        var IP_ADDRESS = "http://192.168.43.219/CRB/"
+        var IP_ADDRESS = "http://192.168.0.19/CRB/"
 
+        const val FLAG = "FLAG"
         const val DATE_FORMAAT_Y_D_M = "yyyy-MM-dd"
 
         const val MIN_MEETING_DURATION: Long = 900000
@@ -59,6 +60,8 @@ class Constants {
         const val INVALID_TOKEN = 401
 
         const val NOT_ACCEPTABLE = 406
+
+        const val NOT_MODIFIED = 304
 
         const val NO_CONTENT_FOUND = 204
 
@@ -92,5 +95,15 @@ class Constants {
         const val DEVICE_ID = "DEVICE ID"
 
         const val ROLE_CODE = "Code"
+
+        const val PROJECTOR = "Projector"
+
+        const val MONITOR = "Monitor"
+
+        const val WHITEBOARD_MARKER = "WhiteBoard-Marker"
+
+        const val SPEAKER = "Speaker"
+
+        const val EXTENSION_BOARD = "Extension Board"
     }
 }

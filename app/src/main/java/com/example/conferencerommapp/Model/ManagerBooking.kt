@@ -4,31 +4,31 @@ import com.google.gson.annotations.SerializedName
 
 data class ManagerBooking(
 
-    @SerializedName("EmailId")
+    @SerializedName("emailId")
     var email: String? = null,
 
-    @SerializedName("RoomId")
+    @SerializedName("roomId")
     var roomId: Int? = 0,
 
-    @SerializedName("BuildingId")
+    @SerializedName("buildingId")
     var buildingId: Int? = 0,
 
-    @SerializedName("StartTime")
+    @SerializedName("startTime")
     var fromTime: ArrayList<String>? = null,
 
-    @SerializedName("RoomName")
+    @SerializedName("roomName")
     var roomName: String? = null,
 
-    @SerializedName("EndTime")
+    @SerializedName("endTime")
     var toTime: ArrayList<String>? = null,
 
-    @SerializedName("Purpose")
+    @SerializedName("purpose")
     var purpose: String? = null,
 
-    @SerializedName("Capacity")
+    @SerializedName("capacity")
     var capacity: Int? = 0,
 
-    @SerializedName("Attendee")
+    @SerializedName("attendee")
     var cCMail: String? = null
 
 )

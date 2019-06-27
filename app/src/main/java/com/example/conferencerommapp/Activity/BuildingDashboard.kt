@@ -6,7 +6,9 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.Html
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,6 +22,7 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
+import es.dmoral.toasty.Toasty
 
 class BuildingDashboard : AppCompatActivity() {
     /**
@@ -44,7 +47,7 @@ class BuildingDashboard : AppCompatActivity() {
      */
     @OnClick(R.id.button_add_building)
     fun addBuildingFloatingButton() {
-        startActivity(Intent(this, AddingBuilding::class.java))
+        startActivity(Intent(this, AddingBuilding::class.java).putExtra("FLAG",false))
     }
 
     /**
@@ -88,20 +91,40 @@ class BuildingDashboard : AppCompatActivity() {
         }
     }
 
+
     /**
      * observe data from server
      */
     private fun observeData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
             mProgressDialog.dismiss()
-            buildingAdapter = BuildingDashboardAdapter(this, it, object : BuildingDashboardAdapter.BtnClickListener {
-                override fun onBtnClick(buildingId: String?, buildingname: String?) {
-                    val intent = Intent(this@BuildingDashboard, ConferenceDashBoard::class.java)
-                    intent.putExtra(Constants.EXTRA_BUILDING_ID, buildingId)
-                    startActivity(intent)
-                }
-            })
-            recyclerView.adapter = buildingAdapter
+            if(it.isEmpty()) {
+                Toasty.info(this, "Please Add Building", Toasty.LENGTH_SHORT).show()
+            } else {
+                buildingAdapter = BuildingDashboardAdapter(this, it, object : BuildingDashboardAdapter.BtnClickListener {
+                    override fun onBtnClick(buildingId: String?, buildingname: String?) {
+                        val intent = Intent(this@BuildingDashboard, ConferenceDashBoard::class.java)
+                        intent.putExtra(Constants.EXTRA_BUILDING_ID, buildingId)
+                        startActivity(intent)
+                    }
+                },
+                    object : BuildingDashboardAdapter.EditClickListener {
+                        override fun onEditBtnClick(
+                            buildingId: String?,
+                            buildingName: String?,
+                            buildingPlace: String?
+                        ) {
+                            val intent = Intent(this@BuildingDashboard, AddingBuilding::class.java)
+                            intent.putExtra("BID", buildingId)
+                            intent.putExtra("BNAME", buildingName)
+                            intent.putExtra("BPLACE", buildingPlace)
+                            intent.putExtra("FLAG", true)
+                            startActivity(intent)
+                        }
+
+                    })
+                recyclerView.adapter = buildingAdapter
+            }
         })
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
             mProgressDialog.dismiss()

@@ -72,7 +72,7 @@ class SignIn : AppCompatActivity() {
     private fun initializeGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestIdToken(getString(R.string.server_client_id_partial))
+            .requestIdToken(getString(R.string.server_client_id))
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     }

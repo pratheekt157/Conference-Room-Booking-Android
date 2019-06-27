@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 data class Employee (
 
 
-    @SerializedName("Email")
+    @SerializedName("email")
     var email: String? = null,
 
-    @SerializedName("Name")
+    @SerializedName("name")
     var name: String? = null,
 
-    @SerializedName("UserId")
+    @SerializedName("userId")
     var userId: String? = null
 
 )

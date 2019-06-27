@@ -19,6 +19,7 @@ import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
+import com.example.conferencerommapp.ViewModel.GetRoleOfUserViewModel
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 
@@ -27,7 +28,7 @@ class SplashScreen : AppCompatActivity() {
 
     private lateinit var prefs: SharedPreferences
     private lateinit var progressDialog: ProgressDialog
-    private lateinit var mCheckRegistrationViewModel: CheckRegistrationViewModel
+    private lateinit var mGetRoleOfUserViewModel: GetRoleOfUserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -61,7 +62,7 @@ class SplashScreen : AppCompatActivity() {
      */
     private fun checkRegistration() {
         progressDialog.show()
-        mCheckRegistrationViewModel.checkRegistration(GetPreference.getTokenFromPreference(this), GetPreference.getDeviceIdFromPreference(this))
+        mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this))
     }
 
     /**
@@ -70,15 +71,15 @@ class SplashScreen : AppCompatActivity() {
     fun init() {
         progressDialog =  GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
-        mCheckRegistrationViewModel = ViewModelProviders.of(this).get(CheckRegistrationViewModel::class.java)
+        mGetRoleOfUserViewModel = ViewModelProviders.of(this).get(GetRoleOfUserViewModel::class.java)
     }
 
     private fun observeData() {
-        mCheckRegistrationViewModel.returnSuccessCode().observe(this, Observer {
+        mGetRoleOfUserViewModel.returnSuccessCodeForUserROle().observe(this, Observer {
             progressDialog.dismiss()
             setValueForSharedPreference(it)
         })
-        mCheckRegistrationViewModel.returnFailureCode().observe(this, Observer {
+        mGetRoleOfUserViewModel.returnFailureCodeForUserRole().observe(this, Observer {
             progressDialog.dismiss()
             if(it == Constants.INVALID_TOKEN) {
                 signIn()
@@ -123,11 +124,10 @@ class SplashScreen : AppCompatActivity() {
     /**
      * set value in shared preference
      */
-    private fun setValueForSharedPreference(it : com.example.conferencerommapp.Model.SignIn) {
+    private fun setValueForSharedPreference(it : Int) {
         val editor = prefs.edit()
-        val code : String = it.StatusCode.toString()
-        editor.putInt(Constants.ROLE_CODE,code.toInt())
+        editor.putInt(Constants.ROLE_CODE,it)
         editor.apply()
-        goToNextActivity(code.toInt())
+        goToNextActivity(it)
     }
 }

@@ -4,24 +4,24 @@ import com.google.gson.annotations.SerializedName
 
 data class Blocked(
 
-    @SerializedName("RoomId")
+    @SerializedName("roomId")
     val roomId : Int? =0,
 
-    @SerializedName("BuildingName")
+    @SerializedName("buildingName")
     val buildingName : String? = null,
 
-    @SerializedName("RoomName")
+    @SerializedName("roomName")
     val roomName : String? = null,
 
-    @SerializedName("StartTime")
+    @SerializedName("startTime")
     val fromTime: String? = null,
 
-    @SerializedName("EndTime")
+    @SerializedName("endTime")
     val toTime: String? = null,
 
-    @SerializedName("Purpose")
+    @SerializedName("purpose")
     val purpose: String? = null,
 
-    @SerializedName("MeetId")
+    @SerializedName("meetId")
     val bookingId: Int? = null
 )

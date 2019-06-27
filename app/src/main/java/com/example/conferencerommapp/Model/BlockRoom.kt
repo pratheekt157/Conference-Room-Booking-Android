@@ -3,24 +3,24 @@ package com.example.conferencerommapp.Model
 import com.google.gson.annotations.SerializedName
 
 data class BlockRoom(
-    @SerializedName("RoomId")
+    @SerializedName("roomId")
     var cId: Int? = 0,
 
-    @SerializedName("EmailId")
+    @SerializedName("emailId")
     var email: String? = null,
 
-    @SerializedName("StartTime")
+    @SerializedName("startTime")
     var fromTime: String? = null,
 
-    @SerializedName("EndTime")
+    @SerializedName("endTime")
     var toTime: String? = null,
 
-    @SerializedName("BuildingId")
+    @SerializedName("buildingId")
     var bId: Int? = 0,
 
-    @SerializedName("Status")
+    @SerializedName("status")
     var status: String? = null,
 
-    @SerializedName("Purpose")
+    @SerializedName("purpose")
     var purpose: String? = null
 )

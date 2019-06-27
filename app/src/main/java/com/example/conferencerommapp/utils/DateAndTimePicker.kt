@@ -22,7 +22,7 @@ class DateAndTimePicker {
             val timeFormat = SimpleDateFormat("HH:mm ", Locale.US)
             val now = Calendar.getInstance()
             val timePickerDialog =
-                TimePickerDialog(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                CustomTimePicker(context, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                     val selectedTime = Calendar.getInstance()
                     selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
                     selectedTime.set(Calendar.MINUTE, minute)

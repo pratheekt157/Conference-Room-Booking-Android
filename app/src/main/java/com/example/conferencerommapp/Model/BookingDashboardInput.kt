@@ -5,19 +5,19 @@ import java.time.Instant
 import java.util.*
 
 data class BookingDashboardInput (
-    @SerializedName("EmailId")
+    @SerializedName("emailId")
     var email: String? = null,
 
-    @SerializedName("Status")
+    @SerializedName("status")
     var status: String? = null,
 
-    @SerializedName("PageSize")
+    @SerializedName("pageSize")
     var pageSize: Int? = null,
 
-    @SerializedName("PageNumber")
+    @SerializedName("pageNumber")
     var pageNumber: Int? = null,
 
-    @SerializedName("CurrentDateTime")
+    @SerializedName("currentDateTime")
     var currentDatTime: String? = null
 
 

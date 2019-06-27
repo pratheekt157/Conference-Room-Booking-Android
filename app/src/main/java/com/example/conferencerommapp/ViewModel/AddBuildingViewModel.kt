@@ -19,6 +19,9 @@ open class AddBuildingViewModel : ViewModel() {
     var mSuccessForAddBuilding = MutableLiveData<Int>()
     var mFailureForAddBuilding = MutableLiveData<Any>()
 
+    var mSuccessForUpdateBuilding = MutableLiveData<Int>()
+    var mFailureForUpdateBuilding = MutableLiveData<Any>()
+
     /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and assign values to the live data objects
@@ -49,4 +52,38 @@ open class AddBuildingViewModel : ViewModel() {
     fun returnFailureForAddBuilding(): MutableLiveData<Any> {
         return mFailureForAddBuilding
     }
+
+
+    //-----------------------------------------update building details ----------------------------------------------------
+    /**
+     * function will initialize the repository object and calls the method of repository which will make the api call
+     * and assign values to the live data objects
+     */
+    fun updateBuildingDetails(mAddBuilding: AddBuilding, token: String) {
+        mAddBuildingRepository = AddBuildingRepository.getInstance()
+        mAddBuildingRepository!!.addBuildingDetails(mAddBuilding, token, object :
+            ResponseListener {
+            override fun onFailure(failure: Any) {
+                mFailureForUpdateBuilding.value = failure
+            }
+
+            override fun onSuccess(success: Any) {
+                mSuccessForUpdateBuilding.value = success as Int
+            }
+        })
+    }
+
+    /**
+     * return positive response from server
+     */
+    fun returnSuccessForUpdateBuilding(): MutableLiveData<Int> {
+        return mSuccessForUpdateBuilding
+    }
+    /**
+     * return negative response from server
+     */
+    fun returnFailureForUpdateBuilding(): MutableLiveData<Any> {
+        return mFailureForUpdateBuilding
+    }
+
 }

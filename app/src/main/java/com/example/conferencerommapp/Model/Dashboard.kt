@@ -4,79 +4,79 @@ import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
 
 data class Dashboard (
-    @SerializedName("RoomId")
+    @SerializedName("roomId")
     var roomId : Int? = null,
 
-    @SerializedName("EmailId")
+    @SerializedName("emailId")
     var email: String? = null,
 
-    @SerializedName("StartTime")
+    @SerializedName("startTime")
     var fromTime : String? = null,
 
-    @SerializedName("EndTime")
+    @SerializedName("endTime")
     var toTime : String? = null,
 
-    @SerializedName("BuildingName")
+    @SerializedName("buildingName")
     var buildingName : String? = null,
 
-    @SerializedName("RoomName")
+    @SerializedName("roomName")
     var roomName : String? = null,
 
-    @SerializedName("Purpose")
+    @SerializedName("purpose")
     var purpose: String? = null,
 
-    @SerializedName("Status")
+    @SerializedName("status")
     var status: String? = null,
 
-    @SerializedName("MeetId")
+    @SerializedName("meetId")
     var bookingId: Int? = null,
 
-    @SerializedName("NameOfAttendees")
+    @SerializedName("nameOfAttendees")
     var name: List<String>? = null,
 
-    @SerializedName("AttendeesMail")
+    @SerializedName("attendeesMail")
     var cCMail: List<String>? = null,
 
-    @SerializedName("Amenities")
+    @SerializedName("amenities")
     var amenities: List<String>? = null,
 
-    @SerializedName("NameOfOrganizer")
+    @SerializedName("nameOfOrganizer")
     var organizer: String? = null,
 
-    @SerializedName("IsTagged")
+    @SerializedName("isTagged")
     var isTagged: Boolean? = false,
 
-    @SerializedName("RecurringMeetId")
+    @SerializedName("recurringMeetId")
     var recurringmeetingId:String?= null
 
 
 )
 
 data class PaginationMetaData(
-    @SerializedName("TotalCount")
+    @SerializedName("totalCount")
     var pageCount: Int? = null,
 
-    @SerializedName("PageSize")
+    @SerializedName("pageSize")
     var pageSize: Int? = null,
 
-    @SerializedName("CurrentPage")
+    @SerializedName("currentPage")
     var currentPage: Int? = null,
 
-    @SerializedName("TotalPages")
+    @SerializedName("totalPages")
     var totalPages: Int? = null,
 
-    @SerializedName("PreviousPage")
+    @SerializedName("previousPage")
     var previousPage: Boolean? = null,
 
-    @SerializedName("NextPage")
+    @SerializedName("nextPage")
     var nextPage: Boolean? = null
 )
 
 data class DashboardDetails(
-    @SerializedName("UserDashboard")
+    @SerializedName("userDashboard")
     var dashboard: List<Dashboard>? = null,
 
-    @SerializedName("Pager")
+    @SerializedName("pager")
     var paginationMetaData: PaginationMetaData? = null
 )
 

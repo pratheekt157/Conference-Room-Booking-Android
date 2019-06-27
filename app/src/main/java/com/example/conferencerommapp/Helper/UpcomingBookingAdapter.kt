@@ -65,9 +65,11 @@ class UpcomingBookingAdapter(
         if (dashboardItemList[position].isTagged == true) {
             holder.attendeeTextView.visibility = View.VISIBLE
             holder.actionLayout.visibility = View.GONE
+            holder.landingView.visibility = View.GONE
         } else {
             holder.attendeeTextView.visibility = View.GONE
             holder.actionLayout.visibility = View.VISIBLE
+            holder.landingView.visibility = View.VISIBLE
             holder.editTextView.setOnClickListener {
                 editActivity(position)
             }
@@ -165,6 +167,7 @@ class UpcomingBookingAdapter(
         var editTextView: TextView = itemView.findViewById(R.id.editBtn)
         var attendeeTextView: TextView = itemView.findViewById(R.id.attendee_text_view)
         var actionLayout: LinearLayout = itemView.findViewById(R.id.action_button_linear_layout)
+        var landingView: View = itemView.findViewById(R.id.view_landing)
         var amenity1: TextView = itemView.findViewById(R.id.ani_1)
         var amenity2: TextView = itemView.findViewById(R.id.ani_2)
         var amenity3: TextView = itemView.findViewById(R.id.ani_3)

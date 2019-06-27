@@ -16,6 +16,12 @@
             android:roundIcon="@drawable/nine"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="b461e1369818e034fe68e4a7d2dd12bb7919959b"
+        />
+
         <service
                 android:name=".NotificationService"
                 android:enabled="true"

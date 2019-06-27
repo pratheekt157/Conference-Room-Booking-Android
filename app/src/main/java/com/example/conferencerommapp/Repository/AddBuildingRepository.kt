@@ -62,4 +62,41 @@ class AddBuildingRepository {
             }
         })
     }
+    //--------------------------------------------api call for update building details ----------------------------
+
+    /**
+     * make API call and calls the methods of interface
+     */
+    fun updateBuildingDetails(mAddBuilding: AddBuilding, token: String, listener: ResponseListener) {
+        val addBuildingService: ConferenceService = ServiceBuilder.getObject()
+        val addBuildingRequestCall: Call<ResponseBody> = addBuildingService.updateBuilding(token, mAddBuilding)
+        addBuildingRequestCall.enqueue(object : Callback<ResponseBody> {
+            // Negative response
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                when(t) {
+                    is SocketTimeoutException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    is UnknownHostException -> {
+                        listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
+                    }
+                    else -> {
+                        listener.onFailure(Constants.INTERNAL_SERVER_ERROR)
+                    }
+                }
+
+            }
+            //positive response
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
+                    listener.onSuccess(response.code())
+                } else {
+                    listener.onFailure(response.code())
+                }
+            }
+        })
+    }
+
+
+
 }

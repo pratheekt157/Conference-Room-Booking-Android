@@ -20,6 +20,9 @@ class ShowToast {
                 Constants.NOT_ACCEPTABLE -> {
                     message = mContext.getString(R.string.parameter_missing)
                 }
+                Constants.NOT_MODIFIED -> {
+                    message = mContext.getString(R.string.not_modified_message)
+                }
                 Constants.NO_CONTENT_FOUND -> {
                     message = mContext.getString(R.string.no_booking_available)
                 }

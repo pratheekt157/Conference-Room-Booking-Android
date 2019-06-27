@@ -2,13 +2,13 @@ package com.example.conferencerommapp.Model
 import com.google.gson.annotations.SerializedName
 
 data class Building (
-    @SerializedName("BuildingId")
+    @SerializedName("buildingId")
     var buildingId: String? = null,
 
-    @SerializedName("BuildingName")
+    @SerializedName("buildingName")
     var buildingName: String? = null,
 
-    @SerializedName("Place")
+    @SerializedName("place")
     var buildingPlace: String? = null
 )
 

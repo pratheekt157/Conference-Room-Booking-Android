@@ -165,9 +165,9 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
                 val name = it.name
                 val purpose = it.purpose
                 builder.setMessage(
-                    "Room is Booked by Employee $name for $purpose.\nAre you sure the 'BLOCKING' is Necessary?"
+                    "Room is Booked by Employee '$name' for '$purpose'.\nAre you sure the 'BLOCKING' is Necessary?"
                 )
-                builder.setPositiveButton(getString(R.string.ok_label)) { _, _ ->
+                builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
                     blockConfirmed(room)
                 }
                 builder.setNegativeButton(getString(R.string.no)) { _, _ ->

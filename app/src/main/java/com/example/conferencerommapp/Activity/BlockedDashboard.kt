@@ -136,7 +136,7 @@ class BlockedDashboard : AppCompatActivity() {
          */
         mBlockedDashboardViewModel.returnSuccessCodeForUnBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
-            Toasty.success(this, getString(R.string.room_unblocked), Toast.LENGTH_SHORT, true).show()
+            Toasty.success(this,getString(R.string.room_unblocked), Toast.LENGTH_SHORT, true).show()
             mBlockedDashboardViewModel.getBlockedList(GetPreference.getTokenFromPreference(this))
         })
         mBlockedDashboardViewModel.returnFailureCodeForUnBlockRoom().observe(this, Observer {

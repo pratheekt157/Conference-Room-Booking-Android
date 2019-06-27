@@ -2,10 +2,12 @@ package com.example.conferencerommapp.Helper
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
 
@@ -61,6 +63,10 @@ class RoomAdapter(
         }
         if (roomDetailsList[position].status == "Unavailable") {
             holder.roomNameTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_unavailable, 0, 0, 0)
+            holder.roomNameTextView.setTextColor(Color.parseColor("#BDBDBD"))
+            holder.permissionTextView.setTextColor(Color.parseColor("#BDBDBD"))
+            holder.buildingNameTextView.setTextColor(Color.parseColor("#BDBDBD"))
+            holder.mainCard.elevation = 0.75F
         }
         setDataToFields(holder, position)
         holder.itemView.setOnClickListener {
@@ -109,6 +115,7 @@ class RoomAdapter(
         var buildingNameTextView: TextView = itemView.findViewById(R.id.building_name)
         var roomNameTextView: TextView = itemView.findViewById(R.id.room_name)
         var permissionTextView: TextView = itemView.findViewById(R.id.permission_required_text_view)
+        val mainCard: CardView = itemView.findViewById(R.id.main_card)
         var amenity1: TextView = itemView.findViewById(R.id.ami_room1)
         var amenity2: TextView = itemView.findViewById(R.id.ami_room2)
         var amenity3: TextView = itemView.findViewById(R.id.ami_room3)

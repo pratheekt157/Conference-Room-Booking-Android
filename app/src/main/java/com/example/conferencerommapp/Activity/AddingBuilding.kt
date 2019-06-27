@@ -37,18 +37,28 @@ class AddingBuilding : AppCompatActivity() {
     lateinit var buildingNameEditText: EditText
     @BindView(R.id.edit_text_building_place)
     lateinit var buildingPlaceEditText: EditText
-
     private lateinit var mAddBuildingViewModel: AddBuildingViewModel
     private var mAddBuilding = AddBuilding()
     private lateinit var progressDialog: ProgressDialog
-
-
+    var flag = false
+    var mUpdateBuildingDetails = AddBuilding()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adding_building)
         ButterKnife.bind(this)
         init()
+        getDataFromIntent()
         observeData()
+    }
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
+
+    private fun getDataFromIntent() {
+        var flag = intent.getBooleanExtra("FLAG", false)
+        if(flag) {
+            mUpdateBuildingDetails.buildingId = intent.getIntExtra("BID", 0)
+            buildingNameEditText.text = intent.getStringExtra("BNAME").toEditable()
+            buildingPlaceEditText.text = intent.getStringExtra("BPLACE").toEditable()
+        }
     }
 
     private fun initTextChangeListener() {
@@ -102,13 +112,18 @@ class AddingBuilding : AppCompatActivity() {
     fun getBuildingDetails() {
         if (validateInputs()) {
             if (NetworkState.appIsConnectedToInternet(this)) {
-                addDataToObject(mAddBuilding)
-                addBuild(mAddBuilding)
+                if(flag) {
+                    mUpdateBuildingDetails.buildingName = buildingNameEditText.text.toString().trim()
+                    mUpdateBuildingDetails.place =  buildingPlaceEditText.text.toString().trim()
+                    updateBuildingDetails(mUpdateBuildingDetails)
+                } else {
+                    addDataToObject(mAddBuilding)
+                    addBuild(mAddBuilding)
+                }
             } else {
                 val i = Intent(this@AddingBuilding, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE)
             }
-
         }
     }
 
@@ -125,7 +140,6 @@ class AddingBuilding : AppCompatActivity() {
     private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Add_Buildings) + "</font>")
-
     }
 
     private fun initLateInitializerVariables() {
@@ -152,6 +166,19 @@ class AddingBuilding : AppCompatActivity() {
         })
         mAddBuildingViewModel.returnFailureForAddBuilding().observe(this, Observer {
             progressDialog.dismiss()
+            if (it == Constants.INVALID_TOKEN) {
+                ShowDialogForSessionExpired.showAlert(this, AddingBuilding())
+            } else {
+                ShowToast.show(this, it as Int)
+            }
+        })
+
+        mAddBuildingViewModel.returnSuccessForUpdateBuilding().observe(this, Observer {
+            progressDialog.dismiss()
+            Toasty.success(this, getString(R.string.building_details_updated), Toast.LENGTH_SHORT, true).show()
+            finish()
+        })
+        mAddBuildingViewModel.returnFailureForUpdateBuilding().observe(this, Observer {
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, AddingBuilding())
             } else {
@@ -217,5 +244,10 @@ class AddingBuilding : AppCompatActivity() {
          */
         progressDialog.show()
         mAddBuildingViewModel.addBuildingDetails(mBuilding, GetPreference.getTokenFromPreference(this))
+    }
+
+    private fun updateBuildingDetails(mUpdateBuildingDetails: AddBuilding) {
+        progressDialog.show()
+        mAddBuildingViewModel.updateBuildingDetails(mUpdateBuildingDetails, GetPreference.getTokenFromPreference(this))
     }
 }

@@ -1,5 +1,6 @@
 package com.example.conferencerommapp.Repository
 
+import android.util.Log
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.Building
@@ -53,11 +54,15 @@ class BuildingsRepository {
                 }
             }
             override fun onResponse(call: Call<List<Building>>, response: Response<List<Building>>) {
-                if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
+                if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.NO_CONTENT_FOUND)) {
                     /**
                      * call interface method which is implemented in ViewModel
                      */
-                    listener.onSuccess(response.body()!!)
+                    if(response.body().isNullOrEmpty()) {
+                        listener.onSuccess(ArrayList<Building>())
+                    } else {
+                        listener.onSuccess(response.body()!!)
+                    }
                 }else {
                     /**
                      * call interface method which is implemented in ViewModel

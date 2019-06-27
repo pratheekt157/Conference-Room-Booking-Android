@@ -107,7 +107,17 @@ class ConferenceDashBoard : AppCompatActivity() {
     }
 
     private fun setAdapter() {
-        conferenceRoomAdapter = ConferenceRecyclerAdapter(mConferenceList)
+        conferenceRoomAdapter = ConferenceRecyclerAdapter(mConferenceList, object: ConferenceRecyclerAdapter.EditRoomDetails {
+            override fun editRoom(position: Int) {
+                val intent = Intent(this@ConferenceDashBoard, AddingConference::class.java)
+                var editRoomDetails = EditRoomDetails()
+                editRoomDetails.mRoomDetail = mConferenceList[position]
+                intent.putExtra("FLAG", true)
+                intent.putExtra(Constants.EXTRA_INTENT_DATA, editRoomDetails)
+                startActivity(intent)
+            }
+
+        })
         recyclerView.adapter = conferenceRoomAdapter
     }
 
@@ -140,6 +150,7 @@ class ConferenceDashBoard : AppCompatActivity() {
         editor.apply()
 
         val intent = Intent(this, AddingConference::class.java)
+        intent.putExtra(Constants.FLAG, false)
         intent.putExtra(Constants.EXTRA_BUILDING_ID, buildingId)
         startActivity(intent)
     }

@@ -76,6 +76,10 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
     fun checkSearchEditTextContent() {
         if(validateEmailFormat()) {
             var email = searchEditText.text.toString().trim()
+            if(email == acct.email) {
+                Toast.makeText(this, getString(R.string.already_part_of_meeting), Toast.LENGTH_SHORT).show()
+                return
+            }
             addChip(email, email)
         } else {
             Toasty.info(this, getString(R.string.wrong_email), Toasty.LENGTH_SHORT, true).show()

@@ -11,13 +11,6 @@ import retrofit2.http.*
 
 interface ConferenceService {
 
-    @PUT("api/ChangeStatus")
-    fun chengerStatusOfEditBooking(
-        @Header("Authorization") token: String,
-        @Header("UserId") userId: String,
-        @Body mEditBookingStatus: EditBookingStatus
-    ): Call<ResponseBody>
-
     @GET("api/Building")
     fun getBuildingList(
         @Header("Authorization") token: String
@@ -48,6 +41,12 @@ interface ConferenceService {
         @Header("Authorization") token: String,
         @Query("deviceId") deviceId: String
     ): Call<SignIn>
+
+    @GET("api/CheckEmployeeRole")
+    fun getRole(
+        @Header("Authorization") token: String
+    ): Call<Int>
+
 
     @POST("api/Dashboard")
     fun getDashboard(
@@ -111,8 +110,21 @@ interface ConferenceService {
         @Body newBuilding: AddBuilding
     ): Call<ResponseBody>
 
+    @PUT("api/UpdateBuilding")
+    fun updateBuilding(
+        @Header("Authorization") token: String,
+        @Body newBuilding: AddBuilding
+    ): Call<ResponseBody>
+
+
     @POST("api/AddRoom")
     fun addConference(
+        @Header("Authorization") token: String,
+        @Body newConferenceRoom: AddConferenceRoom
+    ): Call<ResponseBody>
+
+    @PUT("api/UpdateRoom")
+    fun updateConference(
         @Header("Authorization") token: String,
         @Body newConferenceRoom: AddConferenceRoom
     ): Call<ResponseBody>

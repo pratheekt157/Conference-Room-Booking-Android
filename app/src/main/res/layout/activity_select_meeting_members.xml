@@ -41,10 +41,8 @@
             android:hint="Search"
             android:paddingStart="5dp"
             android:layout_marginTop="10dp"
-            android:drawablePadding="8dp"
             android:drawableEnd="@drawable/ic_search"
-            android:background="@null"
-            android:drawableStart="@drawable/ic_search_black_24dp"/>
+            android:background="@null"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

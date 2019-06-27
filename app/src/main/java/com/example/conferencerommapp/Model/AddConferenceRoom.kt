@@ -1,35 +1,42 @@
 package com.example.conferencerommapp
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 //Model Class Of the AddConference
 data class AddConferenceRoom(
-   @SerializedName("BuildingId")
+   @SerializedName("buildingId")
    var  bId:Int?= 0,
 
-   @SerializedName("RoomName")
+   @SerializedName("roomId")
+   var roomId: Int? = 0,
+
+   @SerializedName("newRoomName")
+   var newRoomName: String? = null,
+
+   @SerializedName("roomName")
    var roomName :String?=null,
 
-   @SerializedName("Capacity")
+   @SerializedName("capacity")
    var capacity :Int? = 0,
 
-   @SerializedName("Projector")
+   @SerializedName("projector")
    var projector: Boolean? = null,
 
 
-   @SerializedName("Monitor")
+   @SerializedName("monitor")
    var monitor: Boolean? = null,
 
-   @SerializedName("Speaker")
+   @SerializedName("speaker")
    var speaker: Boolean? = null,
 
-   @SerializedName("ExtensionBoard")
+   @SerializedName("extensionBoard")
    var extensionBoard: Boolean? = null,
 
-   @SerializedName("WhiteBoardMarker")
+   @SerializedName("whiteBoardMarker")
    var whiteBoardMarker: Boolean? = null,
 
-   @SerializedName("Permission")
+   @SerializedName("permission")
    var permission: Boolean? = false
 
-)
+): Serializable
