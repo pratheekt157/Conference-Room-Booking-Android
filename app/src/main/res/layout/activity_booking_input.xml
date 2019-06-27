@@ -30,7 +30,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         app:errorEnabled="true"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                     <com.google.android.material.textfield.TextInputEditText
@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="8dp"
                         app:errorEnabled="true"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                     <com.google.android.material.textfield.TextInputEditText
@@ -72,7 +72,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <LinearLayout
-                    android:layout_marginTop="8dp"
                     android:layout_below="@+id/time_layout"
                     android:id="@+id/date_capacity_layout"
                     android:weightSum="2"
@@ -98,7 +97,7 @@
                             android:textColor="@color/textColorGray"
                             android:hint="@string/date"
                             android:drawableStart="@drawable/ic_today_black_24dp"
-                            android:drawablePadding="8dp"/>
+                            android:drawablePadding="5dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/capacity_layout"
@@ -124,7 +123,7 @@
                             android:textColor="@color/textColorGray"
                             android:hint="@string/room_capacity"
                             android:drawableStart="@drawable/ic_person_black_24dp"
-                            android:drawablePadding="8dp"/>
+                            android:drawablePadding="5dp"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -136,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="true"
                     android:background="@color/white"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     app:errorEnabled="true"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
                 <com.google.android.material.textfield.TextInputEditText
@@ -147,21 +146,23 @@
                         android:singleLine="true"
                         android:textColor="@color/textColorGray"
                         android:hint="@string/purpose"
+                        android:paddingRight="9dp"
                         android:drawableStart="@drawable/ic_local_offer_black_24dp"
                         android:drawablePadding="8dp"/>
             </com.google.android.material.textfield.TextInputLayout>
+
             <Spinner
-                    android:layout_below="@+id/purpose_layout"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:id="@+id/building_name_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
-                    android:paddingTop="16dp"
-                    android:drawablePadding="5dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/spinner_rect"/>
+                android:id="@+id/building_name_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/purpose_layout"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/spinner_rect"
+                android:drawablePadding="5dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp" />
             <TextView
                     android:id="@+id/text_view_error_spinner_building"
                     android:layout_below="@id/building_name_spinner"
@@ -172,14 +173,18 @@
                     android:layout_marginStart="20dp"
                     android:textSize="12sp"
                     android:text="Select building"/>
+
             <Button
-                    android:id="@+id/search_room"
-                    android:layout_below="@id/text_view_error_spinner_building"
-                    android:text="Search"
-                    android:layout_margin="10dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                android:id="@+id/search_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_error_spinner_building"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:text="Search" />
 
             <TableRow
                     android:layout_below="@+id/search_room"

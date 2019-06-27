@@ -1,6 +1,7 @@
 package com.example.conferencerommapp.Repository
 
 import android.util.Log
+import com.example.conferencerommapp.Model.SignIn
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.globofly.services.ServiceBuilder
@@ -37,9 +38,9 @@ class CheckRegistrationRepository {
          */
 
         val service = ServiceBuilder.getObject()
-        val requestCall: Call<Int> = service.getRequestCode(token, deviceId)
-        requestCall.enqueue(object : Callback<Int> {
-            override fun onFailure(call: Call<Int>, t: Throwable) {
+        val requestCall: Call<SignIn> = service.getRequestCode(token, deviceId)
+        requestCall.enqueue(object : Callback<SignIn> {
+            override fun onFailure(call: Call<SignIn>, t: Throwable) {
                 when(t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
@@ -52,7 +53,7 @@ class CheckRegistrationRepository {
                     }
                 }
             }
-            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+            override fun onResponse(call: Call<SignIn>, response: Response<SignIn>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.body()!!)
                 } else {

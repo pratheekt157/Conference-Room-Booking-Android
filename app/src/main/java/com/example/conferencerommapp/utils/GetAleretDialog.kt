@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.text.Html
 import androidx.core.content.ContextCompat.startActivity
 import com.example.conferencerommapp.SignIn
 import com.google.android.gms.common.internal.ConnectionErrorMessages
@@ -29,6 +30,13 @@ class GetAleretDialog {
             val mDialog = AlertDialog.Builder(mContext)
             mDialog.setTitle(title)
 
+            return mDialog
+        }
+
+        fun getDialogForPasscode(mContext: Context,title: String,passcode: String):AlertDialog.Builder{
+            val mDialog = AlertDialog.Builder(mContext)
+            mDialog.setTitle(title)
+            mDialog.setMessage(Html.fromHtml("Your passcode is " +"<b>"+ passcode + "</b>"+". You can use this passcode to book a room from tablet placed inside conference room."))
             return mDialog
         }
     }

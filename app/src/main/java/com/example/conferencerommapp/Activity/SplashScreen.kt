@@ -123,10 +123,11 @@ class SplashScreen : AppCompatActivity() {
     /**
      * set value in shared preference
      */
-    private fun setValueForSharedPreference(status: Int) {
+    private fun setValueForSharedPreference(it : com.example.conferencerommapp.Model.SignIn) {
         val editor = prefs.edit()
-        editor.putInt(Constants.ROLE_CODE, status)
+        val code : String = it.StatusCode.toString()
+        editor.putInt(Constants.ROLE_CODE,code.toInt())
         editor.apply()
-        goToNextActivity(status)
+        goToNextActivity(code.toInt())
     }
 }

@@ -2,6 +2,7 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.conferencerommapp.Model.SignIn
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Repository.CheckRegistrationRepository
 
@@ -15,7 +16,7 @@ class CheckRegistrationViewModel : ViewModel() {
     /**
      * a MutableLivedata variable which will hold the Value for the Livedata
      */
-    var mSuccessCode =  MutableLiveData<Int>()
+    var mSuccessCode =  MutableLiveData<SignIn>()
     var mFailureCode =  MutableLiveData<Any>()
 
     /**
@@ -27,7 +28,7 @@ class CheckRegistrationViewModel : ViewModel() {
         mCheckRegistrationRepository!!.checkRegistration(token, deviceId, object:
             ResponseListener {
             override fun onSuccess(success: Any) {
-                mSuccessCode.value = success as Int
+                mSuccessCode.value = success as SignIn
             }
 
             override fun onFailure(failure: Any) {
@@ -37,7 +38,7 @@ class CheckRegistrationViewModel : ViewModel() {
         })
     }
 
-    fun returnSuccessCode(): MutableLiveData<Int> {
+    fun returnSuccessCode(): MutableLiveData<SignIn> {
         return mSuccessCode
     }
     fun returnFailureCode(): MutableLiveData<Any> {

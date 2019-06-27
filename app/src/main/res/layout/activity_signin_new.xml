@@ -1,61 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:weightSum="3"
+    android:layout_height="match_parent">
+    <FrameLayout
         android:layout_width="match_parent"
-        android:theme="@style/sighin"
-        android:background="@color/black"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        android:layout_weight="1.10">
 
-    <ImageView
-            android:background="@drawable/bg31"
+        <ImageView
             android:layout_width="match_parent"
-            android:alpha="0.55"
-            android:id="@+id/image"
+            android:background="@drawable/ic_design"
             android:layout_height="match_parent"/>
 
-
-    <TextView
-            android:fontFamily="casual"
-            android:textColor="#FFF"
-            android:textStyle="bold"
-            android:textSize="28sp"
-            android:id="@+id/title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="260dp"
-            android:text="Conference Room Booking"
+        <TextView
             android:layout_width="wrap_content"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto"
+            android:layout_gravity="center"
+            android:text="Welcome to Nineleaps"
             android:layout_height="wrap_content"/>
-    <TextView
-            android:fontFamily="casual"
-            android:textColor="#FFF"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:id="@+id/subtitle"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:layout_below="@id/title"
-            android:text="Smart way to book room"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:weightSum="3"
+        android:layout_weight="1.90">
 
-    <TableRow
-            android:layout_width="250dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:layout_height="1dp"
-            android:layout_below="@id/subtitle"
-            android:background="#FFF" android:layout_centerVertical="true"/>
-
-    <com.shobhitpuri.custombuttons.GoogleSignInButton
-            android:id="@+id/sign_in_button"
+        <ImageView
+            android:src="@drawable/new_app_logo"
             android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="2"
+            android:textColor="@color/black"/>
+
+        <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="@string/google_sign_in"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="40dp"
-            android:fontFamily="casual"
-            android:background="#ddffff"
-            app:isDarkTheme="false"/>
-</RelativeLayout>
+            android:layout_weight="0.55"/>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="0.45"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <com.shobhitpuri.custombuttons.GoogleSignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/google_sign_in"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="@font/roboto"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

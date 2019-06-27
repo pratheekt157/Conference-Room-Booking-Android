@@ -15,6 +15,7 @@ import butterknife.OnClick
 import com.example.conferencerommapp.Activity.NoInternetConnectionActivity
 import com.example.conferencerommapp.Activity.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Model.SignIn
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.GetAleretDialog
@@ -71,7 +72,7 @@ class SignIn : AppCompatActivity() {
     private fun initializeGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestIdToken(getString(R.string.server_client_id))
+            .requestIdToken(getString(R.string.server_client_id_partial))
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     }
@@ -124,7 +125,13 @@ class SignIn : AppCompatActivity() {
 
     private fun saveTokenAndUserIdInSharedPreference(idToken: String?) {
         val editor = prefs.edit()
-        editor.putString(getString(R.string.token), idToken)
+        editor.putString("GoogleIdToken", idToken)
+        editor.apply()
+    }
+
+    private fun saveCustomToken(idToken: String?) {
+        val editor = prefs.edit()
+        editor.putString(getString(R.string.token), "Bearer $idToken")
         editor.apply()
     }
 
@@ -142,7 +149,12 @@ class SignIn : AppCompatActivity() {
      */
     private fun checkRegistration() {
         progressDialog.show()
-        mCheckRegistrationViewModel.checkRegistration(GetPreference.getTokenFromPreference(this), GetPreference.getDeviceIdFromPreference(this))
+        mCheckRegistrationViewModel.checkRegistration(getGoogleIdToken(), GetPreference.getDeviceIdFromPreference(this))
+    }
+
+
+    private fun getGoogleIdToken():String {
+        return getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString("GoogleIdToken", "Not set")
     }
 
 
@@ -161,6 +173,19 @@ class SignIn : AppCompatActivity() {
             ShowToast.show(this, it as Int)
             signOut()
         })
+    }
+    /**
+     * a function which will set the value in shared preference
+     */
+
+    private fun setValueForSharedPreference(it: SignIn?) {
+        val editor = prefs.edit()
+        val code : String = it!!.StatusCode.toString()
+        editor.putInt(Constants.ROLE_CODE,code.toInt())
+        editor.apply()
+        saveCustomToken(it.Token)
+        intentToNextActivity(code.toInt())
+
     }
 
     /**
@@ -181,16 +206,6 @@ class SignIn : AppCompatActivity() {
                 GetAleretDialog.showDialog(builder)
             }
         }
-    }
-
-    /**
-     * a function which will set the value in shared preference
-     */
-    private fun setValueForSharedPreference(status: Int) {
-        val editor = prefs.edit()
-        editor.putInt(Constants.ROLE_CODE, status)
-        editor.apply()
-        intentToNextActivity(status)
     }
 
 }

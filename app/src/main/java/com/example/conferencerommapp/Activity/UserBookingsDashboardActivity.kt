@@ -101,10 +101,10 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
      * show dialog for passcode
      */
     private fun showAlertForPasscode(passcode: String) {
-        val dialog = GetAleretDialog.getDialog(
+        val dialog = GetAleretDialog.getDialogForPasscode(
             this,
             getString(R.string.do_not_share),
-            "Your passcode is " + passcode + ". You can use this passcode to book a room from tablet placed inside conference room."
+            passcode
         )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
         }
