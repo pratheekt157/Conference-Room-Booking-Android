@@ -3,20 +3,21 @@ package com.example.conferencerommapp.Activity
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.bumptech.glide.Glide
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.GoogleGSO
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
@@ -30,9 +31,6 @@ import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.activity_user_dashboard.*
 import kotlinx.android.synthetic.main.app_bar_main2.*
 import kotlinx.android.synthetic.main.nav_header_main2.view.*
-
-
-
 
 
 @Suppress("DEPRECATION")
@@ -147,7 +145,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
-                signOut()
+                showAlertForSignout()
             }
             R.id.HR -> {
                 startActivity(Intent(this@UserBookingsDashboardActivity, BlockedDashboard::class.java))
@@ -227,7 +225,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         var mGoogleSignInClient: GoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
         mGoogleSignInClient!!.signOut()
             .addOnCompleteListener(this) {
-                Toasty.info(this, getString(R.string.successfully_sign_out), Toasty.LENGTH_SHORT).show()
+                Toasty.success(this, getString(R.string.successfully_sign_out), Toasty.LENGTH_SHORT).show()
                 startActivity(Intent(this@UserBookingsDashboardActivity, SignIn::class.java))
                 finish()
             }
@@ -237,6 +235,36 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()
+    }
+
+    /**
+     * show dialog for sign out
+     */
+    private fun showAlertForSignout() {
+        val dialog = GetAleretDialog.getDialog(
+            this, getString(R.string.logout), getString(R.string.logout_message))
+        dialog.setPositiveButton(R.string.yes) { _, _ ->
+            signOut()
+        }
+        dialog.setNegativeButton(R.string.cancel) { _, _ ->
+            // do nothing
+        }
+        val builder = GetAleretDialog.showDialog(dialog)
+        val mPositiveButton: Button = builder.getButton(DialogInterface.BUTTON_POSITIVE)
+        val mNegativeButton: Button = builder.getButton(DialogInterface.BUTTON_NEGATIVE)
+
+        /**
+         * for positive button color code red
+         */
+        mPositiveButton.setBackgroundColor(Color.WHITE)
+        mPositiveButton.setTextColor(Color.RED)
+
+        /**
+         * for Negative button color code Red
+         */
+        mNegativeButton.setBackgroundColor(Color.WHITE)
+        mNegativeButton.setTextColor(Color.RED)
+
     }
 }
 

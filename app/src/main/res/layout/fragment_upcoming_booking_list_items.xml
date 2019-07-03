@@ -6,50 +6,51 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
     <androidx.cardview.widget.CardView
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
             android:layout_marginBottom="1dp"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="@dimen/card_corner_radius_dp_5">
         <LinearLayout
                 android:id="@+id/main_layout"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <RelativeLayout
-                    android:padding="16dp"
+                    android:padding="@dimen/dp_16"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:elevation="2dp"
+                    android:elevation="@dimen/dp_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                 <TextView
-                        android:text="Uber Client Meeting"
+                        android:hint="@string/uber_client_meeting"
+                        android:textColorHint="@color/black"
                         android:fontFamily="@font/roboto"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/sp_18"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:paddingEnd="@dimen/dp_32"
                         android:id="@+id/purpose"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 <ImageView
                         android:id="@+id/btnshow"
                         android:src="@drawable/ic_show_members"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:drawablePadding="8dp"
-                        android:textColor="#333333"
-                        android:textSize="12sp"
+                        android:textColor="@color/sub_item_text_color"
+                        android:textSize="@dimen/sp_12"
                         android:drawableStart="@drawable/ic_business_black_24dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="@dimen/dp_16"
                         android:id="@+id/conferenceRoomName"
-                        android:text="Rajas, Main Building"
+                        android:text="@string/room_location_hint"
                         android:layout_below="@id/purpose"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -63,28 +64,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <TextView
-                            android:drawablePadding="8dp"
-                            android:textColor="#333333"
-                            android:textSize="12sp"
+                            android:drawablePadding="@dimen/dp_8"
+                            android:textColor="@color/sub_item_text_color"
+                            android:textSize="@dimen/sp_12"
                             android:id="@+id/date"
                             android:drawableStart="@drawable/ic_today_resized"
                             android:layout_marginTop="8dp"
-                            android:text="30 June, 2019"
-                            android:layout_below="@id/cancelled_building_name"
+                            android:hint="@string/date_hint"
+                            android:textColorHint="@color/sub_item_text_color"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"/>
                     <TextView
                             android:id="@+id/from_time"
-                            android:drawablePadding="8dp"
-                            android:textColor="#333333"
-                            android:textSize="12sp"
+                            android:drawablePadding="@dimen/dp_8"
+                            android:textColor="@color/sub_item_text_color"
+                            android:textSize="@dimen/sp_12"
                             android:layout_weight="1"
-                            android:layout_toRightOf="@id/cancelled_date"
                             android:drawableStart="@drawable/ic_time_dashboard"
-                            android:layout_marginTop="8dp"
-                            android:text="07:30 - 08:30"
-                            android:layout_below="@id/cancelled_building_name"
+                            android:layout_marginTop="@dimen/dp_8"
+                            android:textColorHint="@color/sub_item_text_color"
+                            android:hint="@string/start_end_time_hint"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -93,31 +93,30 @@
                         android:layout_below="@+id/date_time_linear_layout"
                         android:weightSum="2"
                         android:id="@+id/status_layout"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="@dimen/dp_8"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <TextView
                             android:id="@+id/attendee_text_view"
-                            android:textColor="#4F4F4F"
-                            android:drawablePadding="8dp"
+                            android:textColor="@color/attendee_and_meeting_status_text_color"
+                            android:drawablePadding="@dimen/dp_8"
                             android:drawableStart="@drawable/ic_attendee"
-                            android:textSize="12sp"
+                            android:textSize="@dimen/sp_12"
                             android:visibility="gone"
-                            android:text="you are an attendee"
-                            android:layout_below="@+id/date_time_linear_layout"
+                            android:text="@string/you_are_an_attendee"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"/>
 
                     <TextView
                             android:id="@+id/status_text_view"
-                            android:textColor="#4F4F4F"
-                            android:drawablePadding="8dp"
+                            android:textColor="@color/attendee_and_meeting_status_text_color"
+                            android:drawablePadding="@dimen/dp_8"
                             android:drawableStart="@drawable/ic_pending"
                             android:textSize="12sp"
                             android:visibility="gone"
-                            android:text="Pending for approval"
+                            android:text="@string/pending_for_approval"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"/>
@@ -128,22 +127,22 @@
                         android:layout_below="@+id/status_layout"
                         android:id="@+id/horizontal_line1"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="1dp"
-                        android:background="#E5E5E5"/>
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="@color/horizontal_view_color"/>
                 <TextView
                         android:layout_below="@id/horizontal_line1"
                         android:textColor="#BDBDBD"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/sp_12"
                         android:id="@+id/aminities_text_view"
-                        android:layout_marginTop="8dp"
-                        android:text="Amenities"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:text="@string/amenities"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
                 <LinearLayout
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/dp_4"
                         android:weightSum="2"
                         android:id="@+id/linear_layout_1"
                         android:layout_below="@id/aminities_text_view"
@@ -152,28 +151,28 @@
 
                     <TextView
                             android:id="@+id/ani_1"
-                            android:hint="Projector"
+                            android:hint="@string/projector"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_projector"
                             android:fontFamily="@font/roboto"
-                            android:textSize="12sp"
-                            android:textColor="#4F4F4F"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:drawablePadding="16dp"
+                            android:drawablePadding="@dimen/dp_16"
                             android:maxLines="1"
                             android:ellipsize="end"/>
                     <TextView
                             android:id="@+id/ani_2"
                             android:fontFamily="@font/roboto"
-                            android:textSize="12sp"
-                            android:textColor="#4F4F4F"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:drawablePadding="16dp"
-                            android:hint="WhiteBoard-Marker"
+                            android:drawablePadding="@dimen/dp_16"
+                            android:hint="@string/whiteboard_marker"
                             android:drawableStart="@drawable/ic_white_board2"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
@@ -181,7 +180,7 @@
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/dp_4"
                         android:weightSum="2"
                         android:id="@+id/linear_layout_2"
                         android:layout_below="@id/linear_layout_1"
@@ -190,28 +189,28 @@
 
                     <TextView
                             android:id="@+id/ani_3"
-                            android:hint="Monitor"
+                            android:hint="@string/monitor"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_live_tv_black_24dp"
                             android:fontFamily="@font/roboto"
-                            android:textSize="12sp"
-                            android:textColor="#4F4F4F"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:drawablePadding="16dp"
+                            android:drawablePadding="@dimen/dp_16"
                             android:maxLines="1"
                             android:ellipsize="end"/>
                     <TextView
                             android:id="@+id/ani_4"
                             android:fontFamily="@font/roboto"
-                            android:textSize="12sp"
-                            android:textColor="#4F4F4F"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:drawablePadding="16dp"
-                            android:hint="Speaker"
+                            android:drawablePadding="@dimen/dp_16"
+                            android:hint="@string/speaker"
                             android:drawableStart="@drawable/ic_speaker"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
@@ -219,7 +218,7 @@
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="@dimen/dp_4"
                         android:weightSum="2"
                         android:id="@+id/linear_layout_3"
                         android:layout_below="@id/linear_layout_2"
@@ -228,32 +227,31 @@
 
                     <TextView
                             android:id="@+id/ani_5"
-                            android:hint="Extension Board"
+                            android:hint="@string/extension_board"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_extension_board"
                             android:fontFamily="@font/roboto"
-                            android:textSize="12sp"
+                            android:textSize="@dimen/sp_12"
                             android:textColor="@color/amenities_color"
                             android:visibility="gone"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:drawablePadding="16dp"
+                            android:drawablePadding="@dimen/dp_16"
                             android:maxLines="1"
                             android:ellipsize="end"/>
                 </LinearLayout>
             </RelativeLayout>
             <View
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="@dimen/dp_4"
                     android:id="@+id/view_landing"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#e6e6e6"/>
+                    android:layout_height="@dimen/dp_1"
+                    android:background="@color/horizontal_view_color"/>
 
             <LinearLayout
-                    android:layout_below="@id/linear_layout_3"
                     android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:layout_marginBottom="@dimen/dp_8"
                     android:weightSum="4"
                     android:layout_gravity="center"
                     android:visibility="visible"
@@ -262,23 +260,24 @@
                     android:layout_height="wrap_content">
                 <TextView
                         android:layout_gravity="center"
-                        android:textColor="#006DBE"
+                        android:textColor="@color/action_button_text_color"
                         android:textStyle="bold"
-                        android:layout_marginStart="16dp"
-                        android:text="CANCEL"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:text="@string/cancel"
+                        android:textAllCaps="true"
                         android:fontFamily="@font/roboto"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/sp_14"
                         android:id="@+id/btnCancel"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                 <TextView
                         android:layout_gravity="center"
-                        android:textColor="#006DBE"
-                        android:text="EDIT"
+                        android:textColor="@color/action_button_text_color"
+                        android:text="@string/edit"
                         android:textStyle="bold"
                         android:fontFamily="@font/roboto"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/sp_14"
                         android:id="@+id/editBtn"
                         android:layout_width="0dp"
                         android:layout_weight="1"

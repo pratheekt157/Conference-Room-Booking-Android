@@ -234,5 +234,10 @@
     <string name="email_hint">prateek.patidar@gmail.com</string>
     <string name="welcome_to_nineleaps">Welcome to Nineleaps</string>
     <string name="uber_client_meeting">Uber Client Meeting</string>
+    <string name="logout">Logout</string>
+    <string name="logout_message">Are you sure that you want to log out?</string>
+    <string name="you_are_an_attendee">you are an attendee</string>
+    <string name="pending_for_approval">Pending for approval</string>
+    <string name="edit">EDIT</string>
 
 </resources>
