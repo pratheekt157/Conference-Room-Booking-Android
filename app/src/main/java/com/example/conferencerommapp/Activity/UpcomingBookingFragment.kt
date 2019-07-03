@@ -32,9 +32,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 import kotlinx.android.synthetic.main.fragment_upcoming_booking.*
+import org.jetbrains.anko.find
 import java.text.SimpleDateFormat
 
 class UpcomingBookingFragment : Fragment() {
+    private lateinit var mProgressBar: ProgressBar
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     private lateinit var acct: GoogleSignInAccount
@@ -72,6 +74,7 @@ class UpcomingBookingFragment : Fragment() {
      */
     @SuppressLint("ResourceAsColor")
     fun init() {
+        mProgressBar = activity!!.findViewById(R.id.upcoming_main_progress_bar)
         initRecyclerView()
         initLateInitializerVariables()
         booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
@@ -95,7 +98,7 @@ class UpcomingBookingFragment : Fragment() {
     }
 
     private fun getViewModel() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mBookingDashBoardViewModel.getBookingList(
             GetPreference.getTokenFromPreference(activity!!),
             mBookingDashboardInput
@@ -172,8 +175,10 @@ class UpcomingBookingFragment : Fragment() {
          * observing data for booking list
          */
         mBookingDashBoardViewModel.returnSuccess().observe(this, Observer {
+            upcoming_empty_view.visibility = View.GONE
             upcoming_booking_progress_bar.visibility = View.GONE
             booking_refresh_layout.isRefreshing = false
+            mProgressBar.visibility = View.GONE
             progressDialog.dismiss()
             hasMoreItem = it.paginationMetaData!!.nextPage!!
             setFilteredDataToAdapter(it.dashboard!!)
@@ -181,6 +186,7 @@ class UpcomingBookingFragment : Fragment() {
         mBookingDashBoardViewModel.returnFailure().observe(this, Observer {
             upcoming_booking_progress_bar.visibility = View.GONE
             booking_refresh_layout.isRefreshing = false
+            mProgressBar.visibility = View.GONE
             progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
@@ -197,7 +203,6 @@ class UpcomingBookingFragment : Fragment() {
          */
         mBookingDashBoardViewModel.returnBookingCancelled().observe(this, Observer {
             Toasty.success(activity!!, getString(R.string.cancelled_successful), Toast.LENGTH_SHORT, true).show()
-            // make api call to get the updated list of booking after cancellation
             pagination = 1
             mBookingDashboardInput.pageNumber = pagination
             finalList.clear()

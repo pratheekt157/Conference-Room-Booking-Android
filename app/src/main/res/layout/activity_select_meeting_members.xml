@@ -7,17 +7,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".Activity.SelectMeetingMembersActivity">
-
+    <ProgressBar
+            android:id="@+id/select_meeting_members_progress_bar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
     <HorizontalScrollView
             android:id="@+id/scroll_view"
-            android:padding="2dp"
-            android:paddingBottom="10dp"
+            android:padding="@dimen/dp_2"
+            android:paddingBottom="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_margin="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </HorizontalScrollView>
@@ -25,11 +30,11 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/dp_8"
             android:layout_below="@+id/scroll_view"
             android:focusableInTouchMode="true"
             android:focusable="true"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             app:errorEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
     <com.google.android.material.textfield.TextInputEditText
@@ -38,9 +43,9 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="Search"
-            android:paddingStart="5dp"
-            android:layout_marginTop="10dp"
+            android:hint="@string/search"
+            android:paddingStart="@dimen/drawable_padding_5dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:drawableEnd="@drawable/ic_search"
             android:background="@null"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -48,7 +53,7 @@
     <Button
             android:id="@+id/add_email"
             android:layout_below="@id/card_view"
-            android:text="Add Email"
+            android:text="@string/add_email"
             android:layout_centerHorizontal="true"
             android:visibility="gone"
             android:layout_width="wrap_content"
@@ -65,7 +70,7 @@
     <com.github.clans.fab.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/dp_10"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             app:fab_colorPressed="@color/colorPrimary1"

@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -39,7 +40,8 @@ import java.util.regex.Pattern
 
 @Suppress("DEPRECATION")
 class SelectMeetingMembersActivity : AppCompatActivity() {
-
+    @BindView(R.id.select_meeting_members_progress_bar)
+    lateinit var mProgressBar: ProgressBar
     private val employeeList = ArrayList<EmployeeList>()
     private val selectedName = ArrayList<String>()
     private val selectedEmail = ArrayList<String>()
@@ -133,7 +135,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     private fun observeData() {
         // positive response from server
         mSelectMemberViewModel.returnSuccessForEmployeeList().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             employeeList.clear()
             employeeList.addAll(it)
             customAdapter = SelectMembers(it, object : SelectMembers.ItemClickListener {
@@ -146,7 +148,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         })
         // Negative response from server
         mSelectMemberViewModel.returnFailureForEmployeeList().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, SelectMeetingMembersActivity())
             } else {
@@ -204,7 +206,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
 
     // call function of ViewModel which will make API call
     private fun getViewModel() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this))
     }
 

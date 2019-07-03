@@ -6,11 +6,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import butterknife.BindView
+import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.R
@@ -28,16 +32,22 @@ import kotlinx.android.synthetic.main.app_bar_main2.*
 import kotlinx.android.synthetic.main.nav_header_main2.view.*
 
 
+
+
+
 @Suppress("DEPRECATION")
 class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+
     private lateinit var mProgressDialog: ProgressDialog
+    lateinit var mProgressBar: ProgressBar
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
         setNavigationViewItem()
         init()
+        mProgressBar = findViewById(R.id.user_booking_dashboard_progress_bar)
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
             var selectedFragment: Fragment? = null
             when (item.itemId) {
@@ -70,7 +80,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     }
 
     private fun getPasscode() {
-        mProgressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), false)
     }
 
@@ -83,11 +93,11 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
          * observing data for booking list
          */
         mBookingDashBoardViewModel.returnPasscode().observe(this, androidx.lifecycle.Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             showAlertForPasscode(it)
         })
         mBookingDashBoardViewModel.returnPasscodeFailed().observe(this, androidx.lifecycle.Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 showAlert()
             } else {
@@ -155,6 +165,18 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
+    /**
+     * deslect item in navigation drawer after selection
+     */
+    override fun onResume() {
+        super.onResume()
+        val size = nav_view.menu.size()
+        for (i in 0 until size) {
+            nav_view.menu.getItem(i).isCheckable = false
+        }
+    }
+
 
     /**
      * this function will set item in navigation drawer according to the data stored in the sharedpreference

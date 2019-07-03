@@ -61,7 +61,6 @@ class AddConferenceRepository {
         //Retrofit Call
         val addConferenceRoomService = ServiceBuilder.getObject()
         val addConferenceRequestCall: Call<ResponseBody> = addConferenceRoomService.updateConference(token, mConferenceRoom)
-
         addConferenceRequestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 when(t) {

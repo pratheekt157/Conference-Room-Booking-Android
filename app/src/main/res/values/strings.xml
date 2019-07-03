@@ -98,6 +98,7 @@
     <string name="no_upcoming_events_n_let_s_change_that">No upcoming events. Let\'s change that!</string>
     <string name="location">Location</string>
     <string name="update">Update Timings</string>
+    <string name="update_button">Update</string>
     <string name="internal_server_error">Unable to connect to server!</string>
     <string name="missing_building_name">Enter the Building name</string>
     <string name="missing_building_place">Enter the Building place</string>
@@ -200,7 +201,7 @@
     <string name="already_selected">Already Selected!</string>
     <string name="book_confirmation_message">Are you sure want to book room?</string>
     <string name="no_rooms_available">No Rooms Available</string>
-    <string name="suggestion_message">No Room Available.Have look on suggestions</string>
+    <string name="suggestion_message">No room available in this building. Have look on suggestions</string>
     <string name="organizer">(organiser)</string>
     <string name="sign_in_error">Google Sign In Error</string>
     <string name="poor_internet_connection">Poor internet connection!</string>
@@ -210,4 +211,28 @@
     <string name="building_place_hint">Koramangala</string>
     <string name="building_details_updated">Building Details Updated</string>
     <string name="room_details_updated">Room Details Updated</string>
+    <string name="room_name_conflict_message">Room already exist with this name</string>
+    <string name="whiteboard_marker">WhiteBoard-Marker</string>
+    <string name="extension_board">Extension-Board</string>
+    <string name="speaker">Speaker</string>
+    <string name="monitor">Monitor</string>
+    <string name="projector">Projector</string>
+    <string name="amenities">Amenities</string>
+    <string name="room_location_hint">Prithvi(1st floor), Main Building</string>
+    <string name="date_hint">30 June, 2019</string>
+    <string name="start_end_time_hint">07:30 - 08:30</string>
+    <string name="unblock_label">Unblock</string>
+    <string name="block_purpose_hint">Ac Under Maintenance</string>
+    <string name="search">Search</string>
+    <string name="message_for_no_rooms_available">Sorry No Rooms available.Have look on Suggestions</string>
+    <string name="rajas_1st_floor_10_people">Rajas(1st floor) [10 people]</string>
+    <string name="connection_error">Connection error</string>
+    <string name="check_your_network_settings_and_try_again">Check your network settings and try again</string>
+    <string name="selected_days_list_can_t_be_empty">please select days</string>
+    <string name="add_email">Add Email</string>
+    <string name="name">Name</string>
+    <string name="email_hint">prateek.patidar@gmail.com</string>
+    <string name="welcome_to_nineleaps">Welcome to Nineleaps</string>
+    <string name="uber_client_meeting">Uber Client Meeting</string>
+
 </resources>

@@ -55,7 +55,7 @@ class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList:
          * call the interface method on click of item in recyclerview
          */
         holder.edit.setOnClickListener {
-
+            editListener.onEditBtnClick(position)
         }
         holder.viewRooms.setOnClickListener {
             mClickListener?.onBtnClick(id, buildingName)
@@ -79,6 +79,6 @@ class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList:
     }
 
     interface EditClickListener {
-        fun onEditBtnClick(buildingId: String?, buildingName: String?, buildingPlace: String?)
+        fun onEditBtnClick(position: Int)
     }
 }

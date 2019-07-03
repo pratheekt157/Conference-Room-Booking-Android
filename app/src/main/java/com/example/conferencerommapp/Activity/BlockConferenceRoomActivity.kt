@@ -9,10 +9,7 @@ import android.text.Editable
 import android.text.Html.fromHtml
 import android.text.TextWatcher
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -39,6 +36,8 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     /**
      * Declaring Global variables and butterknife
      */
+    @BindView(R.id.block_conference_room_progress_bar)
+    lateinit var mProgressDialog: ProgressBar
     @BindView(R.id.fromTime_b)
     lateinit var fromTimeEditText: EditText
     @BindView(R.id.toTime_b)
@@ -121,12 +120,12 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      */
     private fun observeData() {
         mBuildingViewModel.returnMBuildingSuccess().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressDialog.visibility = View.GONE
             buildingListFromBackend(it)
         })
 
         mBuildingViewModel.returnMBuildingFailure().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressDialog.visibility = View.GONE
             when (it) {
                 Constants.INVALID_TOKEN -> ShowDialogForSessionExpired.showAlert(this, BlockConferenceRoomActivity())
                 Constants.NO_CONTENT_FOUND -> Toast.makeText(this, getString(R.string.empty_building_list), Toast.LENGTH_SHORT).show()
@@ -195,12 +194,12 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         // observer for conference room list
 
         mBlockRoomViewModel.returnConferenceRoomList().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressDialog.visibility = View.GONE
             setSpinnerToConferenceList(it)
         })
 
         mBlockRoomViewModel.returnResponseErrorForConferenceRoom().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressDialog.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, BlockConferenceRoomActivity())
             } else {
@@ -260,7 +259,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      * function calls the ViewModel of getbuilding
      */
     private fun getBuilding() {
-        progressDialog.show()
+        mProgressDialog.visibility = View.VISIBLE
         // make api call
         mBuildingViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }
@@ -285,7 +284,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      * function calls the ViewModel of getConference for the Selected Building
      */
     fun conferenceRoomListFromBackend(buildingId: Int) {
-        progressDialog.show()
+        mProgressDialog.visibility = View.VISIBLE
         mBlockRoomViewModel.getRoomList(buildingId, GetPreference.getTokenFromPreference(this))
     }
 

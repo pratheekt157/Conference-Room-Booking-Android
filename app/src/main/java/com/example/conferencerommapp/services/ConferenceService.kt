@@ -153,7 +153,7 @@ interface ConferenceService {
     ): Call<ResponseBody>
 
     @GET("api/ConferenceRooms")
-    fun conferencelist(
+    fun conferenceList(
         @Header("Authorization") token: String,
         @Query("buildingId") id: Int
     ): Call<List<ConferenceList>>

@@ -89,9 +89,10 @@ class CancelledBookingAdpter(
     /**
      * set data to the fields of view
      */
+    @SuppressLint("SetTextI18n")
     private fun setDataToFields(holder: ViewHolder, position: Int) {
         holder.dashboard = dashboardItemList[position]
-        holder.buildingNameTextView.text = dashboardItemList[position].roomName + "," + dashboardItemList[position].buildingName
+        holder.buildingNameTextView.text = "${dashboardItemList[position].roomName}, ${dashboardItemList[position].buildingName}"
         holder.purposeTextView.text = dashboardItemList[position].purpose
         holder.showButton.setOnClickListener {
             setMeetingMembers(position)

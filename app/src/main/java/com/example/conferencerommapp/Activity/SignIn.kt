@@ -7,9 +7,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.Activity.NoInternetConnectionActivity
@@ -31,6 +34,8 @@ import com.google.android.gms.tasks.Task
 
 class SignIn : AppCompatActivity() {
 
+    @BindView(R.id.sin_in_progress_bar)
+    lateinit var mProgressBar: ProgressBar
     private var RC_SIGN_IN = 0
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private lateinit var prefs: SharedPreferences
@@ -148,7 +153,7 @@ class SignIn : AppCompatActivity() {
      * if not registered than make an intent to registration activity
      */
     private fun checkRegistration() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mCheckRegistrationViewModel.checkRegistration(getGoogleIdToken(), GetPreference.getDeviceIdFromPreference(this))
     }
 
@@ -164,12 +169,12 @@ class SignIn : AppCompatActivity() {
     private fun observeData() {
         //positive response from server
         mCheckRegistrationViewModel.returnSuccessCode().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             setValueForSharedPreference(it)
         })
         // Negative response from server
         mCheckRegistrationViewModel.returnFailureCode().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             ShowToast.show(this, it as Int)
             signOut()
         })

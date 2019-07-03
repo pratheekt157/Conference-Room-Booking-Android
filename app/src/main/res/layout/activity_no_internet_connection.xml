@@ -5,21 +5,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <ImageView
-            android:layout_marginTop="94dp"
+            android:layout_marginTop="@dimen/dp_94"
             android:id="@+id/no_internet_image"
             android:layout_gravity="center"
             android:layout_centerHorizontal="true"
             android:src="@drawable/cable"
-            android:layout_width="150dp"
-            android:layout_height="290dp"/>
+            android:layout_width="@dimen/check_internet_image_view_dp_150"
+            android:layout_height="@dimen/check_internet_image_view_dp_290"/>
 
     <TextView
             android:layout_below="@+id/no_internet_image"
             android:id="@+id/no_internet_message"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:text="Connection error"
-            android:textSize="20sp"
+            android:text="@string/connection_error"
+            android:textSize="@dimen/sp_20"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -29,18 +29,18 @@
             android:id="@+id/no_internet_message2"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:text="Check your network settings and try again"
-            android:textSize="16sp"
+            android:text="@string/check_your_network_settings_and_try_again"
+            android:textSize="@dimen/sp_16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
 
     <Button
             android:id="@+id/retry_button"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/dp_24"
             android:layout_below="@+id/no_internet_message2"
             android:text="Retry"
             android:layout_centerHorizontal="true"
-            android:layout_width="190dp"
+            android:layout_width="@dimen/retry_button_dp_190"
             android:layout_height="wrap_content"/>
 </RelativeLayout>

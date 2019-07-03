@@ -27,7 +27,7 @@ class HrConferenceRoomRepository {
          * api call using retorfit
          */
         val service = ServiceBuilder.getObject()
-        val requestCall: Call<List<ConferenceList>> = service.conferencelist(token, buildingId)
+        val requestCall: Call<List<ConferenceList>> = service.conferenceList(token, buildingId)
         requestCall.enqueue(object : Callback<List<ConferenceList>> {
             override fun onFailure(call: Call<List<ConferenceList>>, t: Throwable) {
                 when(t) {

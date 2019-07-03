@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -41,6 +42,8 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
     private val selectedName = ArrayList<String>()
     private val selectedEmail = ArrayList<String>()
     private lateinit var customAdapter: SelectMembers
+    @BindView(R.id.select_meeting_members_progress_bar)
+    lateinit var mProgressBar: ProgressBar
     @BindView(R.id.search_edit_text)
     lateinit var searchEditText: EditText
     @BindView(R.id.add_email)
@@ -116,7 +119,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
     }
 
     private fun getViewModel() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this))
     }
 
@@ -125,7 +128,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
      */
     private fun observeData() {
         mSelectMemberViewModel.returnSuccessForEmployeeList().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it.isEmpty()) {
                 Toasty.info(this, "Empty EmployeeList", Toast.LENGTH_SHORT, true).show()
                 finish()
@@ -142,7 +145,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
             }
         })
         mSelectMemberViewModel.returnFailureForEmployeeList().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == getString(R.string.invalid_token)) {
                 ShowDialogForSessionExpired.showAlert(this, ManagerSelectMeetingMembers())
             } else {

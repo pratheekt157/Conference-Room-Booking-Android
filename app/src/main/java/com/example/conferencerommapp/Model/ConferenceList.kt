@@ -1,6 +1,7 @@
 package com.example.myapplication.Models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ConferenceList(
 
@@ -26,6 +27,6 @@ data class ConferenceList(
         var place : String? = null,
 
         @SerializedName("permission")
-        var permission: Boolean? = null
+        var permission: Int? = null
 
-)
+) :Serializable

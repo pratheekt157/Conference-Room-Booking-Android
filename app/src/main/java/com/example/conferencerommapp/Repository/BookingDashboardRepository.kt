@@ -44,12 +44,6 @@ class BookingDashboardRepository {
         /**
          * API call using retrofit
          */
-
-        val date = Date()
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-        var dateDate = dateFormat.parse(dateFormat.format(date))
-        Log.d("date------", dateDate.toString())
-
         mBookingDashboardInput.currentDatTime = GetCurrentTimeInUTC.getCurrentTimeInUTC()
         val service = ServiceBuilder.getObject()
         val requestCall: Call<DashboardDetails> = service.getDashboard(token, mBookingDashboardInput)

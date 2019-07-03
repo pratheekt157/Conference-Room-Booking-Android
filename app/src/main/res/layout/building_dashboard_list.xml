@@ -4,25 +4,25 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="5dp">
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/card_corner_radius_dp_5">
     <RelativeLayout
             android:layout_toEndOf="@+id/linear_layout_icon"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:padding="8dp">
+            android:layout_marginStart="@dimen/dp_8"
+            android:padding="@dimen/dp_8">
 
         <TextView
                 android:id="@+id/building_name"
-                android:paddingRight="8dp"
-                android:paddingBottom="1dp"
+                android:paddingRight="@dimen/dp_8"
+                android:paddingBottom="@dimen/dp_1"
                 android:layout_width="match_parent"
                 android:hint="@string/building_name_hint"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp_16"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
@@ -30,19 +30,19 @@
                 android:ellipsize="end"/>
         <TextView
                 android:layout_below="@id/building_name"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/dp_2"
                 android:drawableStart="@drawable/ic_location_on_black_24dp"
                 android:id="@+id/building_place"
                 android:fontFamily="@font/roboto"
                 android:layout_width="match_parent"
                 android:hint="@string/building_place_hint"
-                android:drawablePadding="16dp"
-                android:textSize="12sp"
+                android:drawablePadding="@dimen/dp_16"
+                android:textSize="@dimen/sp_12"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end"/>
         <View
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_below="@+id/building_place"
                 android:id="@+id/line"
                 android:background="#E5E5E5"
@@ -54,7 +54,7 @@
                 android:textColor="@color/colorPrimary"
                 android:text="Edit"
                 android:id="@+id/edit_room_details"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -64,106 +64,9 @@
                 android:textColor="@color/colorPrimary"
                 android:text="View Rooms"
                 android:id="@+id/view_room_text_view"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
-<!--
-<androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="5dp">
-
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/linear_layout_icon">
-            <TextView
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/status_icon"
-                    android:layout_margin="8dp"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:drawableTop="@drawable/ic_building_icon"
-                    android:layout_width="wrap_content"/>
-        </LinearLayout>
-
-        <View
-                android:id="@+id/vertical_bar"
-                android:layout_width="1dp"
-                android:layout_toRightOf="@+id/linear_layout_icon"
-                android:layout_height="match_parent"
-                android:background="#B9B9B9"/>
-        <RelativeLayout
-                android:layout_toEndOf="@+id/linear_layout_icon"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:padding="8dp">
-
-            <TextView
-                    android:id="@+id/building_name"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="1dp"
-                    android:layout_width="match_parent"
-                    android:hint="@string/building_name_hint"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/roboto"
-                    android:textColor="@color/black"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
-            <TextView
-                    android:layout_below="@id/building_name"
-                    android:layout_marginTop="2dp"
-                    android:id="@+id/building_place"
-                    android:fontFamily="@font/roboto"
-                    android:layout_width="match_parent"
-                    android:hint="@string/building_place_hint"
-                    android:drawablePadding="16dp"
-                    android:textSize="12sp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"/>
-
-            <TextView
-                    android:drawableStart="@drawable/ic_keyboard_arrow_right_black_24dp"
-                    android:layout_centerVertical="true"
-                    android:clickable="false"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <View
-                    android:layout_marginTop="8dp"
-                    android:layout_below="@+id/building_place"
-                    android:id="@+id/line"
-                    android:background="@color/grey"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-            <TextView
-                    android:layout_below="@+id/line"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Edit"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </RelativeLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
-
--->

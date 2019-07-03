@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="@dimen/dp_16"
         tools:context=".Activity.UpdateBookingActivity">
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout6"
@@ -15,19 +15,19 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
                 android:focusable="false"
-                android:editable="false"
                 android:id="@+id/Purpose"
                 android:textColor="@color/nonEditableValues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:enabled="false"
                 android:singleLine="true"
                 android:maxLines="1"
                 android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_local_offer_black_24dp"
-                android:drawablePadding="5dp"
+                android:drawablePadding="@dimen/drawable_padding_5dp"
                 android:maxLength="50"
-                android:hint="Purpose"/>
+                android:hint="@string/purpose"/>
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -41,29 +41,29 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:focusable="false"
-                android:editable="false"
+                android:enabled="false"
                 android:textColor="@color/nonEditableValues"
                 android:id="@+id/buildingname"
-                android:hint="Building Name"
-            android:drawableTint="@color/nonEditableValues"
-            android:drawableStart="@drawable/ic_building_black_24dp"
-                android:drawablePadding="5dp"/>
+                android:hint="@string/building_name"
+                android:drawableTint="@color/nonEditableValues"
+                android:drawableStart="@drawable/ic_building_black_24dp"
+                android:drawablePadding="@dimen/drawable_padding_5dp"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dp_8"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:editable="false"
+                android:enabled="false"
                 android:focusable="false"
                 android:textColor="@color/nonEditableValues"
                 android:id="@+id/conferenceRoomName"
-                android:hint="Room name"
+                android:hint="@string/room_name"
                 android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_room_black_24dp"
                 android:drawablePadding="5dp"/>
@@ -80,28 +80,28 @@
                 android:ems="10"
                 android:textColor="@color/nonEditableValues"
                 android:focusable="false"
-                android:editable="false"
                 android:id="@+id/date_update"
-                android:hint="Date"
+                android:hint="@string/date"
                 android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_today_black_24dp"
-                android:drawablePadding="5dp"/>
+                android:drawablePadding="@dimen/drawable_padding_5dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="100">
+            android:weightSum="2"
+            android:baselineAligned="false">
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/from_time_input_layout"
                 android:layout_width="0dp"
-                android:layout_weight="50"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:textColorHint="@color/colorPrimary"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -113,19 +113,19 @@
                     android:focusable="false"
                     android:textColor="@color/colorPrimary"
                     android:drawableStart="@drawable/ic_schedule_black_24dp"
-                    android:drawablePadding="5dp"
+                    android:drawablePadding="@dimen/drawable_padding_5dp"
                     android:maxLength="50"
                     android:hint="@string/start_time"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/to_time_layout"
                 android:layout_width="0dp"
-                android:layout_weight="50"
-                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/dp_20"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:textColorHint="@color/colorPrimary"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/toTime_update"
@@ -137,15 +137,15 @@
                     android:textColor="@color/colorPrimary"
                     android:hint="@string/end_time"
                     android:drawableStart="@drawable/ic_schedule_black_24dp"
-                    android:drawablePadding="5dp"/>
+                    android:drawablePadding="@dimen/drawable_padding_5dp"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
     <Button android:id="@+id/update"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="UPDATE"
+            android:text="@string/update"
             android:background="@color/colorPrimary"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="@dimen/dp_40"
             android:textColor="@android:color/white"/>
 </LinearLayout>
 

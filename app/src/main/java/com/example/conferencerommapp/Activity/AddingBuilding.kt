@@ -53,11 +53,14 @@ class AddingBuilding : AppCompatActivity() {
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun getDataFromIntent() {
-        var flag = intent.getBooleanExtra("FLAG", false)
+        flag = intent.getBooleanExtra("FLAG", false)
         if(flag) {
+            button_add_building.text = getString(R.string.update_button)
             mUpdateBuildingDetails.buildingId = intent.getIntExtra("BID", 0)
             buildingNameEditText.text = intent.getStringExtra("BNAME").toEditable()
             buildingPlaceEditText.text = intent.getStringExtra("BPLACE").toEditable()
+        } else {
+            button_add_building.text = getString(R.string.ADD)
         }
     }
 
@@ -179,6 +182,7 @@ class AddingBuilding : AppCompatActivity() {
             finish()
         })
         mAddBuildingViewModel.returnFailureForUpdateBuilding().observe(this, Observer {
+            progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, AddingBuilding())
             } else {
@@ -195,7 +199,7 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuilding.place = buildingPlaceEditText.text.toString().trim()
     }
 
-    /**
+    /**addBuildingDetails
      * validation for field building name for empty condition
      */
     private fun validateBuildingName(): Boolean {

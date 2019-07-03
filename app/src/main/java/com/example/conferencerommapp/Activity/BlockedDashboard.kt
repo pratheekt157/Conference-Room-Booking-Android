@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Html.fromHtml
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -38,6 +39,8 @@ class BlockedDashboard : AppCompatActivity() {
      */
     @BindView(R.id.block_recyclerView)
     lateinit var recyclerView: RecyclerView
+    @BindView(R.id.block_dashboard_progress_bar)
+    lateinit var mProgressBar: ProgressBar
     @BindView(R.id.block_dashboard_refresh_layout)
     lateinit var refreshLayout: SwipeRefreshLayout
     private lateinit var blockedAdapter: BlockedDashboardNew
@@ -109,7 +112,7 @@ class BlockedDashboard : AppCompatActivity() {
          */
         mBlockedDashboardViewModel.returnBlockedRoomList().observe(this, Observer {
             refreshLayout.isRefreshing = false
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             empty_view_blocked.visibility = View.GONE
             r2_block_dashboard.setBackgroundColor(Color.parseColor("#F7F7F7"))
             mBlockRoomList.clear()
@@ -119,7 +122,7 @@ class BlockedDashboard : AppCompatActivity() {
         })
         mBlockedDashboardViewModel.returnFailureCodeFromBlockedApi().observe(this, Observer {
             refreshLayout.isRefreshing = false
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, BlockedDashboard())
             } else if (it == Constants.NO_CONTENT_FOUND) {
@@ -211,7 +214,7 @@ class BlockedDashboard : AppCompatActivity() {
      * function calls the ViewModel of blockedList
      */
     private fun loadBlocking() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mBlockedDashboardViewModel.getBlockedList(GetPreference.getTokenFromPreference(this))
     }
 

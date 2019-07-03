@@ -13,10 +13,11 @@
             android:layout_height="match_parent"
             app:cardCornerRadius="5dp"
             android:padding="8dp">
+
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:descendantFocusability="beforeDescendants"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
             <LinearLayout
                     android:id="@+id/time_layout"
                     android:layout_width="match_parent"
@@ -212,11 +213,18 @@
                     android:layout_below="@id/suggestions"
                     android:visibility="visible"
                     android:layout_margin="2dp"
+                    android:layout_marginBottom="4dp"
                     android:id="@+id/recycler_view_room_list"
                     android:layout_width="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/conference_room_list"/>
+            <ProgressBar
+                    android:id="@+id/input_for_booking_progress_bar"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </androidx.core.widget.NestedScrollView>

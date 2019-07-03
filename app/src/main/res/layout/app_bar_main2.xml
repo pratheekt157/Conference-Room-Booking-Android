@@ -15,13 +15,10 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="Bookings"
+                app:title="@string/Bookings"
                 app:titleTextColor="@color/white"
                 android:background="@color/colorPrimary"/>
-        <!--app:popupTheme="@style/PopupOverlay"/>-->
-
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--<include layout="@layout/content_main2"/>-->
     <include layout="@layout/activity_user_dashboard"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

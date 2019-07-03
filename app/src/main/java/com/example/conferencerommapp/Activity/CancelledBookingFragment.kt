@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 
 class CancelledBookingFragment : Fragment() {
     private var finalList = ArrayList<Dashboard>()
+    private lateinit var mProgressBar: ProgressBar
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     private lateinit var acct: GoogleSignInAccount
     private lateinit var progressDialog: ProgressDialog
@@ -51,6 +53,7 @@ class CancelledBookingFragment : Fragment() {
      */
     @SuppressLint("ResourceAsColor")
     fun init() {
+        mProgressBar = activity!!.findViewById(R.id.cancelled_main_progress_bar)
         initRecyclerView()
         initLateInitializerVariables()
         cancelled_booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
@@ -81,7 +84,7 @@ class CancelledBookingFragment : Fragment() {
     }
 
     private fun getViewModel() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
     }
 
@@ -136,14 +139,14 @@ class CancelledBookingFragment : Fragment() {
         mBookingDashBoardViewModel.returnSuccess().observe(this, Observer {
             cancelled_progress_bar.visibility = View.GONE
             cancelled_booking_refresh_layout.isRefreshing = false
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             setFilteredDataToAdapter(it.dashboard!!)
             hasMoreItem = it.paginationMetaData!!.nextPage!!
         })
         mBookingDashBoardViewModel.returnFailure().observe(this, Observer {
             cancelled_progress_bar.visibility = View.GONE
             cancelled_booking_refresh_layout.isRefreshing = false
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else if (it == Constants.NO_CONTENT_FOUND && finalList.size == 0) {

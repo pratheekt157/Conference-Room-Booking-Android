@@ -7,7 +7,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Html.fromHtml
+import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,8 +32,9 @@ class ConferenceDashBoard : AppCompatActivity() {
 
     @BindView(R.id.conference_list)
     lateinit var recyclerView: RecyclerView
+    @BindView(R.id.conference_room_dashboard_progress_bar)
+    lateinit var mProgressBar: ProgressBar
     var buildingId: Int = 0
-    lateinit var progressDialog: ProgressDialog
     private lateinit var mHrConferenceRoomViewModel: HrConferenceRoomViewModel
     private lateinit var conferenceRoomAdapter: ConferenceRecyclerAdapter
     private var mConferenceList = ArrayList<ConferenceList>()
@@ -56,7 +59,6 @@ class ConferenceDashBoard : AppCompatActivity() {
 
     private fun initLateInitalizerVariables(){
         buildingId = getIntentData()
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         mHrConferenceRoomViewModel = ViewModelProviders.of(this).get(HrConferenceRoomViewModel::class.java)
     }
 
@@ -83,19 +85,21 @@ class ConferenceDashBoard : AppCompatActivity() {
     }
     private fun observeData() {
         mHrConferenceRoomViewModel.returnConferenceRoomList().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             empty_view_blocked1.visibility = View.GONE
             mConferenceList.clear()
+            Log.e("--------------", it.toString())
             if(it.isNotEmpty()) {
                 mConferenceList.addAll(it)
             } else {
+
                 empty_view_blocked1.visibility = View.VISIBLE
                 empty_view_blocked1.setBackgroundColor(Color.parseColor("#FFFFFF"))
             }
             setAdapter()
         })
         mHrConferenceRoomViewModel.returnFailureForConferenceRoom().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             when (it) {
                 Constants.INVALID_TOKEN -> ShowDialogForSessionExpired.signOut(this, ConferenceDashBoard())
                 else -> {
@@ -110,10 +114,11 @@ class ConferenceDashBoard : AppCompatActivity() {
         conferenceRoomAdapter = ConferenceRecyclerAdapter(mConferenceList, object: ConferenceRecyclerAdapter.EditRoomDetails {
             override fun editRoom(position: Int) {
                 val intent = Intent(this@ConferenceDashBoard, AddingConference::class.java)
-                var editRoomDetails = EditRoomDetails()
+                val editRoomDetails = EditRoomDetails()
                 editRoomDetails.mRoomDetail = mConferenceList[position]
-                intent.putExtra("FLAG", true)
+                intent.putExtra(Constants.FLAG, true)
                 intent.putExtra(Constants.EXTRA_INTENT_DATA, editRoomDetails)
+                Log.e("-----------------room--", editRoomDetails.mRoomDetail.toString())
                 startActivity(intent)
             }
 
@@ -162,9 +167,7 @@ class ConferenceDashBoard : AppCompatActivity() {
         /**
          * getting Progress Dialog
          */
-
-        // todo pass pagination to backend
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mHrConferenceRoomViewModel.getConferenceRoomList(buildingId, GetPreference.getTokenFromPreference(this))
     }
 }

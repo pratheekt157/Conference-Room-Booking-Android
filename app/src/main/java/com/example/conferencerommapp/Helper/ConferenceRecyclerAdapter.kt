@@ -28,7 +28,7 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.conferencelist = conferencceList[position]
         holder.conferenceName.text = conferencceList[position].roomName + " [${conferencceList[position].capacity} people]"
-        if(conferencceList[position].permission!!) {
+        if(conferencceList[position].permission!! == 1) {
             holder.permissionTextView.visibility = View.VISIBLE
         } else {
             holder.permissionTextView.visibility = View.GONE
@@ -67,7 +67,7 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
 
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         val conferenceName: TextView = itemView.findViewById(R.id.room_name_show)
-        val permissionTextView: TextView = itemView.findViewById(R.id.permission_required_text_view)
+        val permissionTextView: TextView = itemView.findViewById(R.id.permission_text_view)
         var amenity1: TextView = itemView.findViewById(R.id.dashboard_ani_1)
         var amenity2: TextView = itemView.findViewById(R.id.dashboard_ani_2)
         var amenity3: TextView = itemView.findViewById(R.id.dashboard_ani_3)

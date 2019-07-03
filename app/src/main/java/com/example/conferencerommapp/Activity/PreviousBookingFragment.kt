@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,11 +29,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.fragment_previous_booking.*
 
 class PreviousBookingFragment : Fragment() {
+    private lateinit var mProgressBar: ProgressBar
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     private lateinit var acct: GoogleSignInAccount
     private lateinit var progressDialog: ProgressDialog
     private lateinit var mBookingListAdapter: PreviousBookingAdapter
+    private var mActivity = UserBookingsDashboardActivity()
     var mBookingDashboardInput = BookingDashboardInput()
     var pagination: Int = 1
     var hasMoreItem: Boolean = false
@@ -53,6 +56,7 @@ class PreviousBookingFragment : Fragment() {
      */
     @SuppressLint("ResourceAsColor")
     fun init() {
+        mProgressBar = activity!!.findViewById(R.id.progress_bar)
         initRecyclerView()
         initLateInitializerVariables()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
@@ -85,7 +89,8 @@ class PreviousBookingFragment : Fragment() {
     }
 
     private fun getViewModel() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
+        //progressDialog.show()
         mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
     }
 
@@ -141,7 +146,8 @@ class PreviousBookingFragment : Fragment() {
         mBookingDashBoardViewModel.returnSuccess().observe(this, Observer {
             previous_progress_bar.visibility = View.GONE
             previous__booking_refresh_layout.isRefreshing = false
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
+            //progressDialog.dismiss()
             previous__empty_view.visibility = View.GONE
             hasMoreItem = it.paginationMetaData!!.nextPage!!
             setFilteredDataToAdapter(it.dashboard!!)
@@ -149,7 +155,8 @@ class PreviousBookingFragment : Fragment() {
         mBookingDashBoardViewModel.returnFailure().observe(this, Observer {
             previous_progress_bar.visibility = View.GONE
             previous__booking_refresh_layout.isRefreshing = false
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
+            //progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else if (it == Constants.NO_CONTENT_FOUND && finalList.size == 0) {

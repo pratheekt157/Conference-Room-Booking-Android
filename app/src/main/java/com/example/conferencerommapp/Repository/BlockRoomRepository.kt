@@ -74,7 +74,7 @@ class BlockRoomRepository {
         /**
          *  api call using retrofit
          */
-        val requestCall: Call<List<ConferenceList>> = ServiceBuilder.getObject().conferencelist(token, buildingId)
+        val requestCall: Call<List<ConferenceList>> = ServiceBuilder.getObject().conferenceList(token, buildingId)
         requestCall.enqueue(object : Callback<List<ConferenceList>> {
             override fun onFailure(call: Call<List<ConferenceList>>, t: Throwable) {
                 when(t) {

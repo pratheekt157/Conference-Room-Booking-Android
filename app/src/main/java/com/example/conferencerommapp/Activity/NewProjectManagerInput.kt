@@ -36,6 +36,9 @@ import java.util.*
 
 @Suppress("NAME_SHADOWING", "DEPRECATION")
 class NewProjectManagerInput : AppCompatActivity() {
+
+    @BindView(R.id.project_manager_progress_bar)
+    lateinit var mProgressDialog: ProgressBar
     @BindView(R.id.fromTime_manager)
     lateinit var fromTimeEditText: EditText
     @BindView(R.id.toTime_manager)
@@ -199,16 +202,16 @@ class NewProjectManagerInput : AppCompatActivity() {
             fromTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $start"))
             toTimeList.add(FormatTimeAccordingToZone.formatDateAsUTC("$item $end"))
         }
-        Log.i("------from time list", "" + fromTimeList)
+
     }
     //observe data from view model
     private fun observerData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressDialog.visibility = View.GONE
             setBuildingSpinner(it)
         })
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressDialog.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
             } else {
@@ -239,7 +242,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             if(it.isEmpty()) {
                 manager_suggestions.text = getString(R.string.no_rooms_available)
             } else {
-                manager_suggestions.text = getString(R.string.suggestion_message)
+                manager_suggestions.text = "No room available in this building. Have look on suggestion"
             }
             setAdapter(it)
         })

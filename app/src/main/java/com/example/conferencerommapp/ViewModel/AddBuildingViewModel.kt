@@ -61,7 +61,7 @@ open class AddBuildingViewModel : ViewModel() {
      */
     fun updateBuildingDetails(mAddBuilding: AddBuilding, token: String) {
         mAddBuildingRepository = AddBuildingRepository.getInstance()
-        mAddBuildingRepository!!.addBuildingDetails(mAddBuilding, token, object :
+        mAddBuildingRepository!!.updateBuildingDetails(mAddBuilding, token, object :
             ResponseListener {
             override fun onFailure(failure: Any) {
                 mFailureForUpdateBuilding.value = failure

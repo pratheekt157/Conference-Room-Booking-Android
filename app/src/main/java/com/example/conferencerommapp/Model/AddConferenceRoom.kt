@@ -23,7 +23,6 @@ data class AddConferenceRoom(
    @SerializedName("projector")
    var projector: Boolean? = null,
 
-
    @SerializedName("monitor")
    var monitor: Boolean? = null,
 

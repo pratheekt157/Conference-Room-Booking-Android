@@ -179,10 +179,11 @@ class UpcomingBookingAdapter(
     /**
      * set data to the fields of view
      */
+    @SuppressLint("SetTextI18n")
     private fun setDataToFields(holder: ViewHolder, position: Int) {
         holder.dashboard = dashboardItemList[position]
         holder.roomNameTextView.text =
-            dashboardItemList[position].roomName + ", " + dashboardItemList[position].buildingName
+              "${dashboardItemList[position].roomName}, ${dashboardItemList[position].buildingName}"
         holder.purposeTextView.text = dashboardItemList[position].purpose
         holder.showButton.setOnClickListener {
             setMeetingMembers(position)

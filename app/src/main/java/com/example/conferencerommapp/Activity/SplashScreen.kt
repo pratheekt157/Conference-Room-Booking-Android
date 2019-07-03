@@ -8,6 +8,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -26,6 +28,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 class SplashScreen : AppCompatActivity() {
 
+    private lateinit var mProgressBar: ProgressBar
     private lateinit var prefs: SharedPreferences
     private lateinit var progressDialog: ProgressDialog
     private lateinit var mGetRoleOfUserViewModel: GetRoleOfUserViewModel
@@ -61,7 +64,7 @@ class SplashScreen : AppCompatActivity() {
      * function make a request to backend for checking whether the user is registered or not
      */
     private fun checkRegistration() {
-        progressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this))
     }
 
@@ -69,6 +72,7 @@ class SplashScreen : AppCompatActivity() {
      * initialize all lateinit variables
      */
     fun init() {
+        mProgressBar = findViewById(R.id.splash_screen_progress_bar)
         progressDialog =  GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
         mGetRoleOfUserViewModel = ViewModelProviders.of(this).get(GetRoleOfUserViewModel::class.java)
@@ -76,11 +80,11 @@ class SplashScreen : AppCompatActivity() {
 
     private fun observeData() {
         mGetRoleOfUserViewModel.returnSuccessCodeForUserROle().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             setValueForSharedPreference(it)
         })
         mGetRoleOfUserViewModel.returnFailureCodeForUserRole().observe(this, Observer {
-            progressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if(it == Constants.INVALID_TOKEN) {
                 signIn()
                 finish()

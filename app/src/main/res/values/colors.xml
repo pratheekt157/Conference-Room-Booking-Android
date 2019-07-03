@@ -21,5 +21,8 @@
     <color name="dayDeselected">@android:color/darker_gray</color>
     <color name="error_color">#ba160c</color>
     <color name="aminities">#BDBDBD</color>
+    <color name="sub_item_text_color">#333333</color>
+    <color name="recycler_view_background">#F7F7F7</color>
+    <color name="amenities_color">#4F4F4F</color>
 
 </resources>

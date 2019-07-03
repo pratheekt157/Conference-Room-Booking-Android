@@ -1,20 +1,15 @@
 package com.example.conferencerommapp.Activity
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -22,13 +17,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.NetworkState
+import com.example.conferencerommapp.Helper.RoomAdapter
 import com.example.conferencerommapp.Model.Building
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.InputDetailsForRoom
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
@@ -40,6 +35,8 @@ import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 
 class InputDetailsForBookingFragment : Fragment() {
 
+    @BindView(R.id.input_for_booking_progress_bar)
+    lateinit var mProgressBar: ProgressBar
     @BindView(R.id.date)
     lateinit var dateEditText: EditText
     @BindView(R.id.fromTime)
@@ -56,14 +53,13 @@ class InputDetailsForBookingFragment : Fragment() {
     lateinit var purposeEditText: EditText
     @BindView(R.id.booking_scroll_view)
     lateinit var scrollView: NestedScrollView
-    private lateinit var mProgressDialog: ProgressDialog
     private lateinit var mSetDataFromActivity: GetIntentDataFromActvity
     private lateinit var mConferenceRoomViewModel: ConferenceRoomViewModel
     private var mInputDetailsForRoom = InputDetailsForRoom()
     private var mSuggestedRoomApiIsCallled = false
     private lateinit var acct: GoogleSignInAccount
     var mSetIntentData = GetIntentDataFromActvity()
-    var mBuildingName = "Select Building"
+    var mBuildingName = Constants.SELECT_BUILDING
     var mBuildingId = -1
     var capacity = 0
     var buildingId = 0
@@ -104,15 +100,13 @@ class InputDetailsForBookingFragment : Fragment() {
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModelForBuildingList()
         } else {
-            val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
-            startActivityForResult(i, Constants.RES_CODE)
+            startActivityForResult(Intent(activity!!, NoInternetConnectionActivity::class.java), Constants.RES_CODE)
         }
     }
 
     private fun initLateInitializerVariables() {
         acct = GoogleSignIn.getLastSignedInAccount(activity)!!
         mInputDetailsForRoom.email = acct.email.toString()
-        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
         mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
         mConferenceRoomViewModel = ViewModelProviders.of(this).get(ConferenceRoomViewModel::class.java)
         mSetDataFromActivity = GetIntentDataFromActvity()
@@ -122,18 +116,17 @@ class InputDetailsForBookingFragment : Fragment() {
      * get the object of ViewModel using ViewModelProviders and observers the data from backend
      */
     private fun getViewModelForBuildingList() {
-        mProgressDialog.show()
-        // make api call
+        mProgressBar.visibility = View.VISIBLE
         mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(activity!!))
     }
 
     private fun getViewModelForConferenceRoomList(mInputDetailsForRoom: InputDetailsForRoom) {
-        mProgressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         mConferenceRoomViewModel.getConferenceRoomList(GetPreference.getTokenFromPreference(activity!!), mInputDetailsForRoom)
     }
 
     private fun setAdapter(mListOfRooms: List<RoomDetails>) {
-        mProgressDialog.dismiss()
+        mProgressBar.visibility = View.GONE
         customAdapter =
             RoomAdapter(mListOfRooms as ArrayList<RoomDetails>, activity!!, object : RoomAdapter.ItemClickListener {
                 override fun onItemClick(roomId: Int?, buidingId: Int?, roomName: String?, buildingName: String?) {
@@ -157,16 +150,15 @@ class InputDetailsForBookingFragment : Fragment() {
      */
     private fun observeData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             setBuildingSpinner(it)
         })
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else {
                 ShowToast.show(activity!!, it as Int)
-
             }
         })
 
@@ -176,7 +168,7 @@ class InputDetailsForBookingFragment : Fragment() {
         })
         // Negative response
         mConferenceRoomViewModel.returnFailure().observe(this, Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else {
@@ -197,7 +189,7 @@ class InputDetailsForBookingFragment : Fragment() {
         })
         // negative response for suggested rooms
         mConferenceRoomViewModel.returnFailureForSuggestedRooms().observe(this, Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else {
@@ -207,10 +199,10 @@ class InputDetailsForBookingFragment : Fragment() {
         })
     }
     private fun goToSelectMeetingMembersActivity() {
-        mSetIntentData.fromTime = dateEditText.text.toString() + " " + fromTimeEditText.text.toString()
-        mSetIntentData.toTime = dateEditText.text.toString() + " " + toTimeEditText.text.toString()
+        mSetIntentData.fromTime = "${dateEditText.text} ${fromTimeEditText.text}"
+        mSetIntentData.toTime = "${dateEditText.text} ${toTimeEditText.text}"
         mSetIntentData.purpose = purposeEditText.text.toString()
-        var intent = Intent(activity!!, SelectMeetingMembersActivity::class.java)
+        val intent = Intent(activity!!, SelectMeetingMembersActivity::class.java)
         intent.putExtra(Constants.EXTRA_INTENT_DATA, mSetIntentData)
         startActivity(intent)
     }
@@ -218,7 +210,7 @@ class InputDetailsForBookingFragment : Fragment() {
     private fun checkForStatusOfRooms(mListOfRooms: List<RoomDetails>?) {
         var count = 0
         for (room in mListOfRooms!!) {
-            if (room.status == "Unavailable") {
+            if (room.status == getString(R.string.unavailable)) {
                 count++
             }
         }
@@ -253,10 +245,10 @@ class InputDetailsForBookingFragment : Fragment() {
     }
 
     private fun setBuildingSpinner(mBuildingList: List<Building>) {
-        var buildingNameList = mutableListOf<String>()
-        var buildingIdList = mutableListOf<Int>()
+        val buildingNameList = mutableListOf<String>()
+        val buildingIdList = mutableListOf<Int>()
 
-        buildingNameList.add("Select Building")
+        buildingNameList.add(getString(R.string.select_building))
         buildingIdList.add(-1)
         for (mBuilding in mBuildingList) {
             buildingNameList.add(mBuilding.buildingName!!)
@@ -527,38 +519,39 @@ class InputDetailsForBookingFragment : Fragment() {
              * if the elapsed2 < 0 that means the from time is less than the current time. In that case
              * we restrict the user to move forword and show some message in alert that the time is not valid
              */
-            if (elapsed2 < 0) {
-                val builder = GetAleretDialog.getDialog(
-                    activity!!,
-                    getString(R.string.invalid),
-                    getString(R.string.invalid_fromtime)
-                )
-                builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+            when {
+                elapsed2 < 0 -> {
+                    val builder = GetAleretDialog.getDialog(
+                        activity!!,
+                        getString(R.string.invalid),
+                        getString(R.string.invalid_fromtime)
+                    )
+                    builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                    }
+                    val alertDialog = GetAleretDialog.showDialog(builder)
+                    ColorOfDialogButton.setColorOfDialogButton(alertDialog)
                 }
-                var alertDialog = GetAleretDialog.showDialog(builder)
-                ColorOfDialogButton.setColorOfDialogButton(alertDialog)
-            }
 
-            /**
-             * if MIN_MILLISECONDS <= elapsed that means the meeting duration is more than 10 min
-             * if the above condition is not true than we show a message in alert that the meeting duration must be greater than 15 min
-             * if MAX_MILLISECONDS >= elapsed that means the meeting duration is less than 4hours
-             * if the above condition is not true than we show show a message in alert that the meeting duration must be less than 4hours
-             * if above both conditions are true than entered time is correct and user is allowed to go to the next actvity
-             */
-            else if (minMilliseconds <= elapsed) {
-                setDataForApiCallToFetchRoomDetails()
-            } else {
-                val builder = GetAleretDialog.getDialog(
-                    activity!!,
-                    getString(R.string.invalid),
-                    getString(R.string.time_validation_message)
-                )
-                builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                /**
+                 * if MIN_MILLISECONDS <= elapsed that means the meeting duration is more than 15 min
+                 * if the above condition is not true than we show a message in alert that the meeting duration must be greater than 15 min
+                 * if MAX_MILLISECONDS >= elapsed that means the meeting duration is less than 4hours
+                 * if the above condition is not true than we show show a message in alert that the meeting duration must be less than 4hours
+                 * if above both conditions are true than entered time is correct and user is allowed to go to the next activity
+                 */
+                minMilliseconds <= elapsed -> setDataForApiCallToFetchRoomDetails()
+                else -> {
+                    val builder = GetAleretDialog.getDialog(
+                        activity!!,
+                        getString(R.string.invalid),
+                        getString(R.string.time_validation_message)
+                    )
+                    builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                    }
+                    val alertBuilder = GetAleretDialog.showDialog(builder)
+                    ColorOfDialogButton.setColorOfDialogButton(alertBuilder)
+
                 }
-                var alertBuilder = GetAleretDialog.showDialog(builder)
-                ColorOfDialogButton.setColorOfDialogButton(alertBuilder)
-
             }
         } catch (e: Exception) {
             Toast.makeText(activity!!, getString(R.string.details_invalid), Toast.LENGTH_LONG).show()

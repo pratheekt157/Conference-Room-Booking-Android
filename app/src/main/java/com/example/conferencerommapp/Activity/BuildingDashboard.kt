@@ -8,6 +8,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -23,6 +26,7 @@ import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
+import java.text.FieldPosition
 
 class BuildingDashboard : AppCompatActivity() {
     /**
@@ -30,6 +34,8 @@ class BuildingDashboard : AppCompatActivity() {
      */
     @BindView(R.id.buidingRecyclerView)
     lateinit var recyclerView: RecyclerView
+    @BindView(R.id.building_dashboard_progress_bar)
+    lateinit var mProgressBar: ProgressBar
     private lateinit var buildingAdapter: BuildingDashboardAdapter
     private lateinit var mBuildingsViewModel: BuildingViewModel
     private lateinit var mProgressDialog: ProgressDialog
@@ -97,7 +103,7 @@ class BuildingDashboard : AppCompatActivity() {
      */
     private fun observeData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if(it.isEmpty()) {
                 Toasty.info(this, "Please Add Building", Toasty.LENGTH_SHORT).show()
             } else {
@@ -109,25 +115,21 @@ class BuildingDashboard : AppCompatActivity() {
                     }
                 },
                     object : BuildingDashboardAdapter.EditClickListener {
-                        override fun onEditBtnClick(
-                            buildingId: String?,
-                            buildingName: String?,
-                            buildingPlace: String?
-                        ) {
+                        override fun onEditBtnClick(position: Int) {
                             val intent = Intent(this@BuildingDashboard, AddingBuilding::class.java)
-                            intent.putExtra("BID", buildingId)
-                            intent.putExtra("BNAME", buildingName)
-                            intent.putExtra("BPLACE", buildingPlace)
-                            intent.putExtra("FLAG", true)
+                            Log.e("------------------",it[position].buildingId)
+                            intent.putExtra("BID", it[position].buildingId!!.toInt())
+                            intent.putExtra("BNAME", it[position].buildingName)
+                            intent.putExtra("BPLACE", it[position].buildingPlace)
+                            intent.putExtra(Constants.FLAG, true)
                             startActivity(intent)
                         }
-
                     })
                 recyclerView.adapter = buildingAdapter
             }
         })
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
-            mProgressDialog.dismiss()
+            mProgressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, BuildingDashboard())
             } else {
@@ -142,7 +144,7 @@ class BuildingDashboard : AppCompatActivity() {
      * setting the adapter by passing the data into it and implementing a Interface BtnClickListner of BuildingAdapter class
      */
     private fun getViewModel() {
-        mProgressDialog.show()
+        mProgressBar.visibility = View.VISIBLE
         // making API call
         mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }

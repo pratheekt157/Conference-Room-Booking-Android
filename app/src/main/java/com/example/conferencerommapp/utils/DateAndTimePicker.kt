@@ -3,6 +3,7 @@ package com.example.conferencerommapp.utils
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.text.Editable
 import android.widget.EditText
 import java.text.SimpleDateFormat
@@ -31,6 +32,10 @@ class DateAndTimePicker {
                     setTime.text = Editable.Factory.getInstance().newEditable(mCurrentTime)
                 }, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true)
             timePickerDialog.show()
+            timePickerDialog.getButton(TimePickerDialog.BUTTON_NEGATIVE).setBackgroundColor(Color.parseColor("#F2F2F2"))
+            timePickerDialog.getButton(TimePickerDialog.BUTTON_POSITIVE).setBackgroundColor(Color.parseColor("#F2F2F2"))
+            timePickerDialog.getButton(TimePickerDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#0072bc"))
+            timePickerDialog.getButton(TimePickerDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#0072bc"))
         }
 
         /**

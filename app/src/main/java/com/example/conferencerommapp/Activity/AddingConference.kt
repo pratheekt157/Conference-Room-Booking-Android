@@ -17,17 +17,15 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.AddConferenceRoom
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.AddConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
-import com.example.myapplication.Models.ConferenceList
 import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_adding_building.*
 import kotlinx.android.synthetic.main.activity_adding_conference.*
-import kotlin.system.measureNanoTime
 
 @Suppress("DEPRECATION")
 class AddingConference : AppCompatActivity() {
@@ -62,14 +60,15 @@ class AddingConference : AppCompatActivity() {
     private var mConferenceRoom = AddConferenceRoom()
     private lateinit var progressDialog: ProgressDialog
 
-    var flag = false
+    private var flag = false
     var roomId = 0
-    var mEditRoomDetails = EditRoomDetails()
+    private var mEditRoomDetails = EditRoomDetails()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adding_conference)
         ButterKnife.bind(this)
         init()
+        getIntentData()
         observeData()
     }
 
@@ -90,11 +89,12 @@ class AddingConference : AppCompatActivity() {
     private fun getIntentData() {
         flag = intent.getBooleanExtra(Constants.FLAG, false)
         if (flag) {
-            mEditRoomDetails.mRoomDetail = intent.getSerializableExtra(Constants.EXTRA_INTENT_DATA) as ConferenceList
+            add_conference_room.text = getString(R.string.update_button)
+            mEditRoomDetails = intent.getSerializableExtra(Constants.EXTRA_INTENT_DATA) as EditRoomDetails
             roomId = mEditRoomDetails.mRoomDetail!!.roomId!!
             roomCapacity.text = mEditRoomDetails.mRoomDetail!!.capacity.toString().toEditable()
             conferenceRoomEditText.text = mEditRoomDetails.mRoomDetail!!.roomName!!.toEditable()
-            switchButton.isChecked = mEditRoomDetails.mRoomDetail!!.permission!!
+            switchButton.isChecked = mEditRoomDetails.mRoomDetail!!.permission!! != 0
             for (amenity in mEditRoomDetails.mRoomDetail!!.amenities!!) {
                 when (amenity) {
                     Constants.PROJECTOR -> projector.isChecked = true
@@ -104,6 +104,8 @@ class AddingConference : AppCompatActivity() {
                     Constants.EXTENSION_BOARD -> extensionBoard.isChecked = true
                 }
             }
+        }else {
+            add_conference_room.text = getString(R.string.ADD)
         }
     }
 
@@ -144,10 +146,10 @@ class AddingConference : AppCompatActivity() {
         })
         mAddConferenceRoomViewModel.returnFailureForUpdateRoom().observe(this, Observer {
             progressDialog.dismiss()
-            if (it == getString(R.string.invalid_token)) {
-                ShowDialogForSessionExpired.showAlert(this, AddingConference())
-            } else {
-                ShowToast.show(this, it as Int)
+            when (it) {
+                getString(R.string.invalid_token) -> ShowDialogForSessionExpired.showAlert(this, AddingConference())
+                Constants.UNAVAILABLE_SLOT -> Toasty.info(this, getString(R.string.room_name_conflict_message), Toasty.LENGTH_SHORT, true).show()
+                else -> ShowToast.show(this, it as Int)
             }
         })
     }
@@ -193,9 +195,12 @@ class AddingConference : AppCompatActivity() {
      *  set values to the different properties of object which is required for api call
      */
     private fun addDataToObject(mConferenceRoom: AddConferenceRoom) {
-        val bundle: Bundle? = intent.extras
-        val buildingId = bundle!!.get(Constants.EXTRA_BUILDING_ID)!!.toString().toInt()
-        mConferenceRoom.bId = buildingId
+        if(flag) {
+            mConferenceRoom.bId = mEditRoomDetails.mRoomDetail!!.buildingId
+        } else {
+            val bundle: Bundle? = intent.extras
+            mConferenceRoom.bId  = bundle!!.get(Constants.EXTRA_BUILDING_ID)!!.toString().toInt()
+        }
         mConferenceRoom.roomName = conferenceRoomEditText.text.toString().trim()
         mConferenceRoom.capacity = roomCapacity.text.toString().toInt()
         mConferenceRoom.monitor = monitor.isChecked
@@ -205,6 +210,9 @@ class AddingConference : AppCompatActivity() {
         mConferenceRoom.projector = projector.isChecked
         mConferenceRoom.permission = switchButton.isChecked
     }
+
+
+
 
     /**
      * validation for room employeeList
