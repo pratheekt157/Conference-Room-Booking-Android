@@ -108,5 +108,11 @@ class Constants {
         const val SPEAKER = "Speaker"
 
         const val EXTENSION_BOARD = "Extension Board"
+
+        const val BUILDING_ID = "buildingId"
+
+        const val BUILDING_NAME = "buildingName"
+
+        const val BUILDING_PLACE = "buildingPlace"
     }
 }

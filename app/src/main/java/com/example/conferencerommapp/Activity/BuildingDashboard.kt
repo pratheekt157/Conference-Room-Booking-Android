@@ -6,12 +6,9 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.text.Html
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,14 +16,16 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.BuildingDashboardAdapter
+import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
-import com.example.conferencerommapp.utils.*
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.GetProgress
+import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
-import java.text.FieldPosition
 
 class BuildingDashboard : AppCompatActivity() {
     /**
@@ -105,7 +104,7 @@ class BuildingDashboard : AppCompatActivity() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
             mProgressBar.visibility = View.GONE
             if(it.isEmpty()) {
-                Toasty.info(this, "Please Add Building", Toasty.LENGTH_SHORT).show()
+                Toasty.info(this, getString(R.string.please_add_building), Toasty.LENGTH_SHORT).show()
             } else {
                 buildingAdapter = BuildingDashboardAdapter(this, it, object : BuildingDashboardAdapter.BtnClickListener {
                     override fun onBtnClick(buildingId: String?, buildingname: String?) {
@@ -117,10 +116,9 @@ class BuildingDashboard : AppCompatActivity() {
                     object : BuildingDashboardAdapter.EditClickListener {
                         override fun onEditBtnClick(position: Int) {
                             val intent = Intent(this@BuildingDashboard, AddingBuilding::class.java)
-                            Log.e("------------------",it[position].buildingId)
-                            intent.putExtra("BID", it[position].buildingId!!.toInt())
-                            intent.putExtra("BNAME", it[position].buildingName)
-                            intent.putExtra("BPLACE", it[position].buildingPlace)
+                            intent.putExtra(Constants.BUILDING_ID, it[position].buildingId!!.toInt())
+                            intent.putExtra(Constants.BUILDING_NAME, it[position].buildingName)
+                            intent.putExtra(Constants.BUILDING_PLACE, it[position].buildingPlace)
                             intent.putExtra(Constants.FLAG, true)
                             startActivity(intent)
                         }

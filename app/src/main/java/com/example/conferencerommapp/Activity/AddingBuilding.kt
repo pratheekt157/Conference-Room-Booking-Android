@@ -53,12 +53,12 @@ class AddingBuilding : AppCompatActivity() {
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun getDataFromIntent() {
-        flag = intent.getBooleanExtra("FLAG", false)
+        flag = intent.getBooleanExtra(Constants.FLAG, false)
         if(flag) {
             button_add_building.text = getString(R.string.update_button)
-            mUpdateBuildingDetails.buildingId = intent.getIntExtra("BID", 0)
-            buildingNameEditText.text = intent.getStringExtra("BNAME").toEditable()
-            buildingPlaceEditText.text = intent.getStringExtra("BPLACE").toEditable()
+            mUpdateBuildingDetails.buildingId = intent.getIntExtra(Constants.BUILDING_ID, 0)
+            buildingNameEditText.text = intent.getStringExtra(Constants.BUILDING_NAME).toEditable()
+            buildingPlaceEditText.text = intent.getStringExtra(Constants.BUILDING_PLACE).toEditable()
         } else {
             button_add_building.text = getString(R.string.ADD)
         }
