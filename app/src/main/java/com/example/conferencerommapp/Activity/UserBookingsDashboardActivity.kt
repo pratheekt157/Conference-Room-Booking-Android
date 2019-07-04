@@ -36,8 +36,6 @@ import kotlinx.android.synthetic.main.nav_header_main2.view.*
 @Suppress("DEPRECATION")
 class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-
-    private lateinit var mProgressDialog: ProgressDialog
     lateinit var mProgressBar: ProgressBar
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +70,6 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     }
 
     private fun init() {
-        mProgressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
         observeData()
     }
@@ -117,7 +114,6 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         dialog.setPositiveButton(R.string.ok) { _, _ ->
         }
         dialog.setNeutralButton(getString(R.string.get_new_passcode)) { _, _ ->
-            mProgressDialog.show()
             mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), true)
         }
         val builder = GetAleretDialog.showDialog(dialog)
