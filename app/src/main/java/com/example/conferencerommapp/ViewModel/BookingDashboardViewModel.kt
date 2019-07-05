@@ -109,9 +109,9 @@ class BookingDashboardViewModel : ViewModel() {
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will return the value for MutableLivedata
      */
-    fun getPasscode(token: String, generateNewPasscode: Boolean) {
+    fun getPasscode(token: String, generateNewPasscode: Boolean,emailId : String) {
         mBookingDashboardRepository = BookingDashboardRepository.getInstance()
-        mBookingDashboardRepository!!.getPasscode(token, generateNewPasscode, object :
+        mBookingDashboardRepository!!.getPasscode(token, generateNewPasscode,emailId,object :
             ResponseListener {
             override fun onFailure(failure: Any) {
                 mFailureForPasscode.value = failure

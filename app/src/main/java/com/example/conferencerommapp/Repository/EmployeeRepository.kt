@@ -30,9 +30,9 @@ class EmployeeRepository {
     /**
      * function will call the api which will return some data
      */
-    fun getEmployeeList(token: String, listener: ResponseListener) {
+    fun getEmployeeList(token: String, email: String, listener: ResponseListener) {
         val service = ServiceBuilder.getObject()
-        val requestCall: Call<List<EmployeeList>> = service.getEmployees(token)
+        val requestCall: Call<List<EmployeeList>> = service.getEmployees(token, email)
         requestCall.enqueue(object : Callback<List<EmployeeList>> {
             override fun onFailure(call: Call<List<EmployeeList>>, t: Throwable) {
                 when(t) {

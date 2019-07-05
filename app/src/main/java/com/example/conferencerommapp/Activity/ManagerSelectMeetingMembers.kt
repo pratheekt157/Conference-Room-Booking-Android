@@ -33,12 +33,14 @@ import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.chip.Chip
+import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_select_meeting_members.*
 import java.util.regex.Pattern
 
 class ManagerSelectMeetingMembers : AppCompatActivity() {
     val employeeList = ArrayList<EmployeeList>()
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private val selectedName = ArrayList<String>()
     private val selectedEmail = ArrayList<String>()
     private lateinit var customAdapter: SelectMembers
@@ -94,6 +96,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
      */
     fun init() {
         initActionBar()
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this)
         initLateInitializerVariables()
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModel()
@@ -120,7 +123,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
 
     private fun getViewModel() {
         mProgressBar.visibility = View.VISIBLE
-        mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this))
+        mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this), acct.email!!)
     }
 
     /**
@@ -130,7 +133,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
         mSelectMemberViewModel.returnSuccessForEmployeeList().observe(this, Observer {
             mProgressBar.visibility = View.GONE
             if (it.isEmpty()) {
-                Toasty.info(this, "Empty EmployeeList", Toast.LENGTH_SHORT, true).show()
+                Toasty.info(this, getString(R.string.empty_employee_list), Toast.LENGTH_SHORT, true).show()
                 finish()
             } else {
                 employeeList.clear()
@@ -209,6 +212,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
             if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject()
                 addBooking()
+                recurringBookingLog()
             } else {
                 val i = Intent(this@ManagerSelectMeetingMembers, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE2)
@@ -219,6 +223,16 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
         }
         val builder = GetAleretDialog.showDialog(dialog)
         ColorOfDialogButton.setColorOfDialogButton(builder)
+    }
+
+    private fun recurringBookingLog() {
+        val recurringBookingBundle = Bundle()
+        mFirebaseAnalytics.logEvent(getString(R.string.recurring_booking),recurringBookingBundle)
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(mManagerBooking.email)
+        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(this).toString())
     }
 
     /**

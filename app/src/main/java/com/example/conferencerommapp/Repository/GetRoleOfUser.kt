@@ -32,12 +32,12 @@ class GetRoleOfUser {
     /**
      * function will initialize the MutableLivedata Object and than call a function for api call
      */
-    fun getRole(token: String, listener: ResponseListener)  {
+    fun getRole(token: String, email: String, listener: ResponseListener)  {
         /**
          * api call using retrofit
          */
         val service = ServiceBuilder.getObject()
-        val requestCall: Call<Int> = service.getRole(token)
+        val requestCall: Call<Int> = service.getRole(token, email)
         requestCall.enqueue(object : Callback<Int> {
             override fun onFailure(call: Call<Int>, t: Throwable) {
                 when(t) {

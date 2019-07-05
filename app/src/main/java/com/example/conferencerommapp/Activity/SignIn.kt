@@ -31,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.analytics.FirebaseAnalytics
 
 class SignIn : AppCompatActivity() {
 
@@ -39,11 +40,13 @@ class SignIn : AppCompatActivity() {
     private var RC_SIGN_IN = 0
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private lateinit var prefs: SharedPreferences
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var progressDialog: ProgressDialog
     private lateinit var mCheckRegistrationViewModel: CheckRegistrationViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin_new)
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         ButterKnife.bind(this)
         initialize()
         observeData()
@@ -51,6 +54,7 @@ class SignIn : AppCompatActivity() {
     @OnClick(R.id.sign_in_button)
     fun signIn() {
         startIntentToGoogleSignIn()
+
     }
 
     /**
@@ -77,7 +81,7 @@ class SignIn : AppCompatActivity() {
     private fun initializeGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestIdToken(getString(R.string.server_client_id))
+            .requestIdToken(getString(R.string.server_client_id_partial))
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     }

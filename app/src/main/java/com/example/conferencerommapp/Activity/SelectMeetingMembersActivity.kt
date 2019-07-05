@@ -33,6 +33,7 @@ import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.chip.Chip
+import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_no_internet_connection.*
 import kotlinx.android.synthetic.main.activity_select_meeting_members.*
@@ -55,7 +56,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     private lateinit var mBookingViewModel: BookingViewModel
     private var mBooking = Booking()
     private lateinit var acct: GoogleSignInAccount
-
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var mGetIntentDataFromActivity: GetIntentDataFromActvity
     private var count = 0
 
@@ -101,6 +102,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     fun init() {
         initToolBar()
         initLateInitializerVariables()
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModel()
         } else {
@@ -207,7 +209,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     // call function of ViewModel which will make API call
     private fun getViewModel() {
         mProgressBar.visibility = View.VISIBLE
-        mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this))
+        mSelectMemberViewModel.getEmployeeList(GetPreference.getTokenFromPreference(this), acct.email!!)
     }
 
     @OnClick(R.id.next_activity)
@@ -228,6 +230,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
             if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject()
                 addBooking()
+                bookingLogFirebaseAnalytics()
             } else {
                 val i = Intent(this@SelectMeetingMembersActivity, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE2)
@@ -240,6 +243,15 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         ColorOfDialogButton.setColorOfDialogButton(builder)
     }
 
+    private fun bookingLogFirebaseAnalytics() {
+        val bookingBundle = Bundle()
+        mFirebaseAnalytics.logEvent(getString(R.string.singleBooking),bookingBundle)
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(mBooking.email)
+        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(this).toString())
+    }
     /**
      * add selected recycler item to chip and add this chip to chip group
      */

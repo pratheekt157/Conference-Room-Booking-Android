@@ -27,6 +27,7 @@ import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_spinner.*
 
@@ -48,6 +49,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     lateinit var purposeEditText: EditText
     private lateinit var mBlockRoomViewModel: BlockRoomViewModel
     var room = BlockRoom()
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var mBuildingViewModel: BuildingViewModel
     private lateinit var progressDialog: ProgressDialog
     private var mBuildingName = "Select Building"
@@ -69,6 +71,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         initActionBar()
         initTextChangeListener()
         initLateInitializerVariables()
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         if(NetworkState.appIsConnectedToInternet(this)) {
             getBuilding()
         } else {
@@ -517,6 +520,17 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     private fun blockRoom() {
         addDataToObject()
         blocking(room)
+        blockLogFirebaseAnalytics()
+    }
+
+    private fun blockLogFirebaseAnalytics() {
+        val blockBundle = Bundle()
+        mFirebaseAnalytics.logEvent(getString(R.string.Block_Room),blockBundle)
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(room.email)
+        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(this).toString())
     }
 
     /**

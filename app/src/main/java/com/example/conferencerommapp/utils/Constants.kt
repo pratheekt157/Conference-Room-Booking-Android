@@ -97,6 +97,8 @@ class Constants {
 
         const val DEVICE_ID = "DEVICE ID"
 
+        const val DEFAULT_INT_PREFERENCE_VALUE = -1
+
         const val ROLE_CODE = "Code"
 
         const val PROJECTOR = "Projector"

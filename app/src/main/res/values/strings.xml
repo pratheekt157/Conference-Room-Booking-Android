@@ -240,5 +240,14 @@
     <string name="pending_for_approval">Pending for approval</string>
     <string name="edit">EDIT</string>
     <string name="please_add_building">Please Add Building</string>
+    <string name="empty_employee_list">Empty EmployeeList</string>
+    <string name="Block_Room">block_room</string>
+    <string name="Roll_Id">Roll Id</string>
+    <string name="UnBlockRoom">UnBlockRoom</string>
+    <string name="recurring_booking">Recurring_Booking</string>
+    <string name="singleBooking">SingleBooking</string>
+    <string name="single_cancellation">Single_Cancellation</string>
+    <string name="recurring_cancellation">Recurring_Cancellation</string>
+    <string name="update_log">UPDATE</string>
 
 </resources>

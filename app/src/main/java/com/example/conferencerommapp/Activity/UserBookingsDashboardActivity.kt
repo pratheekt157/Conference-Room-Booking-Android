@@ -1,7 +1,6 @@
 package com.example.conferencerommapp.Activity
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -21,9 +20,13 @@ import com.example.conferencerommapp.Helper.GoogleGSO
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
-import com.example.conferencerommapp.utils.*
+import com.example.conferencerommapp.utils.ColorOfDialogButton
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.GetAleretDialog
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.navigation.NavigationView
 import es.dmoral.toasty.Toasty
@@ -37,6 +40,7 @@ import kotlinx.android.synthetic.main.nav_header_main2.view.*
 class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var mProgressBar: ProgressBar
+    private lateinit var acct: GoogleSignInAccount
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,12 +75,13 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
 
     private fun init() {
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
+        acct = GoogleSignIn.getLastSignedInAccount(this)!!
         observeData()
     }
 
     private fun getPasscode() {
         mProgressBar.visibility = View.VISIBLE
-        mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), false)
+        mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), false,acct.email!!)
     }
 
     /**
@@ -114,7 +119,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         dialog.setPositiveButton(R.string.ok) { _, _ ->
         }
         dialog.setNeutralButton(getString(R.string.get_new_passcode)) { _, _ ->
-            mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), true)
+            mBookingDashBoardViewModel.getPasscode(GetPreference.getTokenFromPreference(this), true,acct.email!!)
         }
         val builder = GetAleretDialog.showDialog(dialog)
         ColorOfDialogButton.setColorOfDialogButton(builder)

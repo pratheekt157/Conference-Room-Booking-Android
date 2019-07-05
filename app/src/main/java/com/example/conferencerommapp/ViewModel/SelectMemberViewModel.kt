@@ -22,9 +22,9 @@ class SelectMemberViewModel: ViewModel() {
     /**
      * for Employee List
      */
-    fun getEmployeeList(token: String) {
+    fun getEmployeeList(token: String, email: String) {
         mEmployeeRepository = EmployeeRepository.getInstance()
-        mEmployeeRepository!!.getEmployeeList(token, object: ResponseListener {
+        mEmployeeRepository!!.getEmployeeList(token, email, object: ResponseListener {
             override fun onFailure(failure: Any) {
                 mErrorCodeFromServerForEmployees.value = failure
             }

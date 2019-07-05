@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -22,8 +23,11 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
 import com.example.conferencerommapp.ViewModel.GetRoleOfUserViewModel
+import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlin.math.log
 
 
 class SplashScreen : AppCompatActivity() {
@@ -31,6 +35,7 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var mProgressBar: ProgressBar
     private lateinit var prefs: SharedPreferences
     private lateinit var progressDialog: ProgressDialog
+    private lateinit var acct: GoogleSignInAccount
     private lateinit var mGetRoleOfUserViewModel: GetRoleOfUserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,13 +70,16 @@ class SplashScreen : AppCompatActivity() {
      */
     private fun checkRegistration() {
         mProgressBar.visibility = View.VISIBLE
-        mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this))
+        mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this),acct.email!!)
     }
 
     /**
      * initialize all lateinit variables
      */
     fun init() {
+    if(GetPreference.getRoleIdFromPreference(this)!=-1)
+        acct = GoogleSignIn.getLastSignedInAccount(this)!!
+
         mProgressBar = findViewById(R.id.splash_screen_progress_bar)
         progressDialog =  GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
@@ -87,7 +95,6 @@ class SplashScreen : AppCompatActivity() {
             mProgressBar.visibility = View.GONE
             if(it == Constants.INVALID_TOKEN) {
                 signIn()
-                finish()
             }else {
                 Toast.makeText(this, "" + it, Toast.LENGTH_SHORT).show()
                 ShowToast.show(this, it as Int)
@@ -99,6 +106,7 @@ class SplashScreen : AppCompatActivity() {
      * pass the intent for the SignIn Activity
      */
     private fun signIn() {
+        ShowDialogForSessionExpired.signOut(this, this)
         startActivity(Intent(applicationContext, SignIn::class.java))
         finish()
     }

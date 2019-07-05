@@ -25,12 +25,15 @@ import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.UpdateBookingViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 
 class UpdateBookingActivity : AppCompatActivity() {
 
     private lateinit var mUpdateBookingViewModel: UpdateBookingViewModel
     private var mUpdateBooking = UpdateBooking()
+    lateinit var mFirebaseAnalytics: FirebaseAnalytics
 
     @BindView(R.id.Purpose)
     lateinit var purpose: EditText
@@ -148,6 +151,7 @@ class UpdateBookingActivity : AppCompatActivity() {
                  */
                 else if (minMilliseconds <= elapsed) {
                     updateMeetingDetails()
+                    updateBookingLogFirebaseAnalytics()
                 } else {
                     val builder = GetAleretDialog.getDialog(
                         this,
@@ -166,6 +170,16 @@ class UpdateBookingActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateBookingLogFirebaseAnalytics() {
+        val update = Bundle()
+        mFirebaseAnalytics.logEvent(getString(R.string.update_log), update)
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(GoogleSignIn.getLastSignedInAccount(this)!!.email)
+        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(this).toString())
+    }
+
     private fun updateMeetingDetails() {
         progressDialog.show()
         mUpdateBookingViewModel.updateBookingDetails(mUpdateBooking, GetPreference.getTokenFromPreference(this))
@@ -175,6 +189,7 @@ class UpdateBookingActivity : AppCompatActivity() {
      * initialize all lateinit variables
      */
     fun init() {
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         initActionBar()
         initLateInitializerVariables()
 

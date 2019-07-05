@@ -44,7 +44,8 @@ interface ConferenceService {
 
     @GET("api/CheckEmployeeRole")
     fun getRole(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("emailId") emailId: String
     ): Call<Int>
 
 
@@ -83,12 +84,14 @@ interface ConferenceService {
     @GET("api/getPasscode")
     fun getPasscode(
         @Header("Authorization") token: String,
-        @Query("GenerateNewPasscode") generateNewPasscode: Boolean
+        @Query("GenerateNewPasscode") generateNewPasscode: Boolean,
+        @Query("emailId") emailId: String
     ): Call<String>
 
     @GET("api/Employee")
     fun getEmployees(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("emailId") emailId: String
     ): Call<List<EmployeeList>>
 
     @POST("api/BookRecurringMeeting")

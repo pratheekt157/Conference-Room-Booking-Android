@@ -20,13 +20,17 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.Blocked
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.BlockedDashboardNew
+import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.R.color.colorPrimary
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BlockedDashboardViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_blocked_dashboard.*
 
@@ -43,8 +47,10 @@ class BlockedDashboard : AppCompatActivity() {
     lateinit var mProgressBar: ProgressBar
     @BindView(R.id.block_dashboard_refresh_layout)
     lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var acct: GoogleSignInAccount
     private lateinit var blockedAdapter: BlockedDashboardNew
     private lateinit var mBlockedDashboardViewModel: BlockedDashboardViewModel
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var progressDialog: ProgressDialog
     private var mBlockRoomList = ArrayList<Blocked>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,6 +80,8 @@ class BlockedDashboard : AppCompatActivity() {
     fun init() {
         initActionBar()
         initLateInitializerVariables()
+        acct = GoogleSignIn.getLastSignedInAccount(this)!!
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         refreshLayout.setColorSchemeColors(colorPrimary)
         if (NetworkState.appIsConnectedToInternet(this)) {
             loadBlocking()
@@ -176,6 +184,7 @@ class BlockedDashboard : AppCompatActivity() {
         builder.setMessage(getString(R.string.unblock_room_confirmation_message))
         builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             unblockRoom(mBookingId)
+            unBlockLogFirebase(mBookingId)
         }
         builder.setNegativeButton(getString(R.string.no)) { _, _ ->
         }
@@ -183,6 +192,16 @@ class BlockedDashboard : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.show()
         ColorOfDialogButton.setColorOfDialogButton(dialog)
+    }
+
+    private fun unBlockLogFirebase(mBookingId: Int) {
+        val unBlockBundle = Bundle()
+        mFirebaseAnalytics.logEvent(getString(R.string.UnBlockRoom),unBlockBundle)
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(acct.email)
+        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(this).toString())
     }
 
 

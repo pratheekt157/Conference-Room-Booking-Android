@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html.fromHtml
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +23,6 @@ import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.ManagerConference
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
@@ -38,7 +36,7 @@ import java.util.*
 class NewProjectManagerInput : AppCompatActivity() {
 
     @BindView(R.id.project_manager_progress_bar)
-    lateinit var mProgressDialog: ProgressBar
+    lateinit var progressBar: ProgressBar
     @BindView(R.id.fromTime_manager)
     lateinit var fromTimeEditText: EditText
     @BindView(R.id.toTime_manager)
@@ -61,7 +59,6 @@ class NewProjectManagerInput : AppCompatActivity() {
     lateinit var purposeEditText: EditText
     private lateinit var mManagerConferecneRoomViewModel: ManagerConferenceRoomViewModel
     private lateinit var customAdapter: RoomAdapter
-    private lateinit var progressDialog: ProgressDialog
     private lateinit var mIntentDataFromActivity: GetIntentDataFromActvity
     private lateinit var mBuildingsViewModel: BuildingViewModel
     private var listOfDays = ArrayList<String>()
@@ -101,7 +98,6 @@ class NewProjectManagerInput : AppCompatActivity() {
         mManagerBuildingViewModel = ViewModelProviders.of(this).get(ManagerBuildingViewModel::class.java)
         mBuildingsViewModel = ViewModelProviders.of(this).get(BuildingViewModel::class.java)
         mManagerConferecneRoomViewModel = ViewModelProviders.of(this).get(ManagerConferenceRoomViewModel::class.java)
-        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         mIntentDataFromActivity = GetIntentDataFromActvity()
 
     }
@@ -207,11 +203,11 @@ class NewProjectManagerInput : AppCompatActivity() {
     //observe data from view model
     private fun observerData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
-            mProgressDialog.visibility = View.GONE
+            progressBar.visibility = View.GONE
             setBuildingSpinner(it)
         })
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
-            mProgressDialog.visibility = View.GONE
+            progressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
             } else {
@@ -226,7 +222,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         })
         // Negative response
         mManagerConferecneRoomViewModel.returnFailure().observe(this, Observer {
-            progressDialog.dismiss()
+            progressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
             } else {
@@ -248,7 +244,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         })
         // negative response for suggested rooms
         mManagerConferecneRoomViewModel.returnFailureForSuggestedRooms().observe(this, Observer {
-            progressDialog.dismiss()
+            progressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
             } else {
@@ -276,7 +272,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         }
     }
     private fun setAdapter(mListOfRooms: List<RoomDetails>) {
-        progressDialog.dismiss()
+        progressBar.visibility = View.GONE
         customAdapter =
             RoomAdapter(mListOfRooms as ArrayList<RoomDetails>, this, object : RoomAdapter.ItemClickListener {
                 override fun onItemClick(roomId: Int?, buidingId: Int?, roomName: String?, buildingName: String?) {
@@ -318,13 +314,11 @@ class NewProjectManagerInput : AppCompatActivity() {
      * get the object of ViewModel using ViewModelProviders and observers the data from backend
      */
     private fun getViewModelForBuildingList() {
-        progressDialog.show()
-        // make api call
+        progressBar.visibility = View.VISIBLE
         mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }
-
-    /**
-     * add text change listener for the room name
+     /**
+      *  add text change listener for the room name
      */
     private fun textChangeListenerOnRoomCapacity() {
         roomCapacityEditText.addTextChangedListener(object : TextWatcher {
@@ -582,7 +576,7 @@ class NewProjectManagerInput : AppCompatActivity() {
 
     private fun getConferenceRoomViewModel() {
         if (NetworkState.appIsConnectedToInternet(this)) {
-            progressDialog.show()
+            progressBar.visibility = View.VISIBLE
             mManagerConferecneRoomViewModel.getConferenceRoomList(mRoom, GetPreference.getTokenFromPreference(this))
         } else {
 

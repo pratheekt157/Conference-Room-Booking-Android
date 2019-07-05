@@ -41,7 +41,6 @@
                     android:focusable="false"
                     android:drawableStart="@drawable/ic_schedule_black_24dp"
                     android:drawablePadding="@dimen/drawable_padding_5dp"
-                    android:maxLength="1"
                     android:hint="@string/start_time"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout

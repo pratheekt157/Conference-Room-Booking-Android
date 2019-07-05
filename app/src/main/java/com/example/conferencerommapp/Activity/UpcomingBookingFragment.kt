@@ -29,6 +29,7 @@ import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 import kotlinx.android.synthetic.main.fragment_upcoming_booking.*
@@ -42,7 +43,9 @@ class UpcomingBookingFragment : Fragment() {
     private lateinit var acct: GoogleSignInAccount
     private lateinit var progressDialog: ProgressDialog
     private lateinit var mBookingListAdapter: UpcomingBookingAdapter
+    private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private var bookingId = 0
+    lateinit var email:String
     private var recurringmeetingId: String ?=null
     private var makeApiCallOnResume = false
     var pagination: Int = 1
@@ -75,6 +78,8 @@ class UpcomingBookingFragment : Fragment() {
     @SuppressLint("ResourceAsColor")
     fun init() {
         mProgressBar = activity!!.findViewById(R.id.upcoming_main_progress_bar)
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity!!)
+
         initRecyclerView()
         initLateInitializerVariables()
         booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
@@ -94,7 +99,9 @@ class UpcomingBookingFragment : Fragment() {
         mBookingDashboardInput.pageSize = Constants.PAGE_SIZE
         mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_UPCOMING
         mBookingDashboardInput.pageNumber = pagination
-        mBookingDashboardInput.email = acct.email.toString()
+        email = acct.email.toString()
+        mBookingDashboardInput.email = email
+        signInAnalyticFirebase()
     }
 
     private fun getViewModel() {
@@ -105,6 +112,14 @@ class UpcomingBookingFragment : Fragment() {
         )
     }
 
+
+    private fun signInAnalyticFirebase() {
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(email)
+        mFirebaseAnalytics.setUserProperty("Roll Id",GetPreference.getRoleIdFromPreference(activity!!).toString())
+    }
     private fun initRecyclerView() {
         mBookingListAdapter = UpcomingBookingAdapter(
             finalList,
@@ -299,6 +314,7 @@ class UpcomingBookingFragment : Fragment() {
                 bookingId = finalList[position].bookingId!!
                 if (NetworkState.appIsConnectedToInternet(activity!!)) {
                     cancelBooking(finalList[position].bookingId!!)
+                    singleCancelLogFirebaseAnaytics(position)
                 } else {
                     val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                     startActivityForResult(i, Constants.RES_CODE2)
@@ -309,6 +325,7 @@ class UpcomingBookingFragment : Fragment() {
                 recurringmeetingId = finalList[position].recurringmeetingId
                 if (NetworkState.appIsConnectedToInternet(activity!!)) {
                     recurringCancelBooking(bookingId,recurringmeetingId)
+                    recurringCancelLogFirebaseAnalytics(position)
                 } else {
                     val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                     startActivityForResult(i, Constants.RES_CODE2)
@@ -322,6 +339,16 @@ class UpcomingBookingFragment : Fragment() {
         }
         val dialog = GetAleretDialog.showDialog(builder)
         ColorOfDialogButton.setColorOfDialogButton(dialog)
+    }
+
+    private fun recurringCancelLogFirebaseAnalytics(position: Int) {
+        val cancellation = Bundle()
+        mFirebaseAnalytics.logEvent(getString(R.string.recurring_cancellation),cancellation)
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(email)
+        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(activity!!).toString())
     }
 
     private fun recurringCancelBooking(bookingId: Int, recurringmeetingId: String?) {
@@ -343,6 +370,7 @@ class UpcomingBookingFragment : Fragment() {
             bookingId = finalList[position].bookingId!!
             if (NetworkState.appIsConnectedToInternet(activity!!)) {
                 cancelBooking(finalList[position].bookingId!!)
+                singleCancelLogFirebaseAnaytics(position)
             } else {
                 val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE2)
@@ -352,6 +380,16 @@ class UpcomingBookingFragment : Fragment() {
         }
         val dialog = GetAleretDialog.showDialog(mBuilder)
         ColorOfDialogButton.setColorOfDialogButton(dialog)
+    }
+
+    private fun singleCancelLogFirebaseAnaytics(position: Int) {
+        val cancellation = Bundle()
+        mFirebaseAnalytics.logEvent(getString(R.string.single_cancellation),cancellation)
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
+        mFirebaseAnalytics.setMinimumSessionDuration(5000)
+        mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
+        mFirebaseAnalytics.setUserId(email)
+        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(activity!!).toString())
     }
 
     /**
