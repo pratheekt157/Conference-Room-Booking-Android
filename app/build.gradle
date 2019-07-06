@@ -4,7 +4,6 @@ buildscript {
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 apply plugin: 'com.android.application'
@@ -155,8 +154,12 @@ dependencies {
     implementation 'com.shawnlin:number-picker:2.4.8'
 
     //crashlytics
-    implementation('com.crashlytics.sdk.android:crashlytics:2.9.9')
-
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
+        transitive = true;
+    }
+    implementation('com.crashlytics.sdk.android:crashlytics-ndk:2.1.0@aar') {
+        transitive = true;
+    }
     // dagger
     // dagger
     implementation "com.google.dagger:dagger:2.18"
@@ -164,4 +167,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:2.14.1"
     kapt "com.google.dagger:dagger-android-processor:2.14.1"
 
+}
+crashlytics {
+    enableNdk true
+    androidNdkOut 'src/main/obj'
+    androidNdkLibsOut 'src/main/libs'
 }

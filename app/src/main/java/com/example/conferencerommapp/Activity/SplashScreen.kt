@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.crashlytics.android.Crashlytics
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.GetProgress
 import com.example.conferencerommapp.Helper.NetworkState
@@ -27,6 +28,7 @@ import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import io.fabric.sdk.android.Fabric
 import kotlin.math.log
 
 
@@ -39,6 +41,7 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var mGetRoleOfUserViewModel: GetRoleOfUserViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Fabric.with(this,Crashlytics())
         setContentView(R.layout.activity_splash_screen)
         init()
         observeData()
