@@ -44,10 +44,12 @@ class DateAndTimePicker {
         fun getDatePickerDialog(context: Context, setDate: EditText) {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
             val now = Calendar.getInstance()
+            val weekends:List<Any>
+
             val datePicker =
                 DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
 
-                    val selectedDate = Calendar.getInstance()
+                        val selectedDate = Calendar.getInstance()
                     selectedDate.set(Calendar.YEAR, year)
                     selectedDate.set(Calendar.MONTH, month)
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -55,6 +57,7 @@ class DateAndTimePicker {
                     val nowDate: String = dateFormat.format(selectedDate.time).toString()
                     setDate.text = Editable.Factory.getInstance().newEditable(nowDate)
                 }, now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH))
+
             datePicker.getDatePicker().setMinDate(System.currentTimeMillis() - 1000)
             datePicker.show()
         }

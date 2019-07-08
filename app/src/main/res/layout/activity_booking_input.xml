@@ -134,7 +134,6 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_height="wrap_content"
-                    android:focusableInTouchMode="true"
                     android:background="@color/white"
                     android:layout_marginTop="8dp"
                     app:errorEnabled="true"
@@ -174,12 +173,21 @@
                     android:layout_marginStart="20dp"
                     android:textSize="12sp"
                     android:text="Select building"/>
+            <CheckBox
+                android:text="Private"
+                android:textSize="@dimen/sp_14"
+                android:paddingRight="@dimen/dp_16"
+                android:layout_margin="@dimen/dp_8"
+                android:layout_below="@id/building_name_spinner"
+                android:id="@+id/checkbox_private"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/search_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_error_spinner_building"
+                android:layout_below="@id/checkbox_private"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"

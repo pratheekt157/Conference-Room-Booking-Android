@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -39,6 +40,7 @@ class CancelledBookingFragment : Fragment() {
     var hasMoreItem: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         return inflater.inflate(R.layout.fragment_cancelled_booking, container, false)
     }
 
@@ -53,6 +55,7 @@ class CancelledBookingFragment : Fragment() {
      */
     @SuppressLint("ResourceAsColor")
     fun init() {
+        HideSoftKeyboard.hideSoftKeyboard(activity!!)
         mProgressBar = activity!!.findViewById(R.id.cancelled_main_progress_bar)
         initRecyclerView()
         initLateInitializerVariables()

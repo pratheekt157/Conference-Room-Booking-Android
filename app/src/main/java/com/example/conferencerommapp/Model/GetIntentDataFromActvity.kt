@@ -2,7 +2,7 @@ package com.example.conferencerommapp.Model
 
 import java.io.Serializable
 
-class GetIntentDataFromActvity(
+data class GetIntentDataFromActvity(
     var fromTime: String? = null,
     var toTime: String? = null,
     var date: String? = null,
@@ -16,6 +16,7 @@ class GetIntentDataFromActvity(
     var fromTimeList: ArrayList<String> = ArrayList(),
     var toTimeList: ArrayList<String> = ArrayList(),
     var purpose: String? = null,
+    var isPurposeVisible:Boolean? = null,
     var cCMail: List<String>? = null,
     var bookingId: Int? = null
 ) : Serializable

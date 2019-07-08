@@ -38,6 +38,9 @@ class Constants {
 
         const val SELECT_BUILDING = "Select Building"
 
+        const val IS_PURPOSE_VISIBLE = "Purpose Visibility"
+
+
         const val MIN_MEETING_DURATION: Long = 900000
 
         const val SOME_EXCEPTION = 400

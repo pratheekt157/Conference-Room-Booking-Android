@@ -23,5 +23,8 @@ data class Booking (
     var purpose: String? = null,
 
     @SerializedName("attendeesMail")
-    var cCMail: String? = null
+    var cCMail: String? = null,
+
+    @SerializedName("isPurposeVisible")
+    var isPurposeVisible: Boolean? = null
 )

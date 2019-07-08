@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html.fromHtml
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -189,11 +190,13 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
      */
     private fun addDataToObject() {
         val acct = GoogleSignIn.getLastSignedInAccount(applicationContext)
-        val mBookingDetails = getIntentData()
+        var mBookingDetails = getIntentData()
+        Log.e("-----data from Intent", mBookingDetails.toString())
         mBooking.email = acct!!.email
         mBooking.purpose = mBookingDetails.purpose
         mBooking.roomId = mBookingDetails.roomId!!.toInt()
         mBooking.buildingId = mBookingDetails.buildingId!!.toInt()
+        mBooking.isPurposeVisible = mBookingDetails.isPurposeVisible
         mBooking.fromTime = FormatTimeAccordingToZone.formatDateAsUTC(mBookingDetails.fromTime!!)
         mBooking.toTime = FormatTimeAccordingToZone.formatDateAsUTC(mBookingDetails.toTime!!)
     }

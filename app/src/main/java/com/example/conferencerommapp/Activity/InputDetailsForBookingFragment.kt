@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.core.widget.NestedScrollView
@@ -30,7 +32,20 @@ import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlinx.android.synthetic.main.activity_booking_input.*
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.booking_scroll_view
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.building_name_spinner
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.capacity_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.date
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.date_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.from_time_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.horizontal_line_below_search_button
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.purpose_layout
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.search_room
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.suggestions
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.text_view_error_spinner_building
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.to_time_layout
 
 
 class InputDetailsForBookingFragment : Fragment() {
@@ -93,6 +108,7 @@ class InputDetailsForBookingFragment : Fragment() {
     }
 
     private fun init() {
+        HideSoftKeyboard.hideSoftKeyboard(activity!!)
         setPickerToEditText()
         initTextChangeListener()
         initLateInitializerVariables()
@@ -136,6 +152,7 @@ class InputDetailsForBookingFragment : Fragment() {
                     mSetIntentData.roomId = roomId
                     mSetIntentData.capacity = roomCapacityEditText.text.toString()
                     mSetIntentData.date = dateEditText.text.toString()
+                    mSetIntentData.isPurposeVisible = checkbox_private.isChecked
                     goToSelectMeetingMembersActivity()
                 }
             })
