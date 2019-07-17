@@ -1,13 +1,11 @@
 package com.example.conferencerommapp.Activity
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Html.fromHtml
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.ConferenceRecyclerAdapter
+import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.HrConferenceRoomViewModel
-import com.example.conferencerommapp.utils.*
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.EditRoomDetails
+import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
 import kotlinx.android.synthetic.main.activity_conference_dash_board.*
@@ -69,11 +70,12 @@ class ConferenceDashBoard : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        if (NetworkState.appIsConnectedToInternet(this)) {
-            getConference(buildingId)
-        } else {
-            val i = Intent(this, NoInternetConnectionActivity::class.java)
-            startActivityForResult(i, Constants.RES_CODE)
+        when {
+            NetworkState.appIsConnectedToInternet(this) -> getConference(buildingId)
+            else -> {
+                val i = Intent(this, NoInternetConnectionActivity::class.java)
+                startActivityForResult(i, Constants.RES_CODE)
+            }
         }
     }
 
@@ -88,13 +90,13 @@ class ConferenceDashBoard : AppCompatActivity() {
             mProgressBar.visibility = View.GONE
             empty_view_blocked1.visibility = View.GONE
             mConferenceList.clear()
-            Log.e("--------------", it.toString())
-            if(it.isNotEmpty()) {
-                mConferenceList.addAll(it)
-            } else {
+            when {
+                it.isNotEmpty() -> mConferenceList.addAll(it)
+                else -> {
 
-                empty_view_blocked1.visibility = View.VISIBLE
-                empty_view_blocked1.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                    empty_view_blocked1.visibility = View.VISIBLE
+                    empty_view_blocked1.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                }
             }
             setAdapter()
         })
@@ -118,7 +120,6 @@ class ConferenceDashBoard : AppCompatActivity() {
                 editRoomDetails.mRoomDetail = mConferenceList[position]
                 intent.putExtra(Constants.FLAG, true)
                 intent.putExtra(Constants.EXTRA_INTENT_DATA, editRoomDetails)
-                Log.e("-----------------room--", editRoomDetails.mRoomDetail.toString())
                 startActivity(intent)
             }
 
@@ -138,7 +139,6 @@ class ConferenceDashBoard : AppCompatActivity() {
     /**
      * get the buildingId from the BuildingDashboard Activity
      */
-
     private fun getIntentData(): Int {
         val bundle: Bundle? = intent.extras!!
         return bundle!!.get(Constants.EXTRA_BUILDING_ID)!!.toString().toInt()
@@ -148,7 +148,6 @@ class ConferenceDashBoard : AppCompatActivity() {
      * Passing Intent and shared preference
      */
     private fun goToNextActivity(buildingId: Int) {
-
         val pref = getSharedPreferences(getString(R.string.preference), Context.MODE_PRIVATE)
         val editor = pref.edit()
         editor.putInt(Constants.EXTRA_BUILDING_ID, buildingId)

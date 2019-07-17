@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.conferencerommapp.Helper
 
 import android.content.Context

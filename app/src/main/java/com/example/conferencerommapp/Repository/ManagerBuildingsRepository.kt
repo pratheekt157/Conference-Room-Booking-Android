@@ -2,7 +2,7 @@ package com.example.conferencerommapp.Repository
 
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.Model.Building
-import com.example.globofly.services.ServiceBuilder
+import com.example.conferencerommapp.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,7 +27,7 @@ class ManagerBuildingsRepository {
     /**
      * function will call the api which will return some data and we store the data in MutableLivedata Object
      */
-    fun getBuildingList(userId: String, token: String) {
+    fun getBuildingList(token: String) {
 
         /**
          * api call using retorfit

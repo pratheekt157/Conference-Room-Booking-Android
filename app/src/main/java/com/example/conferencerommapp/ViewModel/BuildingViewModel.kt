@@ -23,6 +23,8 @@ class BuildingViewModel : ViewModel() {
      */
     var errorCodeFromServer =  MutableLiveData<Any>()
 
+    var mSuccessForDeleteBuilding = MutableLiveData<Int>()
+    var mFailureForDeleteBuilding = MutableLiveData<Any>()
     /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will update the values of MutableLiveData objects according to the response from server
@@ -34,7 +36,7 @@ class BuildingViewModel : ViewModel() {
                     errorCodeFromServer.value = failure
             }
             override fun onSuccess(success: Any) {
-                mBuildingList!!.value = success as List<Building>
+                mBuildingList.value = success as List<Building>
             }
 
         })
@@ -43,6 +45,7 @@ class BuildingViewModel : ViewModel() {
     /**
      * function will return the MutableLiveData of List of buildings
      */
+
     fun returnMBuildingSuccess(): MutableLiveData<List<Building>> {
         return mBuildingList
     }
@@ -53,4 +56,32 @@ class BuildingViewModel : ViewModel() {
     fun returnMBuildingFailure(): MutableLiveData<Any> {
         return errorCodeFromServer
     }
+
+    fun deleteBuilding(token: String,id:Int) {
+        mBuildingsRepository = BuildingsRepository.getInstance()
+        mBuildingsRepository!!.getBuildingList(token, object: ResponseListener {
+            override fun onFailure(failure: Any) {
+                mFailureForDeleteBuilding.value = failure
+            }
+            override fun onSuccess(success: Any) {
+                mSuccessForDeleteBuilding.value = success as Int
+            }
+
+        })
+    }
+
+    /**
+     * return positive response from server
+     */
+    fun returnSuccessForDeleteBuilding(): MutableLiveData<Int> {
+        return mSuccessForDeleteBuilding
+    }
+    /**
+     * return negative response from server
+     */
+    fun returnFailureForDeleteBuilding(): MutableLiveData<Any> {
+        return mFailureForDeleteBuilding
+    }
+
+
 }

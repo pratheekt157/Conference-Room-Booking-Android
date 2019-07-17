@@ -1,4 +1,4 @@
-package com.example.globofly.services
+package com.example.conferencerommapp
 
 import android.annotation.SuppressLint
 import com.example.conferencerommapp.utils.Constants
@@ -10,6 +10,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import com.google.gson.GsonBuilder
+import com.google.gson.Gson
+
+
 
 @SuppressLint("StaticFieldLeak")
 object ServiceBuilder {
@@ -28,11 +32,13 @@ object ServiceBuilder {
 
 
         })
-
+    var gson = GsonBuilder()
+            .setLenient()
+            .create()
 
     private val builder: Retrofit.Builder = Retrofit.Builder()
         .baseUrl(Constants.IP_ADDRESS)
-        .addConverterFactory(GsonConverterFactory.create()).client(okHttp.build())
+        .addConverterFactory(GsonConverterFactory.create(gson)).client(okHttp.build())
     private val retrofit: Retrofit = builder.build()
 
     fun <T> buildService(serviceType: Class<T>): T {

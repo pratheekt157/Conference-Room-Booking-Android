@@ -3,31 +3,33 @@ package com.example.conferencerommapp.Activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.ProgressDialog
+import android.app.*
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.NetworkState
+import com.example.conferencerommapp.Helper.PreviousBookingAdapter
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
-import com.example.conferencerommapp.utils.*
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.GetProgress
+import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.fragment_previous_booking.*
 
+@Suppress("DEPRECATION")
 class PreviousBookingFragment : Fragment() {
     private lateinit var mProgressBar: ProgressBar
     private var finalList = ArrayList<Dashboard>()
@@ -35,7 +37,6 @@ class PreviousBookingFragment : Fragment() {
     private lateinit var acct: GoogleSignInAccount
     private lateinit var progressDialog: ProgressDialog
     private lateinit var mBookingListAdapter: PreviousBookingAdapter
-    private var mActivity = UserBookingsDashboardActivity()
     var mBookingDashboardInput = BookingDashboardInput()
     var pagination: Int = 1
     var hasMoreItem: Boolean = false
@@ -110,7 +111,6 @@ class PreviousBookingFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    // todo check if the there are more items existing in database
                     if (!isApiCalled && hasMoreItem) {
                         isApiCalled = true
                         pagination++
@@ -139,7 +139,6 @@ class PreviousBookingFragment : Fragment() {
      * all observer for LiveData
      */
     private fun observeData() {
-
         /**
          * observing data for booking list
          */

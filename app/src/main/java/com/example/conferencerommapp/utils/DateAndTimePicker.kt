@@ -44,8 +44,6 @@ class DateAndTimePicker {
         fun getDatePickerDialog(context: Context, setDate: EditText) {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
             val now = Calendar.getInstance()
-            val weekends:List<Any>
-
             val datePicker =
                 DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
 

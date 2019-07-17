@@ -6,6 +6,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
@@ -20,10 +22,7 @@ import com.example.conferencerommapp.Helper.GoogleGSO
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
-import com.example.conferencerommapp.utils.ColorOfDialogButton
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.utils.GetAleretDialog
-import com.example.conferencerommapp.utils.ShowToast
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -46,6 +45,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
         setNavigationViewItem()
+        crashHandler()
         init()
         mProgressBar = findViewById(R.id.user_booking_dashboard_progress_bar)
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
@@ -58,8 +58,8 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
             }
             if (selectedFragment != null) {
                 supportFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                    selectedFragment!!
+                        R.id.fragment_container,
+                        selectedFragment
                 ).commit()
             }
             true
@@ -67,12 +67,21 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(
-                R.id.fragment_container,
-                UpcomingBookingFragment()
+                    R.id.fragment_container,
+                    UpcomingBookingFragment()
             ).commit()
         }
     }
-
+    private fun crashHandler() {
+        val foreground : ForegroundCounter = ForegroundCounter().createAndInstallCallbacks(application)
+        val defaultHandler:Thread.UncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler{ t: Thread?, e: Throwable? ->
+            if (foreground.inForeground())
+                defaultHandler.uncaughtException(t,e)
+            else
+                startActivity(Intent(this,SplashScreen::class.java))
+        }
+    }
     private fun init() {
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
@@ -112,9 +121,9 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
      */
     private fun showAlertForPasscode(passcode: String) {
         val dialog = GetAleretDialog.getDialogForPasscode(
-            this,
-            getString(R.string.do_not_share),
-            passcode
+                this,
+                getString(R.string.do_not_share),
+                passcode
         )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
         }
@@ -130,8 +139,8 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
      */
     private fun showAlert() {
         val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.session_expired), "Your session is expired!\n" +
-                    getString(R.string.session_expired_messgae)
+                this, getString(R.string.session_expired), "Your session is expired!\n" +
+                getString(R.string.session_expired_messgae)
         )
         dialog.setPositiveButton(R.string.ok) { _, _ ->
             signOut()
@@ -205,7 +214,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     @SuppressLint("SetTextI18n")
     fun setNavigationViewItem() {
         val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
@@ -225,11 +234,11 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
     private fun signOut() {
         var mGoogleSignInClient: GoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
         mGoogleSignInClient!!.signOut()
-            .addOnCompleteListener(this) {
-                Toasty.success(this, getString(R.string.successfully_sign_out), Toasty.LENGTH_SHORT).show()
-                startActivity(Intent(this@UserBookingsDashboardActivity, SignIn::class.java))
-                finish()
-            }
+                .addOnCompleteListener(this) {
+                    Toasty.success(this, getString(R.string.successfully_sign_out), Toasty.LENGTH_SHORT).show()
+                    startActivity(Intent(this@UserBookingsDashboardActivity, SignIn::class.java))
+                    finish()
+                }
     }
 
     //clear activity stack
@@ -243,7 +252,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
      */
     private fun showAlertForSignout() {
         val dialog = GetAleretDialog.getDialog(
-            this, getString(R.string.logout), getString(R.string.logout_message))
+                this, getString(R.string.logout), getString(R.string.logout_message))
         dialog.setPositiveButton(R.string.yes) { _, _ ->
             signOut()
         }
@@ -268,6 +277,3 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
 
     }
 }
-
-
-

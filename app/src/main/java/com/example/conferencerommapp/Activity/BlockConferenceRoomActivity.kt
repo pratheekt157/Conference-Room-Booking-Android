@@ -167,7 +167,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
                 val name = it.name
                 val purpose = it.purpose
                 builder.setMessage(
-                    "Room is Booked by Employee '$name' for '$purpose'.\nAre you sure the 'BLOCKING' is Necessary?"
+                        "Room is Booked by Employee '$name' for '$purpose'.\nAre you sure the 'BLOCKING' is Necessary?"
                 )
                 builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
                     blockConfirmed(room)
@@ -311,7 +311,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
             itemsId.add(item.buildingId!!.toInt())
         }
         buiding_Spinner.adapter =
-            ArrayAdapter<String>(this@BlockConferenceRoomActivity, R.layout.spinner_icon, R.id.spinner_text, items)
+                ArrayAdapter<String>(this@BlockConferenceRoomActivity, R.layout.spinner_icon, R.id.spinner_text, items)
         buiding_Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 /**
@@ -324,7 +324,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
                 mBuildingId = itemsId[position]
                 error_spinner_building_text_view.visibility = View.INVISIBLE
                 if(NetworkState.appIsConnectedToInternet(this@BlockConferenceRoomActivity)) {
-                   conferenceRoomListFromBackend(itemsId[position])
+                    conferenceRoomListFromBackend(itemsId[position])
                 } else {
                     val i = Intent(this@BlockConferenceRoomActivity, NoInternetConnectionActivity::class.java)
                     startActivityForResult(i, Constants.RES_CODE2)
@@ -351,12 +351,12 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
             conferenceid.add(item.roomId!!)
         }
         conference_Spinner.adapter =
-            ArrayAdapter<String>(
-                this@BlockConferenceRoomActivity,
-                R.layout.spinner_icon,
-                R.id.spinner_text,
-                conferencename
-            )
+                ArrayAdapter<String>(
+                        this@BlockConferenceRoomActivity,
+                        R.layout.spinner_icon,
+                        R.id.spinner_text,
+                        conferencename
+                )
         conference_Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 /**
@@ -474,9 +474,9 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         builder.setTitle(getString(R.string.check))
         try {
             val (elapsed, elapsed2) = ConvertTimeInMillis.calculateTimeInMilliseconds(
-                startTime,
-                endTime,
-                date_block.text.toString()
+                    startTime,
+                    endTime,
+                    date_block.text.toString()
             )
             if (room.cId!!.compareTo(-1) == 0) {
                 Toast.makeText(this, R.string.invalid_conference_room, Toast.LENGTH_SHORT).show()
@@ -510,7 +510,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Toast.makeText(this@BlockConferenceRoomActivity, getString(R.string.details_invalid), Toast.LENGTH_LONG)
-                .show()
+                    .show()
         }
     }
 

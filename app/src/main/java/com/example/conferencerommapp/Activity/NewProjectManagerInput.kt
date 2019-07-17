@@ -1,7 +1,6 @@
 package com.example.conferencerommapp.Activity
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -17,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.NetworkState
+import com.example.conferencerommapp.Helper.RoomAdapter
 import com.example.conferencerommapp.Model.Building
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.ManagerConference
@@ -28,6 +28,7 @@ import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
+import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 import kotlinx.android.synthetic.main.activity_project_manager_input.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -238,7 +239,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             if(it.isEmpty()) {
                 manager_suggestions.text = getString(R.string.no_rooms_available)
             } else {
-                manager_suggestions.text = "No room available in this building. Have look on suggestion"
+                manager_suggestions.text = getString(R.string.suggestion_message)
             }
             setAdapter(it)
         })
@@ -294,13 +295,12 @@ class NewProjectManagerInput : AppCompatActivity() {
                 }
             })
         mRecyclerView.adapter = customAdapter
-        reurring_booking_scroll_view.post {
-            scrollView.smoothScrollTo(0, mRecyclerView.top)
-        }
+        reurring_booking_scroll_view.fullScroll(ScrollView.FOCUS_DOWN)
+
     }
 
     private fun goToSelectMeetingMembersActivity() {
-        var intent = Intent(this@NewProjectManagerInput, ManagerSelectMeetingMembers::class.java)
+        val intent = Intent(this@NewProjectManagerInput, ManagerSelectMeetingMembers::class.java)
         intent.putExtra(Constants.EXTRA_INTENT_DATA, mSetIntentData)
         startActivity(intent)
     }
@@ -540,7 +540,7 @@ class NewProjectManagerInput : AppCompatActivity() {
 
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                 }
-                var dialog = GetAleretDialog.showDialog(builder)
+                val dialog = GetAleretDialog.showDialog(builder)
                 ColorOfDialogButton.setColorOfDialogButton(dialog)
             }
         } catch (e: Exception) {
@@ -561,10 +561,10 @@ class NewProjectManagerInput : AppCompatActivity() {
             dateToEditText.text.toString(),
             listOfDays
         )
-        mRoom.fromTime!!.clear()
-        mRoom.toTime!!.clear()
-        mRoom.fromTime!!.addAll(fromTimeList)
-        mRoom.toTime!!.addAll(toTimeList)
+        mRoom.fromTime.clear()
+        mRoom.toTime.clear()
+        mRoom.fromTime.addAll(fromTimeList)
+        mRoom.toTime.addAll(toTimeList)
         mRoom.capacity = roomCapacityEditText.text.toString().toInt()
         mRoom.buildingId = mBuildingId
         if (dataList.isEmpty()) {
@@ -590,7 +590,7 @@ class NewProjectManagerInput : AppCompatActivity() {
     private fun getListOfSelectedDays() {
         listOfDays.clear()
         for (day in day_picker.selectedDays) {
-            listOfDays.add("${day}")
+            listOfDays.add("$day")
         }
     }
     /**
@@ -702,8 +702,8 @@ class NewProjectManagerInput : AppCompatActivity() {
         }
     }
     private fun setBuildingSpinner(mBuildingList: List<Building>) {
-        var buildingNameList = mutableListOf<String>()
-        var buildingIdList = mutableListOf<Int>()
+        val buildingNameList = mutableListOf<String>()
+        val buildingIdList = mutableListOf<Int>()
 
         buildingNameList.add(getString(R.string.select_building))
         buildingIdList.add(-1)
@@ -714,7 +714,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         val adapter = ArrayAdapter<String>(this, R.layout.spinner_icon, R.id.spinner_text, buildingNameList)
         buildingSpineer.adapter = adapter
         buildingSpineer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 mBuildingName = buildingNameList[position]
                 mBuildingId = buildingIdList[position]
                 manager_text_view_error_spinner_building.visibility = View.INVISIBLE

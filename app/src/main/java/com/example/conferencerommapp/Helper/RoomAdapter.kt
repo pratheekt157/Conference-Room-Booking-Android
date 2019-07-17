@@ -33,7 +33,7 @@ class RoomAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var amiList = roomDetailsList[position].amenities
+        val amiList = roomDetailsList[position].amenities
         if(roomDetailsList[position].permission == 1) {
             holder.permissionTextView.visibility = View.VISIBLE
         }

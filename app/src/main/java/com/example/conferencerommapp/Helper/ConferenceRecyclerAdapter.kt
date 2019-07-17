@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.utils.Constants
-
 import com.example.myapplication.Models.ConferenceList
-import org.jetbrains.anko.find
-import org.w3c.dom.Text
 
 class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList>,val listener: EditRoomDetails) :
     androidx.recyclerview.widget.RecyclerView.Adapter<ConferenceRecyclerAdapter.ViewHolder>() {
@@ -75,7 +72,8 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
         var amenity5: TextView = itemView.findViewById(R.id.dashboard_ani_5)
         var conferencelist: ConferenceList? = null
     }
-    fun setDrawable(amitie: String, targetTextView: TextView) {
+
+    private fun setDrawable(amitie: String, targetTextView: TextView) {
         when(amitie) {
             Constants.PROJECTOR -> {
                 targetTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_projector, 0, 0, 0)

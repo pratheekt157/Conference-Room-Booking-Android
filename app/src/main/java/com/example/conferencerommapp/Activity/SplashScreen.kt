@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.conferencerommapp.Activity
 
 import android.app.Activity
@@ -8,6 +10,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -16,20 +19,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.Crashlytics
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.utils.GetProgress
 import com.example.conferencerommapp.Helper.NetworkState
-import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
-import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
 import com.example.conferencerommapp.ViewModel.GetRoleOfUserViewModel
-import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import io.fabric.sdk.android.Fabric
-import kotlin.math.log
 
 
 class SplashScreen : AppCompatActivity() {
@@ -39,28 +39,42 @@ class SplashScreen : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
     private lateinit var acct: GoogleSignInAccount
     private lateinit var mGetRoleOfUserViewModel: GetRoleOfUserViewModel
+    private var email = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Fabric.with(this,Crashlytics())
         setContentView(R.layout.activity_splash_screen)
         init()
         observeData()
+        crashHandler()
         val logoHandler = Handler()
         val logoRunnable = Runnable {
             val account = GoogleSignIn.getLastSignedInAccount(this)
-            if (account != null) {
-                if(NetworkState.appIsConnectedToInternet(this)) {
-                    checkRegistration()
-                } else {
-                    val i = Intent(this@SplashScreen, NoInternetConnectionActivity::class.java)
-                    startActivityForResult(i, Constants.RES_CODE)
+            when {
+                account != null -> when {
+                    NetworkState.appIsConnectedToInternet(this) -> {
+                        email = account.email!!
+                        checkRegistration()
+                    }
+
+                    else -> {
+                        val i = Intent(this@SplashScreen, NoInternetConnectionActivity::class.java)
+                        startActivityForResult(i, Constants.RES_CODE)
+                    }
                 }
-            } else {
-                signIn()
+                else -> signIn()
             }
         }
         logoHandler.postDelayed(logoRunnable, 3000)
     }
+
+
+
+    private fun crashHandler() {
+//        Thread.setDefaultUncaughtExceptionHandler { thread, e -> Handler(Looper.getMainLooper()).postAtFrontOfQueue { Runtime.getRuntime().exit(0) } }
+       // val foregroundChecker = ForegroundCounter.createAndInstallCallbacks
+    }
+
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {
@@ -73,16 +87,13 @@ class SplashScreen : AppCompatActivity() {
      */
     private fun checkRegistration() {
         mProgressBar.visibility = View.VISIBLE
-        mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this),acct.email!!)
+        mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this),email)
     }
 
     /**
      * initialize all lateinit variables
      */
     fun init() {
-    if(GetPreference.getRoleIdFromPreference(this)!=-1)
-        acct = GoogleSignIn.getLastSignedInAccount(this)!!
-
         mProgressBar = findViewById(R.id.splash_screen_progress_bar)
         progressDialog =  GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
@@ -93,15 +104,17 @@ class SplashScreen : AppCompatActivity() {
         mGetRoleOfUserViewModel.returnSuccessCodeForUserROle().observe(this, Observer {
             mProgressBar.visibility = View.GONE
             setValueForSharedPreference(it)
+            Log.i("Role",it.toString())
         })
         mGetRoleOfUserViewModel.returnFailureCodeForUserRole().observe(this, Observer {
             mProgressBar.visibility = View.GONE
-            if(it == Constants.INVALID_TOKEN) {
-                signIn()
-            }else {
-                Toast.makeText(this, "" + it, Toast.LENGTH_SHORT).show()
-                ShowToast.show(this, it as Int)
-                finish()
+            when (it) {
+                Constants.INVALID_TOKEN -> signIn()
+                else -> {
+                    Toast.makeText(this, "" + it, Toast.LENGTH_SHORT).show()
+                    ShowToast.show(this, it as Int)
+                    finish()
+                }
             }
         })
     }

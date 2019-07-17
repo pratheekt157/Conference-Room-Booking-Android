@@ -171,4 +171,10 @@ interface ConferenceService {
     fun getAccessToken(
         @Body refreshToken: RefreshToken
     ): Call<RefreshToken>
+
+    @DELETE("api/deleteBuilding")
+    fun deleteBuilding(
+            @Header("Authorization") token: String,
+            @Query("buildingId") id: Int
+    ) : Call<ResponseBody>
 }

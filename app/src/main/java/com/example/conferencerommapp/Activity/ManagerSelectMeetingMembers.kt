@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.conferencerommapp.Activity
 
 import android.annotation.SuppressLint
@@ -20,12 +22,12 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.NetworkState
+import com.example.conferencerommapp.Helper.SelectMembers
 import com.example.conferencerommapp.Model.EmployeeList
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.ManagerBooking
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.ManagerBookingViewModel
 import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
 import com.example.conferencerommapp.utils.*
@@ -80,7 +82,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
     @OnClick(R.id.add_email)
     fun checkSearchEditTextContent() {
         if(validateEmailFormat()) {
-            var email = searchEditText.text.toString().trim()
+            val email = searchEditText.text.toString().trim()
             if(email == acct.email) {
                 Toast.makeText(this, getString(R.string.already_part_of_meeting), Toast.LENGTH_SHORT).show()
                 return
@@ -177,7 +179,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
      * set values to the different properties of object which is required for api call
      */
     private fun addDataToObject() {
-        var mGetIntentDataFromActvity = getIntentData()
+        val mGetIntentDataFromActvity = getIntentData()
         mManagerBooking.email = acct.email
         mManagerBooking.roomId = mGetIntentDataFromActvity.roomId!!.toInt()
         mManagerBooking.buildingId = mGetIntentDataFromActvity.buildingId!!.toInt()
@@ -333,7 +335,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
 
 
     private fun validateEmailFormat(): Boolean {
-        var email = searchEditText.text.toString().trim()
+        val email = searchEditText.text.toString().trim()
         val pat = Pattern.compile(Constants.MATCHER)
         return pat.matcher(email).matches()
     }

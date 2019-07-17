@@ -1,15 +1,16 @@
 package com.example.conferencerommapp.Repository
 
-import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.Model.InputDetailsForRoom
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.RoomDetails
-import com.example.globofly.services.ServiceBuilder
+import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import com.example.conferencerommapp.Repository.ConferenceRoomRepository as ConferenceRoomRepository1
 
 class ConferenceRoomRepository {
 
@@ -19,10 +20,10 @@ class ConferenceRoomRepository {
      * or else it will return a new object
      */
     companion object {
-        private var mConferenceRoomRepository: ConferenceRoomRepository? = null
-        fun getInstance(): ConferenceRoomRepository {
+        private var mConferenceRoomRepository: ConferenceRoomRepository1? = null
+        fun getInstance(): ConferenceRoomRepository1 {
             if (mConferenceRoomRepository == null) {
-                mConferenceRoomRepository = ConferenceRoomRepository()
+                mConferenceRoomRepository = ConferenceRoomRepository1()
             }
             return mConferenceRoomRepository!!
         }

@@ -3,8 +3,8 @@ package com.example.conferencerommapp.Repository
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.AddBuilding
+import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.services.ConferenceService
-import com.example.globofly.services.ServiceBuilder
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

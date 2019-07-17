@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.conferencerommapp.Activity
 
 import android.annotation.SuppressLint
@@ -8,7 +10,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html
 import android.text.TextUtils
-import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,11 +18,10 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.UpdateBooking
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.UpdateBookingViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
@@ -131,37 +131,40 @@ class UpdateBookingActivity : AppCompatActivity() {
                  * we restrict the user to move forword and show some message in alert that the time is not valid
                  */
 
-                if (elapsed2 < 0) {
-                    val builder = GetAleretDialog.getDialog(
-                        this,
-                        getString(R.string.invalid),
-                        getString(R.string.invalid_fromtime)
-                    )
-                    builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                when {
+                    elapsed2 < 0 -> {
+                        val builder = GetAleretDialog.getDialog(
+                                this,
+                                getString(R.string.invalid),
+                                getString(R.string.invalid_fromtime)
+                        )
+                        builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                        }
+                        val alertDialog = GetAleretDialog.showDialog(builder)
+                        ColorOfDialogButton.setColorOfDialogButton(alertDialog)
                     }
-                    var alertDialog = GetAleretDialog.showDialog(builder)
-                    ColorOfDialogButton.setColorOfDialogButton(alertDialog)
-                }
-                /**
-                 * if MIN_MILIISECONDS <= elapsed that means the meeting duration is more than 15 min
-                 * if the above condition is not true than we show a message in alert that the meeting duration must be greater than 15 min
-                 * if MAX_MILLISECONDS >= elapsed that means the meeting duration is less than 4hours
-                 * if the above condition is not true than we show show a message in alert that the meeting duration must be less than 4hours
-                 * if above both conditions are true than entered time is correct and user is allowed to go to the next actvity
-                 */
-                else if (minMilliseconds <= elapsed) {
-                    updateMeetingDetails()
-                    updateBookingLogFirebaseAnalytics()
-                } else {
-                    val builder = GetAleretDialog.getDialog(
-                        this,
-                        getString(R.string.invalid),
-                        getString(R.string.time_validation_message)
-                    )
+                    /**
+                     * if MIN_MILIISECONDS <= elapsed that means the meeting duration is more than 15 min
+                     * if the above condition is not true than we show a message in alert that the meeting duration must be greater than 15 min
+                     * if MAX_MILLISECONDS >= elapsed that means the meeting duration is less than 4hours
+                     * if the above condition is not true than we show show a message in alert that the meeting duration must be less than 4hours
+                     * if above both conditions are true than entered time is correct and user is allowed to go to the next actvity
+                     */
+                    minMilliseconds <= elapsed -> {
+                        updateMeetingDetails()
+                        updateBookingLogFirebaseAnalytics()
+                    }
+                    else -> {
+                        val builder = GetAleretDialog.getDialog(
+                                this,
+                                getString(R.string.invalid),
+                                getString(R.string.time_validation_message)
+                        )
 
-                    builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                        builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+                        }
+                        GetAleretDialog.showDialog(builder)
                     }
-                    GetAleretDialog.showDialog(builder)
                 }
             } catch (e: Exception) {
                 Toast.makeText(this@UpdateBookingActivity, getString(R.string.details_invalid), Toast.LENGTH_LONG)

@@ -58,7 +58,6 @@ class BuildingDashboard : AppCompatActivity() {
     /**
      * Restart the Activity
      */
-
     override fun onRestart() {
         super.onRestart()
         mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
@@ -70,11 +69,12 @@ class BuildingDashboard : AppCompatActivity() {
     private fun init() {
         initActionBar()
         initLateInitializerVariables()
-        if (NetworkState.appIsConnectedToInternet(this)) {
-            getViewModel()
-        } else {
-            val i = Intent(this@BuildingDashboard, NoInternetConnectionActivity::class.java)
-            startActivityForResult(i, Constants.RES_CODE)
+        when {
+            NetworkState.appIsConnectedToInternet(this) -> getViewModel()
+            else -> {
+                val i = Intent(this@BuildingDashboard, NoInternetConnectionActivity::class.java)
+                startActivityForResult(i, Constants.RES_CODE)
+            }
         }
 
     }
@@ -103,26 +103,25 @@ class BuildingDashboard : AppCompatActivity() {
     private fun observeData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
             mProgressBar.visibility = View.GONE
-            if(it.isEmpty()) {
-                Toasty.info(this, getString(R.string.please_add_building), Toasty.LENGTH_SHORT).show()
-            } else {
+            if (it.isEmpty()) Toasty.info(this, getString(R.string.please_add_building), Toasty.LENGTH_SHORT).show()
+            else {
                 buildingAdapter = BuildingDashboardAdapter(this, it, object : BuildingDashboardAdapter.BtnClickListener {
-                    override fun onBtnClick(buildingId: String?, buildingname: String?) {
+                    override fun onBtnClick(buildingId: String?, buildingName: String?) {
                         val intent = Intent(this@BuildingDashboard, ConferenceDashBoard::class.java)
                         intent.putExtra(Constants.EXTRA_BUILDING_ID, buildingId)
                         startActivity(intent)
                     }
                 },
-                    object : BuildingDashboardAdapter.EditClickListener {
-                        override fun onEditBtnClick(position: Int) {
-                            val intent = Intent(this@BuildingDashboard, AddingBuilding::class.java)
-                            intent.putExtra(Constants.BUILDING_ID, it[position].buildingId!!.toInt())
-                            intent.putExtra(Constants.BUILDING_NAME, it[position].buildingName)
-                            intent.putExtra(Constants.BUILDING_PLACE, it[position].buildingPlace)
-                            intent.putExtra(Constants.FLAG, true)
-                            startActivity(intent)
-                        }
-                    })
+                        object : BuildingDashboardAdapter.EditClickListener {
+                            override fun onEditBtnClick(position: Int) {
+                                val intent = Intent(this@BuildingDashboard, AddingBuilding::class.java)
+                                intent.putExtra(Constants.BUILDING_ID, it[position].buildingId!!.toInt())
+                                intent.putExtra(Constants.BUILDING_NAME, it[position].buildingName)
+                                intent.putExtra(Constants.BUILDING_PLACE, it[position].buildingPlace)
+                                intent.putExtra(Constants.FLAG, true)
+                                startActivity(intent)
+                            }
+                        })
                 recyclerView.adapter = buildingAdapter
             }
         })
@@ -135,6 +134,11 @@ class BuildingDashboard : AppCompatActivity() {
                 finish()
             }
             //some message goes here
+        })
+
+        mBuildingsViewModel.returnSuccessForDeleteBuilding().observe(this, Observer {
+            mProgressBar.visibility = View.GONE
+           // showAlertDialogForDeleting()
         })
     }
 

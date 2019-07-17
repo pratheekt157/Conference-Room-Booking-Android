@@ -4,7 +4,7 @@ import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.ManagerConference
 import com.example.conferencerommapp.Model.RoomDetails
-import com.example.globofly.services.ServiceBuilder
+import com.example.conferencerommapp.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

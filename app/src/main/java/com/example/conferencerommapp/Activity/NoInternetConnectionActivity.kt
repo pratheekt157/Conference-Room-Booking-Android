@@ -21,7 +21,7 @@ class NoInternetConnectionActivity : AppCompatActivity() {
     @OnClick(R.id.retry_button)
     fun checkConnection() {
         val returnIntent = Intent()
-        var status = NetworkState.appIsConnectedToInternet(this)
+        val status = NetworkState.appIsConnectedToInternet(this)
         if (status) {
             returnIntent.putExtra(getString(R.string.status_of_internet), status)
             setResult(Activity.RESULT_OK, returnIntent)

@@ -67,6 +67,7 @@ class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList:
         val txvBuilding: TextView = itemView.findViewById(R.id.building_name)
         val txvBuildingPlace: TextView = itemView.findViewById(R.id.building_place)
         val edit: TextView = itemView.findViewById(R.id.edit_room_details)
+        val delete: TextView = itemView.findViewById(R.id.delete_room_text_view)
         val viewRooms: TextView = itemView.findViewById(R.id.view_room_text_view)
         var building: Building? = null
     }

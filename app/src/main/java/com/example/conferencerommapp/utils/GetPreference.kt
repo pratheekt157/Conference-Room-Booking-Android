@@ -21,7 +21,7 @@ class GetPreference {
         }
 
         fun getRoleIdFromPreference(mContext: Context): Int {
-            return mContext.getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getInt(Constants.ROLE_CODE,Constants.DEFAULT_INT_PREFERENCE_VALUE)!!
+            return mContext.getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getInt(Constants.ROLE_CODE,Constants.DEFAULT_INT_PREFERENCE_VALUE)
         }
     }
 }

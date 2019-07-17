@@ -3,7 +3,7 @@ package com.example.conferencerommapp.Activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.ProgressDialog
+import android.app.*
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -29,7 +29,6 @@ import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_blocked_dashboard.*
@@ -54,13 +53,11 @@ class BlockedDashboard : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
     private var mBlockRoomList = ArrayList<Blocked>()
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blocked_dashboard)
         ButterKnife.bind(this)
         init()
         observeData()
-
     }
 
     private fun initActionBar() {
@@ -83,11 +80,12 @@ class BlockedDashboard : AppCompatActivity() {
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         refreshLayout.setColorSchemeColors(colorPrimary)
-        if (NetworkState.appIsConnectedToInternet(this)) {
-            loadBlocking()
-        } else {
-            val i = Intent(this, NoInternetConnectionActivity::class.java)
-            startActivityForResult(i, Constants.RES_CODE)
+        when {
+            NetworkState.appIsConnectedToInternet(this) -> loadBlocking()
+            else -> {
+                val i = Intent(this, NoInternetConnectionActivity::class.java)
+                startActivityForResult(i, Constants.RES_CODE)
+            }
         }
         refreshOnPull()
     }
@@ -126,20 +124,19 @@ class BlockedDashboard : AppCompatActivity() {
             mBlockRoomList.clear()
             mBlockRoomList.addAll(it)
             setAdapter()
-
         })
         mBlockedDashboardViewModel.returnFailureCodeFromBlockedApi().observe(this, Observer {
             refreshLayout.isRefreshing = false
             mProgressBar.visibility = View.GONE
-            if (it == Constants.INVALID_TOKEN) {
-                ShowDialogForSessionExpired.showAlert(this, BlockedDashboard())
-            } else if (it == Constants.NO_CONTENT_FOUND) {
-                empty_view_blocked.visibility = View.VISIBLE
-                r2_block_dashboard.setBackgroundColor(Color.parseColor("#FFFFFF"))
-                mBlockRoomList.clear()
-                setAdapter()
-            } else {
-                ShowToast.show(this, it as Int)
+            when (it) {
+                Constants.INVALID_TOKEN -> ShowDialogForSessionExpired.showAlert(this, BlockedDashboard())
+                Constants.NO_CONTENT_FOUND -> {
+                    empty_view_blocked.visibility = View.VISIBLE
+                    r2_block_dashboard.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                    mBlockRoomList.clear()
+                    setAdapter()
+                }
+                else -> ShowToast.show(this, it as Int)
             }
         })
         /**
@@ -152,26 +149,26 @@ class BlockedDashboard : AppCompatActivity() {
         })
         mBlockedDashboardViewModel.returnFailureCodeForUnBlockRoom().observe(this, Observer {
             progressDialog.dismiss()
-            if (it == Constants.INVALID_TOKEN) {
-                ShowDialogForSessionExpired.showAlert(this, BlockedDashboard())
-            } else {
-                ShowToast.show(this, it as Int)
+            when (it) {
+                Constants.INVALID_TOKEN -> ShowDialogForSessionExpired.showAlert(this, BlockedDashboard())
+                else -> ShowToast.show(this, it as Int)
             }
         })
     }
 
 
-    fun setAdapter() {
+    private fun setAdapter() {
         blockedAdapter = BlockedDashboardNew(
             mBlockRoomList,
             this,
             object : BlockedDashboardNew.UnblockRoomListener {
-                override fun onClickOfUnblock(mBookingId: Int) {
-                    if (NetworkState.appIsConnectedToInternet(this@BlockedDashboard)) {
-                        confirmAlertDialogToUnblockRoom(mBookingId)
-                    } else {
-                        val i = Intent(this@BlockedDashboard, NoInternetConnectionActivity::class.java)
-                        startActivityForResult(i, Constants.RES_CODE2)
+                override fun onClickOfUnblock(bookingId: Int) {
+                    when {
+                        NetworkState.appIsConnectedToInternet(this@BlockedDashboard) -> confirmAlertDialogToUnblockRoom(bookingId)
+                        else -> {
+                            val i = Intent(this@BlockedDashboard, NoInternetConnectionActivity::class.java)
+                            startActivityForResult(i, Constants.RES_CODE2)
+                        }
                     }
                 }
             })
@@ -184,9 +181,10 @@ class BlockedDashboard : AppCompatActivity() {
         builder.setMessage(getString(R.string.unblock_room_confirmation_message))
         builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
             unblockRoom(mBookingId)
-            unBlockLogFirebase(mBookingId)
+            unBlockLogFirebase()
         }
         builder.setNegativeButton(getString(R.string.no)) { _, _ ->
+            //disable the AlertDialog
         }
         val dialog: AlertDialog = builder.create()
         dialog.setCancelable(false)
@@ -194,7 +192,7 @@ class BlockedDashboard : AppCompatActivity() {
         ColorOfDialogButton.setColorOfDialogButton(dialog)
     }
 
-    private fun unBlockLogFirebase(mBookingId: Int) {
+    private fun unBlockLogFirebase() {
         val unBlockBundle = Bundle()
         mFirebaseAnalytics.logEvent(getString(R.string.UnBlockRoom),unBlockBundle)
         mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
@@ -240,7 +238,7 @@ class BlockedDashboard : AppCompatActivity() {
     /**
      * function calls the ViewModel of Unblock
      */
-    fun unblockRoom(mBookingId: Int) {
+    private fun unblockRoom(mBookingId: Int) {
         progressDialog.show()
         mBlockedDashboardViewModel.unBlockRoom(GetPreference.getTokenFromPreference(this), mBookingId)
     }

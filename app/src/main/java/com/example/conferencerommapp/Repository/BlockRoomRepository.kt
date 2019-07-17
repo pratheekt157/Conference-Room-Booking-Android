@@ -4,7 +4,7 @@ import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.BlockRoom
 import com.example.conferencerommapp.Model.BlockingConfirmation
-import com.example.globofly.services.ServiceBuilder
+import com.example.conferencerommapp.ServiceBuilder
 import com.example.myapplication.Models.ConferenceList
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -111,7 +111,7 @@ class BlockRoomRepository {
         /**
          * API call using retrofit
          */
-        var blockRoomApi = ServiceBuilder.getObject()
+        val blockRoomApi = ServiceBuilder.getObject()
         val requestCall: Call<BlockingConfirmation> = blockRoomApi.blockConfirmation(token, mRoom)
         requestCall.enqueue(object : Callback<BlockingConfirmation> {
             override fun onFailure(call: Call<BlockingConfirmation>, t: Throwable) {

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.utils.Constants
@@ -20,7 +21,7 @@ class PreviousBookingAdapter(
     val mContext: Context,
     private val mShowMembers: ShowMembersListener
 
-) : androidx.recyclerview.widget.RecyclerView.Adapter<PreviousBookingAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<PreviousBookingAdapter.ViewHolder>() {
 
     /**
      * a variable which will ho
@@ -50,8 +51,8 @@ class PreviousBookingAdapter(
         val fromDate = fromTime!!.split("T")
         val toDate = toTime!!.split("T")
 
-        var localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
-        var localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
+        val localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
+        val localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
         holder.dateTextView.text = formatDate(localStartTime.split(" ")[0])
         holder.fromTimeTextView.text = FormatDate.changeFormateFromDateTimeToTime(localStartTime) + " - " + FormatDate.changeFormateFromDateTimeToTime(localEndTime)
         setDataToFields(holder, position)
@@ -74,7 +75,7 @@ class PreviousBookingAdapter(
         return dashboardItemList.size
     }
 
-    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var buildingNameTextView: TextView = itemView.findViewById(R.id.previous_building_name)
         var fromTimeTextView: TextView = itemView.findViewById(R.id.previous_time)
         var dateTextView: TextView = itemView.findViewById(R.id.previous_date)

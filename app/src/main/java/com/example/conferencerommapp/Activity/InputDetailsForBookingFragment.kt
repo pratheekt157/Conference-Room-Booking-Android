@@ -3,13 +3,13 @@ package com.example.conferencerommapp.Activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.core.widget.NestedScrollView
@@ -33,7 +33,6 @@ import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.activity_booking_input.*
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.booking_scroll_view
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.building_name_spinner
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.capacity_layout
@@ -45,7 +44,6 @@ import kotlinx.android.synthetic.main.activity_booking_input_from_user.purpose_l
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.search_room
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.suggestions
 import kotlinx.android.synthetic.main.activity_booking_input_from_user.text_view_error_spinner_building
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.to_time_layout
 
 
 class InputDetailsForBookingFragment : Fragment() {
@@ -68,6 +66,7 @@ class InputDetailsForBookingFragment : Fragment() {
     lateinit var purposeEditText: EditText
     @BindView(R.id.booking_scroll_view)
     lateinit var scrollView: NestedScrollView
+    lateinit var intent:Intent
     private lateinit var mSetDataFromActivity: GetIntentDataFromActvity
     private lateinit var mConferenceRoomViewModel: ConferenceRoomViewModel
     private var mInputDetailsForRoom = InputDetailsForRoom()
@@ -168,7 +167,15 @@ class InputDetailsForBookingFragment : Fragment() {
     private fun observeData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
             mProgressBar.visibility = View.GONE
-            setBuildingSpinner(it)
+            try {
+                setBuildingSpinner(it)
+            }
+            catch (e:Exception)
+            {
+                Toast.makeText(activity,e.toString(),Toast.LENGTH_SHORT).show()
+                startActivity(Intent(activity,UpcomingBookingFragment::class.java))
+            }
+
         })
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
             mProgressBar.visibility = View.GONE
@@ -197,10 +204,9 @@ class InputDetailsForBookingFragment : Fragment() {
         mConferenceRoomViewModel.returnSuccessForSuggested().observe(this, Observer {
             horizontal_line_below_search_button.visibility = View.VISIBLE
             suggestions.visibility = View.VISIBLE
-            if(it.isEmpty()) {
-                suggestions.text = "No Rooms Available"
-            } else {
-                suggestions.text = "No Room Available.Have look on suggestions"
+            when {
+                it.isEmpty() -> suggestions.text = getString(R.string.no_rooms_available)
+                else -> suggestions.text = getString(R.string.suggestion_rooms)
             }
             setAdapter(it)
         })
@@ -219,7 +225,7 @@ class InputDetailsForBookingFragment : Fragment() {
         mSetIntentData.fromTime = "${dateEditText.text} ${fromTimeEditText.text}"
         mSetIntentData.toTime = "${dateEditText.text} ${toTimeEditText.text}"
         mSetIntentData.purpose = purposeEditText.text.toString()
-        val intent = Intent(activity!!, SelectMeetingMembersActivity::class.java)
+        intent = Intent(activity!!, SelectMeetingMembersActivity::class.java)
         intent.putExtra(Constants.EXTRA_INTENT_DATA, mSetIntentData)
         startActivity(intent)
     }
@@ -280,7 +286,7 @@ class InputDetailsForBookingFragment : Fragment() {
                 text_view_error_spinner_building.visibility = View.INVISIBLE
             }
 
-            override fun onNothingSelected(adapterView: AdapterView<*>) {
+            override fun onNothingSelected(adapterView: AdapterView<*>?) {
                 mBuildingName = getString(R.string.select_building)
             }
         }

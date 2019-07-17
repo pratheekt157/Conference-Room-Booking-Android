@@ -1,11 +1,12 @@
 package com.example.conferencerommapp
-
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -20,10 +21,7 @@ import com.example.conferencerommapp.Activity.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.Model.SignIn
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.utils.GetAleretDialog
-import com.example.conferencerommapp.utils.GetProgress
-import com.example.conferencerommapp.utils.ShowToast
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -32,9 +30,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.analytics.FirebaseAnalytics
-
 class SignIn : AppCompatActivity() {
-
     @BindView(R.id.sin_in_progress_bar)
     lateinit var mProgressBar: ProgressBar
     private var RC_SIGN_IN = 0
@@ -47,16 +43,27 @@ class SignIn : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin_new)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        crashHandler()
         ButterKnife.bind(this)
         initialize()
         observeData()
     }
+
+    private fun crashHandler() {
+        val foreground :ForegroundCounter= ForegroundCounter().createAndInstallCallbacks(application)
+        val defaultHandler:Thread.UncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler{ t: Thread?, e: Throwable? ->
+            if (foreground.inForeground())
+                defaultHandler.uncaughtException(t,e)
+            else
+                Handler(Looper.getMainLooper()).postAtFrontOfQueue ({ Runtime.getRuntime().exit(0) })
+        }
+    }
+
     @OnClick(R.id.sign_in_button)
     fun signIn() {
         startIntentToGoogleSignIn()
-
     }
-
     /**
      * function intialize all items of UI, sharedPreference and calls the setAnimationToLayout function to set the animation to the layouts
      */
@@ -66,7 +73,6 @@ class SignIn : AppCompatActivity() {
         mCheckRegistrationViewModel = ViewModelProviders.of(this).get(CheckRegistrationViewModel::class.java)
         initializeGoogleSignIn()
     }
-
     /**
      * function will starts a explict intent for the google sign in
      */
@@ -74,18 +80,16 @@ class SignIn : AppCompatActivity() {
         val signInIntent = mGoogleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
-
     /**
      * function will initialize the GoogleSignInClient
      */
     private fun initializeGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .requestIdToken(getString(R.string.server_client_id_partial))
-            .build()
+                .requestEmail()
+                .requestIdToken(getString(R.string.server_client_id_partial))
+                .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     }
-
     /**
      * function will automatically invoked once the control will return from the explict intent and than call another
      * method to do further task
@@ -100,7 +104,6 @@ class SignIn : AppCompatActivity() {
             checkRegistration()
         }
     }
-
     /**
      * function will call a another function which connects to the backend.
      */
@@ -117,33 +120,26 @@ class SignIn : AppCompatActivity() {
         } catch (e: ApiException) {
             Log.w(getString(R.string.sign_in_error), "signInResult:failed code=" + e.statusCode)
         }
-
     }
-
-
     /**
      * Sign out from application
      */
     private fun signOut() {
         var mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
         mGoogleSignInClient!!.signOut()
-            .addOnCompleteListener(this) {
-            }
+                .addOnCompleteListener(this) {
+                }
     }
-
-
     private fun saveTokenAndUserIdInSharedPreference(idToken: String?) {
         val editor = prefs.edit()
         editor.putString("GoogleIdToken", idToken)
         editor.apply()
     }
-
     private fun saveCustomToken(idToken: String?) {
         val editor = prefs.edit()
         editor.putString(getString(R.string.token), "Bearer $idToken")
         editor.apply()
     }
-
     /**
      * on back pressed the function will clear the activity stack and will close the application
      */
@@ -151,7 +147,6 @@ class SignIn : AppCompatActivity() {
         finishAffinity()
         super.onBackPressed()
     }
-
     /**
      * this function will check whether the user is registered or not
      * if not registered than make an intent to registration activity
@@ -160,13 +155,9 @@ class SignIn : AppCompatActivity() {
         mProgressBar.visibility = View.VISIBLE
         mCheckRegistrationViewModel.checkRegistration(getGoogleIdToken(), GetPreference.getDeviceIdFromPreference(this))
     }
-
-
     private fun getGoogleIdToken():String {
         return getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString("GoogleIdToken", "Not set")
     }
-
-
     /**
      * observe data from server
      */
@@ -186,7 +177,6 @@ class SignIn : AppCompatActivity() {
     /**
      * a function which will set the value in shared preference
      */
-
     private fun setValueForSharedPreference(it: SignIn?) {
         val editor = prefs.edit()
         val code : String = it!!.StatusCode.toString()
@@ -194,9 +184,7 @@ class SignIn : AppCompatActivity() {
         editor.apply()
         saveCustomToken(it.Token)
         intentToNextActivity(code.toInt())
-
     }
-
     /**
      * this function will intent to some activity according to the received data from backend
      */
@@ -208,7 +196,7 @@ class SignIn : AppCompatActivity() {
             }
             else -> {
                 val builder =
-                    GetAleretDialog.getDialog(this, getString(R.string.error), getString(R.string.restart_app))
+                        GetAleretDialog.getDialog(this, getString(R.string.error), getString(R.string.restart_app))
                 builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     finish()
                 }
@@ -216,5 +204,4 @@ class SignIn : AppCompatActivity() {
             }
         }
     }
-
 }

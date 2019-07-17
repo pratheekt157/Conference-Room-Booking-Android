@@ -3,7 +3,7 @@ package com.example.conferencerommapp.Activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.ProgressDialog
+import android.app.*
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,23 +11,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import com.example.conferencerommapp.Helper.*
-import com.example.conferencerommapp.Model.*
+import com.example.conferencerommapp.Helper.CancelledBookingAdpter
+import com.example.conferencerommapp.Helper.NetworkState
+import com.example.conferencerommapp.Model.BookingDashboardInput
+import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 
+@Suppress("DEPRECATION")
 class CancelledBookingFragment : Fragment() {
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mProgressBar: ProgressBar

@@ -200,7 +200,6 @@
     <string name="book">Book</string>
     <string name="already_selected">Already Selected!</string>
     <string name="book_confirmation_message">Are you sure want to book room?</string>
-    <string name="no_rooms_available">No Rooms Available</string>
     <string name="suggestion_message">No room available in this building. Have look on suggestions</string>
     <string name="organizer">(organiser)</string>
     <string name="sign_in_error">Google Sign In Error</string>
@@ -249,5 +248,9 @@
     <string name="single_cancellation">Single_Cancellation</string>
     <string name="recurring_cancellation">Recurring_Cancellation</string>
     <string name="update_log">UPDATE</string>
+    <string name="no_rooms_available">No Rooms Available</string>
+    <string name="suggestion_rooms">No Room Available.Have look on suggestions</string>
+    <string name="sign_in_result">signInResult:failed code=</string>
+    <string name="google_id_token">GoogleIdToken</string>
 
 </resources>

@@ -295,7 +295,7 @@ class UpcomingBookingFragment : Fragment() {
 
     private fun recurringCancellationMetting(position: Int) {
         var selectedList = mutableListOf<Int>()
-        val items = arrayOf<CharSequence>("sfkjsjfkjsfhks")
+        val items = arrayOf<CharSequence>("Cancel All")
         val builder =
                 GetAleretDialog.getDialogforRecurring(
                         activity!!,
@@ -348,6 +348,7 @@ class UpcomingBookingFragment : Fragment() {
         mFirebaseAnalytics.setMinimumSessionDuration(5000)
         mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
         mFirebaseAnalytics.setUserId(email)
+        Log.i("Role",GetPreference.getRoleIdFromPreference(activity!!).toString())
         mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(activity!!).toString())
     }
 

@@ -1,7 +1,7 @@
 package com.example.conferencerommapp.Activity
 
 import android.app.Activity
-import android.app.ProgressDialog
+import android.app.*
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -24,7 +24,6 @@ import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_adding_building.*
 import kotlinx.android.synthetic.main.activity_adding_conference.*
 
 @Suppress("DEPRECATION")

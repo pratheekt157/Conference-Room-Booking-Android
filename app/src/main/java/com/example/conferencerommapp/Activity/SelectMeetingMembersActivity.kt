@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.conferencerommapp.Activity
 
 import android.annotation.SuppressLint
@@ -21,12 +23,12 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.Helper.NetworkState
+import com.example.conferencerommapp.Helper.SelectMembers
 import com.example.conferencerommapp.Model.Booking
 import com.example.conferencerommapp.Model.EmployeeList
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingViewModel
 import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
 import com.example.conferencerommapp.utils.*
@@ -36,7 +38,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.chip.Chip
 import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_no_internet_connection.*
 import kotlinx.android.synthetic.main.activity_select_meeting_members.*
 import java.util.regex.Pattern
 
@@ -86,7 +87,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     @OnClick(R.id.add_email)
     fun checkSearchEditTextContent() {
         if (validateEmailFormat()) {
-            var email = searchEditText.text.toString().trim()
+            val email = searchEditText.text.toString().trim()
             if(email == acct.email) {
                 Toast.makeText(this, getString(R.string.already_part_of_meeting), Toast.LENGTH_SHORT).show()
                 return
@@ -163,7 +164,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         // positive response from server
         mBookingViewModel.returnSuccessForBooking().observe(this, Observer {
             progressDialog.dismiss()
-            Toasty.success(this, getString(R.string.booked_successfully), Toast.LENGTH_SHORT, true).show();
+            Toasty.success(this, getString(R.string.booked_successfully), Toast.LENGTH_SHORT, true).show()
             goToBookingDashboard()
         })
         // negative response from server
@@ -190,7 +191,7 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
      */
     private fun addDataToObject() {
         val acct = GoogleSignIn.getLastSignedInAccount(applicationContext)
-        var mBookingDetails = getIntentData()
+        val mBookingDetails = getIntentData()
         Log.e("-----data from Intent", mBookingDetails.toString())
         mBooking.email = acct!!.email
         mBooking.purpose = mBookingDetails.purpose
@@ -292,11 +293,13 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
     private fun EditText.onRightDrawableClicked(onClicked: (view: EditText) -> Unit) {
         this.setOnTouchListener { v, event ->
             var hasConsumed = false
-            if (v is EditText && event.x >= v.width - v.totalPaddingRight) {
-                if (event.action == MotionEvent.ACTION_UP) {
-                    onClicked(this)
+            when {
+                v is EditText && event.x >= v.width - v.totalPaddingRight -> {
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        onClicked(this)
+                    }
+                    hasConsumed = true
                 }
-                hasConsumed = true
             }
             hasConsumed
         }
@@ -317,10 +320,9 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
                 /**
                  * Nothing here
                  */
-                if(charSequence.isEmpty()) {
-                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_search,0)
-                } else {
-                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_clear,0)
+                when {
+                    charSequence.isEmpty() -> searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_search,0)
+                    else -> searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_clear,0)
                 }
             }
 
@@ -342,17 +344,16 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         }
         customAdapter.filterList(filterName)
         // no items present in recyclerview than give option for add other emails
-        if (customAdapter.itemCount == 0) {
-            addEmailButton.visibility = View.VISIBLE
-        } else {
-            addEmailButton.visibility = View.GONE
+        when {
+            customAdapter.itemCount == 0 -> addEmailButton.visibility = View.VISIBLE
+            else -> addEmailButton.visibility = View.GONE
         }
     }
 
 
     // function checks for correct email format
     private fun validateEmailFormat(): Boolean {
-        var email = searchEditText.text.toString().trim()
+        val email = searchEditText.text.toString().trim()
         val pat = Pattern.compile(Constants.MATCHER)
         return pat.matcher(email).matches()
     }

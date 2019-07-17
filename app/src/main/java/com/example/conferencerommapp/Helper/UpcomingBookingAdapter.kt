@@ -2,7 +2,6 @@ package com.example.conferencerommapp.Helper
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,7 +15,6 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.FormatDate
 import com.example.conferencerommapp.utils.FormatTimeAccordingToZone
-import org.jetbrains.anko.find
 import java.text.SimpleDateFormat
 
 @Suppress("NAME_SHADOWING")
@@ -28,7 +26,7 @@ class UpcomingBookingAdapter(
     private val mEditBooking: EditBookingListener
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<UpcomingBookingAdapter.ViewHolder>() {
 
-    var mIntentData = GetIntentDataFromActvity()
+    private var mIntentData = GetIntentDataFromActvity()
 
     /**
      * a variable which will hold the 'Instance' of interface
@@ -106,8 +104,8 @@ class UpcomingBookingAdapter(
         }
         setDataToFields(holder, position)
 
-        var localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
-        var localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
+        val localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
+        val localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
 
         holder.dateTextView.text = formatDate(localStartTime.split(" ")[0])
         holder.fromTimeTextView.text =
@@ -117,7 +115,7 @@ class UpcomingBookingAdapter(
         setFunctionOnButton(holder, position)
     }
 
-    fun setDrawable(amitie: String, targetTextView: TextView) {
+    private fun setDrawable(amitie: String, targetTextView: TextView) {
         when (amitie) {
             "Projector" -> {
                 targetTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_projector, 0, 0, 0)
@@ -216,8 +214,8 @@ class UpcomingBookingAdapter(
         val fromDate = dashboardItemList[position].fromTime!!.split("T")
         val toDate = dashboardItemList[position].toTime!!.split("T")
 
-        var localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
-        var localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
+        val localStartTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${fromDate[1]}")
+        val localEndTime = FormatTimeAccordingToZone.formatDateAsIndianStandardTime("${fromDate[0]} ${toDate[1]}")
 
         mIntentData.date = localStartTime.split(" ")[0]
         mIntentData.fromTime = localStartTime.split(" ")[1]

@@ -3,7 +3,7 @@ package com.example.conferencerommapp.Repository
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.EmployeeList
-import com.example.globofly.services.ServiceBuilder
+import com.example.conferencerommapp.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

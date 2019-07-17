@@ -1,8 +1,8 @@
 package com.example.conferencerommapp.Repository
 
+import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
-import com.example.globofly.services.ServiceBuilder
 import com.example.myapplication.Models.ConferenceList
 import retrofit2.Call
 import retrofit2.Callback
