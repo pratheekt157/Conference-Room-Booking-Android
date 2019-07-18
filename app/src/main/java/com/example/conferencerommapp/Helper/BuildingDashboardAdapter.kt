@@ -2,6 +2,7 @@ package com.example.conferencerommapp.Helper
 
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.example.conferencerommapp.Model.Building
 import com.example.conferencerommapp.R
 
 
-class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList: List<Building>, private val btnListener: BtnClickListener, private val editListener: EditClickListener) :
+class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList: List<Building>, private val btnListener: BtnClickListener, private val editListener: EditClickListener,private val deleteListener:DeleteClickListner) :
     androidx.recyclerview.widget.RecyclerView.Adapter<BuildingDashboardAdapter.ViewHolder>() {
 
 
@@ -60,6 +61,10 @@ class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList:
         holder.viewRooms.setOnClickListener {
             mClickListener?.onBtnClick(id, buildingName)
         }
+        holder.delete.setOnClickListener {
+            Log.i("66666","Enter")
+            deleteListener.onDeleteClick(position)
+        }
     }
 
     class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
@@ -67,7 +72,7 @@ class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList:
         val txvBuilding: TextView = itemView.findViewById(R.id.building_name)
         val txvBuildingPlace: TextView = itemView.findViewById(R.id.building_place)
         val edit: TextView = itemView.findViewById(R.id.edit_room_details)
-        val delete: TextView = itemView.findViewById(R.id.delete_room_text_view)
+        val delete: TextView = itemView.findViewById(R.id.delete_building_text_view)
         val viewRooms: TextView = itemView.findViewById(R.id.view_room_text_view)
         var building: Building? = null
     }
@@ -81,5 +86,9 @@ class BuildingDashboardAdapter(var mContext: Context, private val mBuildingList:
 
     interface EditClickListener {
         fun onEditBtnClick(position: Int)
+    }
+
+    interface  DeleteClickListner{
+        fun onDeleteClick(position: Int)
     }
 }

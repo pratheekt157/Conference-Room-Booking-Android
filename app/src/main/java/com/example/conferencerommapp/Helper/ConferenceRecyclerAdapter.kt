@@ -1,6 +1,7 @@
 package com.example.conferencerommapp.Helper
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -10,7 +11,7 @@ import com.example.conferencerommapp.R
 import com.example.conferencerommapp.utils.Constants
 import com.example.myapplication.Models.ConferenceList
 
-class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList>,val listener: EditRoomDetails) :
+class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList>,val listener: EditRoomDetails, val deleteListner:DeleteClickListner) :
     androidx.recyclerview.widget.RecyclerView.Adapter<ConferenceRecyclerAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.conference_list, parent, false)
@@ -57,8 +58,12 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
                 }
             }
         }
-        holder.conferenceName.onRightDrawableClicked {
+        holder.editRoom.setOnClickListener {
+            Log.i("-----","edit")
                 listener.editRoom(position)
+        }
+        holder.deleteRoom.setOnClickListener {
+            deleteListner.deleteRoom(position)
         }
     }
 
@@ -70,6 +75,8 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
         var amenity3: TextView = itemView.findViewById(R.id.dashboard_ani_3)
         var amenity4: TextView = itemView.findViewById(R.id.dashboard_ani_4)
         var amenity5: TextView = itemView.findViewById(R.id.dashboard_ani_5)
+        var deleteRoom: TextView = itemView.findViewById(R.id.delete_room_text_view)
+        var editRoom: TextView = itemView.findViewById(R.id.edit_room_text_view)
         var conferencelist: ConferenceList? = null
     }
 
@@ -112,6 +119,10 @@ class ConferenceRecyclerAdapter(private val conferencceList: List<ConferenceList
     }
     interface EditRoomDetails {
         fun editRoom(position: Int)
+    }
+
+    interface DeleteClickListner{
+        fun deleteRoom(position: Int)
     }
 
 }

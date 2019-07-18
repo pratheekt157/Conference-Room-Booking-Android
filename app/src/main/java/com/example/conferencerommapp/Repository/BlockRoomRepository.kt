@@ -12,6 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import java.util.concurrent.CopyOnWriteArraySet
 
 class BlockRoomRepository {
     companion object {
@@ -129,8 +130,8 @@ class BlockRoomRepository {
             }
 
             override fun onResponse(call: Call<BlockingConfirmation>, response: Response<BlockingConfirmation>) {
-                if (response.code() == Constants.OK_RESPONSE) {
-                    if (response.body() == null) {
+                if (response.code() == Constants.OK_RESPONSE || response.code() == Constants.NO_CONTENT_FOUND) {
+                    if (response.code() == Constants.NO_CONTENT_FOUND) {
                         val blockingConfirmation = BlockingConfirmation()
                         blockingConfirmation.mStatus = 0
                         listener.onSuccess(blockingConfirmation)

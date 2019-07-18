@@ -39,5 +39,7 @@ class GetAleretDialog {
             mDialog.setMessage(Html.fromHtml("Your passcode is " +"<b>"+ passcode + "</b>"+". You can use this passcode to book a room from tablet placed inside conference room."))
             return mDialog
         }
+
+
     }
 }
