@@ -252,5 +252,6 @@
     <string name="suggestion_rooms">No Room Available.Have look on suggestions</string>
     <string name="sign_in_result">signInResult:failed code=</string>
     <string name="google_id_token">GoogleIdToken</string>
+    <string name="successfull_deletion">Successfully Deleted</string>
 
 </resources>

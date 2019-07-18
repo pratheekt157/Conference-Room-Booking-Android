@@ -7,6 +7,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
@@ -20,10 +21,7 @@ import com.example.conferencerommapp.Helper.BuildingDashboardAdapter
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.utils.GetProgress
-import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
-import com.example.conferencerommapp.utils.ShowToast
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
 
@@ -38,7 +36,7 @@ class BuildingDashboard : AppCompatActivity() {
     private lateinit var buildingAdapter: BuildingDashboardAdapter
     private lateinit var mBuildingsViewModel: BuildingViewModel
     private lateinit var mProgressDialog: ProgressDialog
-
+    private var buildingId: Int =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_building_dashboard)
@@ -121,6 +119,13 @@ class BuildingDashboard : AppCompatActivity() {
                                 intent.putExtra(Constants.FLAG, true)
                                 startActivity(intent)
                             }
+                        },
+                        object : BuildingDashboardAdapter.DeleteClickListner{
+                            override fun onDeleteClick(position: Int) {
+                              buildingId=it[position].buildingId!!.toInt()
+                              showDeleteDialog(buildingId)
+                            }
+
                         })
                 recyclerView.adapter = buildingAdapter
             }
@@ -138,8 +143,30 @@ class BuildingDashboard : AppCompatActivity() {
 
         mBuildingsViewModel.returnSuccessForDeleteBuilding().observe(this, Observer {
             mProgressBar.visibility = View.GONE
-           // showAlertDialogForDeleting()
+            Toasty.success(this,getString(R.string.successfull_deletion)).show()
+            mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
         })
+
+        mBuildingsViewModel.returnFailureForDeleteBuilding().observe(this, Observer {
+            mProgressBar.visibility = View.GONE
+            if (it == getString(R.string.invalid_token)) {
+                ShowDialogForSessionExpired.showAlert(this, UserBookingsDashboardActivity())
+            } else {
+                ShowToast.show(this, it as Int)
+            }
+        })
+    }
+
+    private fun showDeleteDialog(buildingId: Int) {
+        val dialog = GetAleretDialog.getDialog(this,"Delete","Are you sure you wnat to delete the Building")
+        dialog.setPositiveButton(R.string.ok){_,_->
+            mBuildingsViewModel.deleteBuilding(GetPreference.getTokenFromPreference(this),buildingId)
+        }
+        dialog.setNegativeButton(R.string.cancel){_,_->
+
+        }
+        val builder = GetAleretDialog.showDialog(dialog)
+        ColorOfDialogButton.setColorOfDialogButton(builder)
     }
 
     /**

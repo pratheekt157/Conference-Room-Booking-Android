@@ -18,7 +18,6 @@
             android:layout_height="match_parent">
         <TextView
                 android:hint="@string/room_location_hint"
-                android:drawableEnd="@drawable/ic_edit_black_24dp"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -95,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_live_tv_black_24dp"
                     android:fontFamily="@font/roboto"
-                    android:textSize="@dimen/sp_14"
+                    android:textSize="@dimen/sp_12"
                     android:textColor="@color/amenities_color"
                     android:visibility="gone"
                     android:layout_width="0dp"
@@ -142,5 +141,32 @@
                     android:maxLines="1"
                     android:ellipsize="end"/>
         </LinearLayout>
+        <View
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_below="@+id/linear_layout_3"
+            android:id="@+id/line"
+            android:background="#E5E5E5"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <TextView
+            android:layout_below="@+id/line"
+            android:layout_alignParentLeft="true"
+            android:text="Edit"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/edit_room_text_view"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_below="@+id/line"
+            android:layout_alignParentRight="true"
+            android:textColor="#F00"
+            android:text="Delete"
+            android:id="@+id/delete_room_text_view"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -12,6 +12,9 @@ class HrConferenceRoomViewModel : ViewModel() {
     var mHrConferenceRoomList = MutableLiveData<List<ConferenceList>>()
     var mFailureCodeForHrConferenceRoom = MutableLiveData<Any>()
 
+    var mSuccessForDeleteBuilding = MutableLiveData<Int>()
+    var mFailureForDeleteBuilding = MutableLiveData<Any>()
+
     fun getConferenceRoomList(buildingId: Int, token: String) {
         mHrConferenceRoomRepository = HrConferenceRoomRepository.getInstance()
         mHrConferenceRoomRepository!!.getConferenceRoomList(buildingId, token,  object :
@@ -35,4 +38,26 @@ class HrConferenceRoomViewModel : ViewModel() {
         return mFailureCodeForHrConferenceRoom
     }
 
+    fun deleteConferenceRoom(token: String,roomId: Int){
+        mHrConferenceRoomRepository = HrConferenceRoomRepository.getInstance()
+        mHrConferenceRoomRepository!!.deleteBuilding(token,roomId,object :ResponseListener{
+            override fun onSuccess(success: Any) {
+                mSuccessForDeleteBuilding.value = success as Int
+            }
+
+            override fun onFailure(failure: Any) {
+                mFailureForDeleteBuilding.value = failure
+            }
+
+        })
+    }
+    fun returnSuccessForDeleteRoom(): MutableLiveData<Int> {
+        return mSuccessForDeleteBuilding
+    }
+    /**
+     * return negative response from server
+     */
+    fun returnFailureForDeleteRoom(): MutableLiveData<Any> {
+        return mFailureForDeleteBuilding
+    }
 }

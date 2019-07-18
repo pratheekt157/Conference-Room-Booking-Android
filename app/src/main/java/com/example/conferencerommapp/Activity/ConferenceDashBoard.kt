@@ -19,12 +19,10 @@ import com.example.conferencerommapp.Helper.ConferenceRecyclerAdapter
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.ViewModel.HrConferenceRoomViewModel
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.utils.EditRoomDetails
-import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
-import com.example.conferencerommapp.utils.ShowToast
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_conference_dash_board.*
 
 
@@ -110,6 +108,21 @@ class ConferenceDashBoard : AppCompatActivity() {
                 }
             }
         })
+
+        mHrConferenceRoomViewModel.returnSuccessForDeleteRoom().observe(this, Observer {
+            mProgressBar.visibility = View.GONE
+            Toasty.success(this,getString(R.string.successfull_deletion)).show()
+            getConference(buildingId)
+        })
+
+        mHrConferenceRoomViewModel.returnFailureForDeleteRoom().observe(this, Observer {
+            mProgressBar.visibility = View.GONE
+            if (it == getString(R.string.invalid_token)) {
+                ShowDialogForSessionExpired.showAlert(this, UserBookingsDashboardActivity())
+            } else {
+                ShowToast.show(this, it as Int)
+            }
+        })
     }
 
     private fun setAdapter() {
@@ -123,8 +136,26 @@ class ConferenceDashBoard : AppCompatActivity() {
                 startActivity(intent)
             }
 
-        })
+        },
+           object : ConferenceRecyclerAdapter.DeleteClickListner{
+               override fun deleteRoom(position: Int) {
+                   showAlertDialogForDelete(mConferenceList[position].roomId)
+               }
+
+           }    )
         recyclerView.adapter = conferenceRoomAdapter
+    }
+
+    private fun showAlertDialogForDelete(roomId: Int?) {
+        val dialog = GetAleretDialog.getDialog(this,"Delete","Are you sure you wnat to delete the Room")
+        dialog.setPositiveButton(R.string.ok){_,_->
+            mHrConferenceRoomViewModel.deleteConferenceRoom(GetPreference.getTokenFromPreference(this),roomId!!)
+        }
+        dialog.setNegativeButton(R.string.cancel){_,_->
+
+        }
+        val builder = GetAleretDialog.showDialog(dialog)
+        ColorOfDialogButton.setColorOfDialogButton(builder)
     }
 
     /**

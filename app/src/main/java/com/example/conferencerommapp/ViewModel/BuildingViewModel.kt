@@ -59,7 +59,7 @@ class BuildingViewModel : ViewModel() {
 
     fun deleteBuilding(token: String,id:Int) {
         mBuildingsRepository = BuildingsRepository.getInstance()
-        mBuildingsRepository!!.getBuildingList(token, object: ResponseListener {
+        mBuildingsRepository!!.deleteBuilding(token,id, object: ResponseListener {
             override fun onFailure(failure: Any) {
                 mFailureForDeleteBuilding.value = failure
             }

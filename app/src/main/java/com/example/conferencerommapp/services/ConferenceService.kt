@@ -177,4 +177,10 @@ interface ConferenceService {
             @Header("Authorization") token: String,
             @Query("buildingId") id: Int
     ) : Call<ResponseBody>
+
+    @DELETE("api/deleteRoom")
+    fun deleteRoom(
+            @Header("Authorization") token: String,
+            @Query("roomId") id: Int
+    ) : Call<ResponseBody>
 }

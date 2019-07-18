@@ -25,7 +25,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_marginBottom="@dimen/dp_4"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/conference_list"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/conference_list"/>

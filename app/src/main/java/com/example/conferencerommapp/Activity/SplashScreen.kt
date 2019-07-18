@@ -10,12 +10,12 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.Crashlytics
@@ -23,12 +23,13 @@ import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.GetRoleOfUserViewModel
-import com.example.conferencerommapp.utils.*
+import com.example.conferencerommapp.utils.Constants
+import com.example.conferencerommapp.utils.GetProgress
+import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
+import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import io.fabric.sdk.android.Fabric
 
 
@@ -44,6 +45,7 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Fabric.with(this,Crashlytics())
         setContentView(R.layout.activity_splash_screen)
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         init()
         observeData()
         crashHandler()
