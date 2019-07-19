@@ -30,7 +30,9 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
             android:layout_below="@+id/scroll_view"
             android:focusableInTouchMode="true"
             android:focusable="true"
@@ -42,12 +44,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:paddingLeft="16dp"
             android:singleLine="true"
             android:hint="@string/search"
-            android:paddingStart="@dimen/drawable_padding_5dp"
             android:layout_marginTop="@dimen/dp_10"
             android:drawableEnd="@drawable/ic_search"
-            android:background="@null"/>
+           />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

@@ -125,14 +125,14 @@ class SignIn : AppCompatActivity() {
      * Sign out from application
      */
     private fun signOut() {
-        var mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
-        mGoogleSignInClient!!.signOut()
+        val mGoogleSignInClient = GoogleGSO.getGoogleSignInClient(this)
+        mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this) {
                 }
     }
     private fun saveTokenAndUserIdInSharedPreference(idToken: String?) {
         val editor = prefs.edit()
-        editor.putString("GoogleIdToken", idToken)
+        editor.putString(getString(R.string.google_id_token), idToken)
         editor.apply()
     }
     private fun saveCustomToken(idToken: String?) {
@@ -156,7 +156,7 @@ class SignIn : AppCompatActivity() {
         mCheckRegistrationViewModel.checkRegistration(getGoogleIdToken(), GetPreference.getDeviceIdFromPreference(this))
     }
     private fun getGoogleIdToken():String {
-        return getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString("GoogleIdToken", "Not set")
+        return getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE).getString(getString(R.string.google_id_token), getString(R.string.not_set))!!
     }
     /**
      * observe data from server

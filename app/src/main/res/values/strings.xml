@@ -253,5 +253,6 @@
     <string name="sign_in_result">signInResult:failed code=</string>
     <string name="google_id_token">GoogleIdToken</string>
     <string name="successfull_deletion">Successfully Deleted</string>
+    <string name="yyyy_mm_dd">yyyy-MM-dd</string>
 
 </resources>

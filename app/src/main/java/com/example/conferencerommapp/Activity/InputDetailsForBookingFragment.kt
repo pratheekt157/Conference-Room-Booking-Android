@@ -167,14 +167,7 @@ class InputDetailsForBookingFragment : Fragment() {
     private fun observeData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
             mProgressBar.visibility = View.GONE
-            try {
-                setBuildingSpinner(it)
-            }
-            catch (e:Exception)
-            {
-                Toast.makeText(activity,e.toString(),Toast.LENGTH_SHORT).show()
-                startActivity(Intent(activity,UpcomingBookingFragment::class.java))
-            }
+                            setBuildingSpinner(it)
 
         })
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
@@ -280,7 +273,7 @@ class InputDetailsForBookingFragment : Fragment() {
         val adapter = ArrayAdapter<String>(activity!!, R.layout.spinner_icon, R.id.spinner_text, buildingNameList)
         building_name_spinner.adapter = adapter
         building_name_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 mBuildingName = buildingNameList[position]
                 mBuildingId = buildingIdList[position]
                 text_view_error_spinner_building.visibility = View.INVISIBLE

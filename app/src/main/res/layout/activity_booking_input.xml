@@ -175,9 +175,12 @@
                     android:text="Select building"/>
             <CheckBox
                 android:text="Private"
+                android:textColor="@color/textColorGray"
                 android:textSize="@dimen/sp_14"
+                android:paddingStart="2dp"
                 android:paddingRight="@dimen/dp_16"
-                android:layout_margin="@dimen/dp_8"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_below="@id/building_name_spinner"
                 android:id="@+id/checkbox_private"
                 android:layout_width="match_parent"

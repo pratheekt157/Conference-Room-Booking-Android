@@ -107,7 +107,7 @@ class CancelledBookingFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    // todo check if the there are more items existing in database
+                    // It check if the there are more items existing in database
                     if (hasMoreItem) {
                         cancelled_progress_bar.visibility = View.VISIBLE
                         pagination++

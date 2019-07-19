@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +27,6 @@ import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
-import kotlinx.android.synthetic.main.activity_booking_input_from_user.*
 import kotlinx.android.synthetic.main.activity_project_manager_input.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,8 +51,8 @@ class NewProjectManagerInput : AppCompatActivity() {
     lateinit var buildingSpineer: Spinner
     @BindView(R.id.manager_room_capacity)
     lateinit var roomCapacityEditText: EditText
-    @BindView(R.id.reurring_booking_scroll_view)
-    lateinit var scrollView: NestedScrollView
+//    @BindView(R.id.reurring_booking_scroll_view)
+//    lateinit var scrollView: NestedScrollView
 
     @BindView(R.id.manager_event_name_text_view)
     lateinit var purposeEditText: EditText
@@ -153,7 +151,7 @@ class NewProjectManagerInput : AppCompatActivity() {
     ) {
         dataList.clear()
         try {
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+            val simpleDateFormat = SimpleDateFormat(getString(R.string.yyyy_mm_dd), Locale.US)
             val d1 = simpleDateFormat.parse(fromDate)
             val d2 = simpleDateFormat.parse(toDate)
             val c1 = Calendar.getInstance()
