@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.conferencerommapp">
+          xmlns:tools="http://schemas.android.com/tools" package="com.example.conferencerommapp">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
@@ -15,11 +15,12 @@
             android:networkSecurityConfig="@xml/network_security_config"
             android:roundIcon="@drawable/new_app_logo"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="dfb427f6e30bbedadb01b9ab540f56eb9aeaa4ce" />
+                android:name="io.fabric.ApiKey"
+                android:value="dfb427f6e30bbedadb01b9ab540f56eb9aeaa4ce"/>
 
         <service
                 android:name=".NotificationService"
@@ -29,6 +30,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+        <activity android:name=".buildings.ui.BuildingDashboard"
+                  android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
                 android:name=".Activity.NoInternetConnectionActivity"
                 android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
