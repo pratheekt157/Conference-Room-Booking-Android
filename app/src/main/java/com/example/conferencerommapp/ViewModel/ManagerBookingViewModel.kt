@@ -19,13 +19,16 @@ class ManagerBookingViewModel: ViewModel() {
     var mSuccessCode =  MutableLiveData<Int>()
 
     var mErrorCode =  MutableLiveData<Any>()
+
+    fun setManagerBookingRepo(mManagerBookingRepo: ManagerBookingRepository) {
+        mManagerBookingRepository = mManagerBookingRepo
+    }
    /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will return the value for MutableLivedata
      */
     fun addBookingDetails(mBooking: ManagerBooking, token: String) {
-        mManagerBookingRepository = ManagerBookingRepository.getInstance()
-        mManagerBookingRepository!!.addBookingDetails(mBooking, token, object:
+       mManagerBookingRepository!!.addBookingDetails(mBooking, token, object:
             ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuccessCode.value = success as Int

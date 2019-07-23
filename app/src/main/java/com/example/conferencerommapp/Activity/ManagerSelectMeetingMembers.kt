@@ -22,13 +22,18 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.SelectMembers
 import com.example.conferencerommapp.Model.EmployeeList
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.ManagerBooking
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.BookingRepository
+import com.example.conferencerommapp.Repository.EmployeeRepository
+import com.example.conferencerommapp.Repository.ManagerBookingRepository
 import com.example.conferencerommapp.ViewModel.ManagerBookingViewModel
+import com.example.conferencerommapp.ViewModel.ManagerBuildingViewModel
 import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
@@ -39,8 +44,16 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_select_meeting_members.*
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 class ManagerSelectMeetingMembers : AppCompatActivity() {
+
+    @Inject
+    lateinit var mSelectEmployeeRepo: EmployeeRepository
+
+    @Inject
+    lateinit var mBookingRepo: ManagerBookingRepository
+
     val employeeList = ArrayList<EmployeeList>()
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private val selectedName = ArrayList<String>()
@@ -98,14 +111,30 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
      */
     fun init() {
         initActionBar()
-        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this)
+        initComponentForSelectMembers()
         initLateInitializerVariables()
+        initManagerSelectMembers()
+        initManagerBooking()
+        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this)
+
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModel()
         } else {
             val i = Intent(this, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initComponentForSelectMembers() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
+    private fun initManagerSelectMembers() {
+        mSelectMemberViewModel.setEmployeeListRepo(mSelectEmployeeRepo)
+    }
+
+    private fun initManagerBooking() {
+        mManagerBookingViewModel.setManagerBookingRepo(mBookingRepo)
     }
 
     private fun initActionBar() {

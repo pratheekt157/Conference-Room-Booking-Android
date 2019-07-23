@@ -29,6 +29,8 @@ interface AppComponent {
 
     fun inject(newProjectManagerInput: NewProjectManagerInput)
 
+    fun inject(managerBooking: ManagerSelectMeetingMembers)
+
     fun inject(noInternetConnectionActivity: NoInternetConnectionActivity)
 
     fun inject(selectMeetingMembersActivity: SelectMeetingMembersActivity)

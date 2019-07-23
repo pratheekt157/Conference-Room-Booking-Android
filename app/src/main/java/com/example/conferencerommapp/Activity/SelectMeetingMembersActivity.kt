@@ -23,12 +23,15 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.SelectMembers
 import com.example.conferencerommapp.Model.Booking
 import com.example.conferencerommapp.Model.EmployeeList
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.BookingRepository
+import com.example.conferencerommapp.Repository.EmployeeRepository
 import com.example.conferencerommapp.ViewModel.BookingViewModel
 import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
 import com.example.conferencerommapp.utils.*
@@ -40,9 +43,17 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_select_meeting_members.*
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 class SelectMeetingMembersActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var mSelectEmployeeRepo: EmployeeRepository
+
+    @Inject
+    lateinit var mBookingRepo: BookingRepository
+
     @BindView(R.id.select_meeting_members_progress_bar)
     lateinit var mProgressBar: ProgressBar
     private val employeeList = ArrayList<EmployeeList>()
@@ -103,7 +114,10 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
      */
     fun init() {
         initToolBar()
+        initComponentForSelectMembers()
         initLateInitializerVariables()
+        initSelectEmployeeRepo()
+        initBookingRepo()
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModel()
@@ -111,6 +125,10 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
             val i = Intent(this, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initBookingRepo() {
+        mBookingViewModel.setBookingRepo(mBookingRepo)
     }
 
     private fun initLateInitializerVariables() {
@@ -201,6 +219,15 @@ class SelectMeetingMembersActivity : AppCompatActivity() {
         mBooking.fromTime = FormatTimeAccordingToZone.formatDateAsUTC(mBookingDetails.fromTime!!)
         mBooking.toTime = FormatTimeAccordingToZone.formatDateAsUTC(mBookingDetails.toTime!!)
     }
+
+    private fun initComponentForSelectMembers() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+    private fun initSelectEmployeeRepo() {
+        mSelectMemberViewModel.setEmployeeListRepo(mSelectEmployeeRepo)
+    }
+
+
 
     /**
      *  redirect to UserBookingDashboardActivity

@@ -19,11 +19,14 @@ class SelectMemberViewModel: ViewModel() {
 
     var mErrorCodeFromServerForEmployees =  MutableLiveData<Any>()
 
+    fun setEmployeeListRepo(mEmployeeListrepo: EmployeeRepository) {
+        this.mEmployeeRepository = mEmployeeListrepo
+    }
+
     /**
      * for Employee List
      */
     fun getEmployeeList(token: String, email: String) {
-        mEmployeeRepository = EmployeeRepository.getInstance()
         mEmployeeRepository!!.getEmployeeList(token, email, object: ResponseListener {
             override fun onFailure(failure: Any) {
                 mErrorCodeFromServerForEmployees.value = failure
