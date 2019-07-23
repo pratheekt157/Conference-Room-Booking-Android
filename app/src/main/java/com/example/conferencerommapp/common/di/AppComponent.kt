@@ -11,13 +11,12 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class])
 interface AppComponent {
 
-
     /**
      * activity dagger injection object
      */
     fun inject(splashScreen: SplashScreen)
 
-    fun inject(addBuilding: AddBuilding)
+    fun inject(addBuilding: AddingBuilding)
 
     fun inject(addingConference: AddingConference)
 

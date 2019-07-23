@@ -3,12 +3,12 @@ package com.example.conferencerommapp.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.AddConferenceRoom
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Repository.AddConferenceRepository
+import com.example.conferencerommapp.services.ResponseListener
 
 class AddConferenceRoomViewModel : ViewModel() {
     /**
-     * a object which will hold the reference to the corrosponding repository class
+     * a object which will hold the reference to the corresponding repository class
      */
     var mAddConferenceRepository: AddConferenceRepository? = null
     /**
@@ -22,11 +22,17 @@ class AddConferenceRoomViewModel : ViewModel() {
     var mFailureForUpdateRoom = MutableLiveData<Any>()
 
     /**
+     * initialize repo object
+     */
+    fun setAddingConferenceRoomRepo(mAddRoomRepo: AddConferenceRepository) {
+        this.mAddConferenceRepository = mAddRoomRepo
+    }
+
+    /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will return the value for MutableLivedata
      */
     fun addConferenceDetails(token: String, mAddConference: AddConferenceRoom) {
-        mAddConferenceRepository = AddConferenceRepository.getInstance()
         mAddConferenceRepository!!.addConferenceDetails(mAddConference, token, object :
             ResponseListener {
             override fun onSuccess(success: Any) {
@@ -49,7 +55,6 @@ class AddConferenceRoomViewModel : ViewModel() {
     //--------------------------------------------for update room details ------------------------------------------------
 
     fun updateConferenceDetails(token: String, mAddConference: AddConferenceRoom) {
-        mAddConferenceRepository = AddConferenceRepository.getInstance()
         mAddConferenceRepository!!.updateConferenceDetails(mAddConference, token, object :
             ResponseListener {
             override fun onSuccess(success: Any) {

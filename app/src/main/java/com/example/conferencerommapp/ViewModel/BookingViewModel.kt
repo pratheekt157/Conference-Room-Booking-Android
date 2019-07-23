@@ -26,7 +26,6 @@ class BookingViewModel: ViewModel() {
      * and function will return the value for MutableLivedata
      */
     fun addBookingDetails(mBooking: Booking, token: String) {
-        mBookingRepository = BookingRepository.getInstance()
         mBookingRepository!!.addBookingDetails(mBooking, token, object:
             ResponseListener {
             override fun onFailure(failure: Any) {

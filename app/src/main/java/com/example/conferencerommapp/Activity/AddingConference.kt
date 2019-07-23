@@ -17,20 +17,27 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.AddConferenceRoom
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.AddConferenceRepository
 import com.example.conferencerommapp.ViewModel.AddConferenceRoomViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_adding_conference.*
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 class AddingConference : AppCompatActivity() {
     /**
      * Declaring Global variables and binned butter knife
      */
+
+    @Inject
+    lateinit var mAddRoomRepo: AddConferenceRepository
+
     @BindView(R.id.conference_Name)
     lateinit var conferenceRoomEditText: EditText
 
@@ -76,13 +83,24 @@ class AddingConference : AppCompatActivity() {
      */
     fun init() {
         initActionBar()
+        initComponent()
         initTextChangeListener()
         initLateInitializerVariables()
+        initRoomRepository()
+
     }
 
     private fun initTextChangeListener() {
         textChangeListenerOnRoomName()
         textChangeListenerOnRoomCapacity()
+    }
+
+    private fun initComponent() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
+    private fun initRoomRepository() {
+        mAddConferenceRoomViewModel.setAddingConferenceRoomRepo(mAddRoomRepo)
     }
 
     private fun getIntentData() {
@@ -103,7 +121,7 @@ class AddingConference : AppCompatActivity() {
                     Constants.EXTENSION_BOARD -> extensionBoard.isChecked = true
                 }
             }
-        }else {
+        } else {
             add_conference_room.text = getString(R.string.ADD)
         }
     }
@@ -147,7 +165,12 @@ class AddingConference : AppCompatActivity() {
             progressDialog.dismiss()
             when (it) {
                 getString(R.string.invalid_token) -> ShowDialogForSessionExpired.showAlert(this, AddingConference())
-                Constants.UNAVAILABLE_SLOT -> Toasty.info(this, getString(R.string.room_name_conflict_message), Toasty.LENGTH_SHORT, true).show()
+                Constants.UNAVAILABLE_SLOT -> Toasty.info(
+                    this,
+                    getString(R.string.room_name_conflict_message),
+                    Toasty.LENGTH_SHORT,
+                    true
+                ).show()
                 else -> ShowToast.show(this, it as Int)
             }
         })
@@ -194,11 +217,11 @@ class AddingConference : AppCompatActivity() {
      *  set values to the different properties of object which is required for api call
      */
     private fun addDataToObject(mConferenceRoom: AddConferenceRoom) {
-        if(flag) {
+        if (flag) {
             mConferenceRoom.bId = mEditRoomDetails.mRoomDetail!!.buildingId
         } else {
             val bundle: Bundle? = intent.extras
-            mConferenceRoom.bId  = bundle!!.get(Constants.EXTRA_BUILDING_ID)!!.toString().toInt()
+            mConferenceRoom.bId = bundle!!.get(Constants.EXTRA_BUILDING_ID)!!.toString().toInt()
         }
         mConferenceRoom.roomName = conferenceRoomEditText.text.toString().trim()
         mConferenceRoom.capacity = roomCapacity.text.toString().toInt()
@@ -209,8 +232,6 @@ class AddingConference : AppCompatActivity() {
         mConferenceRoom.projector = projector.isChecked
         mConferenceRoom.permission = switchButton.isChecked
     }
-
-
 
 
     /**

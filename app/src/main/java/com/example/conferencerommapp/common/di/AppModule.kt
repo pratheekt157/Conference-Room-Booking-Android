@@ -2,8 +2,8 @@ package com.example.conferencerommapp.common.di
 
 import android.content.Context
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.Repository.BuildingsRepository
 import com.example.conferencerommapp.Repository.ConferenceRoomRepository
+import com.example.conferencerommapp.buildings.repository.BuildingsRepository
 import com.example.conferencerommapp.utils.Constants
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -96,7 +96,6 @@ class AppModule(private val application: BaseApplication) {
     fun providesJacksonFactoryInstance(): ObjectMapper {
         objectMapper = provideObjectMapper()
         objectMapper!!.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-        objectMapper!!.dateFormat = providesSimpleDateFormatInstance()
         return objectMapper!!
     }
 
@@ -124,15 +123,5 @@ class AppModule(private val application: BaseApplication) {
         return mHttpLoggingInterceptor!!
     }
 
-    @Provides
-    @Singleton
-    fun provideGetBuildingRepository(): BuildingsRepository {
-        return BuildingsRepository()
-    }
 
-    @Provides
-    @Singleton
-    fun provideGetConferenceRoomRepository(): ConferenceRoomRepository {
-        return ConferenceRoomRepository()
-    }
 }

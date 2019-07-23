@@ -11,7 +11,7 @@ import com.example.myapplication.Models.ConferenceList
 
 class BlockRoomViewModel : ViewModel() {
     /**
-     * a object which will hold the reference to the corrosponding repository class
+     * a object which will hold the reference to the corresponding repository class
      */
     private var mBlockRoomRepository: BlockRoomRepository? = null
 
@@ -45,12 +45,15 @@ class BlockRoomViewModel : ViewModel() {
      */
     var mFailureCodeForBlockRoom = MutableLiveData<Any>()
 
+    fun setBlockRoomRepo(mBlockRoomRepo: BlockRoomRepository) {
+        this.mBlockRoomRepository = mBlockRoomRepo
+    }
+
     /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will return the value for MutableLivedata
      */
     fun blockRoom(mRoom: BlockRoom, token: String) {
-        mBlockRoomRepository = BlockRoomRepository.getInstance()
         mBlockRoomRepository!!.blockRoom(mRoom, token,object: ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuccessForBlockRoom.value = success as Int
@@ -80,7 +83,6 @@ class BlockRoomViewModel : ViewModel() {
      * and function will return the value for MutableLivedata
      */
     fun getRoomList(buildingId: Int, token: String) {
-        mBlockRoomRepository = BlockRoomRepository.getInstance()
         mBlockRoomRepository!!.getRoomList(buildingId, token, object:
             ResponseListener {
             override fun onSuccess(success: Any) {
@@ -112,7 +114,6 @@ class BlockRoomViewModel : ViewModel() {
      * and function will return the value for MutableLivedata
      */
     fun blockingStatus(mRoom: BlockRoom, token: String) {
-        mBlockRoomRepository = BlockRoomRepository.getInstance()
         mBlockRoomRepository!!.blockingStatus(mRoom, token, object:
             ResponseListener {
             override fun onSuccess(success: Any) {

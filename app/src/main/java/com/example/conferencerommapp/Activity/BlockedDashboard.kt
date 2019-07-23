@@ -19,11 +19,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Blocked
 import com.example.conferencerommapp.Helper.BlockedDashboardNew
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.R.color.colorPrimary
+import com.example.conferencerommapp.Repository.BlockDashboardRepository
+import com.example.conferencerommapp.Repository.BlockRoomRepository
 import com.example.conferencerommapp.ViewModel.BlockedDashboardViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
@@ -32,6 +35,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_blocked_dashboard.*
+import javax.inject.Inject
 
 @SuppressLint("Registered")
 @Suppress("DEPRECATION")
@@ -40,6 +44,10 @@ class BlockedDashboard : AppCompatActivity() {
     /**
      * Declaring Global variables and butterknife
      */
+
+    @Inject
+    lateinit var mBlockDashBoardRepo: BlockDashboardRepository
+
     @BindView(R.id.block_recyclerView)
     lateinit var recyclerView: RecyclerView
     @BindView(R.id.block_dashboard_progress_bar)
@@ -76,7 +84,9 @@ class BlockedDashboard : AppCompatActivity() {
     @SuppressLint("ResourceAsColor")
     fun init() {
         initActionBar()
+        initComponentForBlockDashBoard()
         initLateInitializerVariables()
+        initBlockDashBoardRepo()
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         refreshLayout.setColorSchemeColors(colorPrimary)
@@ -88,6 +98,15 @@ class BlockedDashboard : AppCompatActivity() {
             }
         }
         refreshOnPull()
+    }
+
+    private fun initComponentForBlockDashBoard() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
+
+    private fun initBlockDashBoardRepo() {
+        mBlockedDashboardViewModel.setBlockedRoomDashboardRepo(mBlockDashBoardRepo)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

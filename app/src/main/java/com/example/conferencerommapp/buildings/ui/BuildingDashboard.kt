@@ -77,9 +77,10 @@ class BuildingDashboard : AppCompatActivity() {
      */
     private fun init() {
         initActionBar()
+        initComponent()
         initLateInitializerVariables()
         initRepository()
-        initComponent()
+
 
         when {
             NetworkState.appIsConnectedToInternet(this) -> getViewModel()
@@ -96,7 +97,7 @@ class BuildingDashboard : AppCompatActivity() {
     }
 
     private fun initRepository() {
-        mBuildingsViewModel.setProfileRepository(buildingRepository)
+        mBuildingsViewModel.setBuildingRepository(buildingRepository)
     }
 
 

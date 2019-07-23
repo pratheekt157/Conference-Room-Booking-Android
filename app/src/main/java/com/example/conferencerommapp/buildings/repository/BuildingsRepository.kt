@@ -4,6 +4,7 @@ import com.example.conferencerommapp.Model.Building
 import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.services.ConferenceService
 import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -11,8 +12,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class BuildingsRepository {
+class BuildingsRepository @Inject constructor(){
 
     /**
      * function will initialize the MutableLiveData Object and than  make API Call
@@ -20,8 +22,7 @@ class BuildingsRepository {
      * for negative response, we will call onFailure method with response code from server
      */
     fun getBuildingList(token: String, listener: ResponseListener) {
-        val service = ServiceBuilder.getObject()
-        val requestCall: Call<List<Building>> = service.getBuildingList(token)
+        val requestCall: Call<List<Building>> = RestClient.getWebServiceData()?.getBuildingList(token)!!
         requestCall.enqueue(object : Callback<List<Building>> {
             override fun onFailure(call: Call<List<Building>>, t: Throwable) {
                 /**
@@ -67,8 +68,7 @@ class BuildingsRepository {
      * for negative response, we will call onFailure method with response code from server
      */
     fun deleteBuilding(token: String, id:Int,listener: ResponseListener){
-         val service = ServiceBuilder.getObject()
-         val requestCall: Call<ResponseBody> = service.deleteBuilding(token,id)
+        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.deleteBuilding(token,id)!!
         requestCall.enqueue(object :Callback<ResponseBody>{
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 when(t) {

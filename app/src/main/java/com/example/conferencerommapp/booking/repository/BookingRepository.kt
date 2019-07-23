@@ -1,10 +1,9 @@
-package com.example.conferencerommapp.Repository
+package com.example.conferencerommapp.booking.repository
 
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.Booking
-import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
+import com.example.conferencerommapp.utils.Constants
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

@@ -1,41 +1,25 @@
 package com.example.conferencerommapp.Repository
 
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.AddBuilding
-import com.example.conferencerommapp.ServiceBuilder
-import com.example.conferencerommapp.services.ConferenceService
+import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.services.RestClient
+import com.example.conferencerommapp.utils.Constants
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 
-class AddBuildingRepository {
-
-    /**
-     * this block provides a static method which will return the object of repository
-     * if the object is already their than it return the same
-     * or else it will return a new object
-     */
-    companion object {
-        private var mAddBuildingRepository: AddBuildingRepository? = null
-        fun getInstance(): AddBuildingRepository {
-            if (mAddBuildingRepository == null) {
-                mAddBuildingRepository = AddBuildingRepository()
-            }
-            return mAddBuildingRepository!!
-        }
-    }
+class AddBuildingRepository @Inject constructor(){
 
     /**
      * make API call and calls the methods of interface
      */
     fun addBuildingDetails(mAddBuilding: AddBuilding, token: String, listener: ResponseListener) {
-        val addBuildingService: ConferenceService = ServiceBuilder.getObject()
-        val addBuildingRequestCall: Call<ResponseBody> = addBuildingService.addBuilding(token, mAddBuilding)
+        val addBuildingRequestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.addBuilding(token, mAddBuilding)!!
         addBuildingRequestCall.enqueue(object : Callback<ResponseBody> {
             // Negative response
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -68,8 +52,7 @@ class AddBuildingRepository {
      * make API call and calls the methods of interface
      */
     fun updateBuildingDetails(mAddBuilding: AddBuilding, token: String, listener: ResponseListener) {
-        val addBuildingService: ConferenceService = ServiceBuilder.getObject()
-        val addBuildingRequestCall: Call<ResponseBody> = addBuildingService.updateBuilding(token, mAddBuilding)
+        val addBuildingRequestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.updateBuilding(token, mAddBuilding)!!
         addBuildingRequestCall.enqueue(object : Callback<ResponseBody> {
             // Negative response
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

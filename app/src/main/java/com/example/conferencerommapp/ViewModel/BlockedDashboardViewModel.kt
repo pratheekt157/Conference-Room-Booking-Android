@@ -5,17 +5,21 @@ import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.Blocked
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Repository.BlockDashboardRepository
+import com.example.conferencerommapp.Repository.BlockRoomRepository
 
 class BlockedDashboardViewModel : ViewModel() {
 
-    var mBlockDashboardRepository: BlockDashboardRepository? = null
+    private var mBlockDashboardRepository: BlockDashboardRepository? = null
     var mBlockedRoomList = MutableLiveData<List<Blocked>>()
     var mFailureCodeForBlockedRoomList = MutableLiveData<Any>()
     var mSuccessCodeForBlockRoom =  MutableLiveData<Int>()
     var mFailureCodeForBlockRoom =  MutableLiveData<Any>()
 
+    fun setBlockedRoomDashboardRepo(mBlockRoomDashBoardRepo: BlockDashboardRepository) {
+        this.mBlockDashboardRepository = mBlockRoomDashBoardRepo
+    }
+
     fun getBlockedList(token: String) {
-        mBlockDashboardRepository = BlockDashboardRepository.getInstance()
         mBlockDashboardRepository!!.getBlockedList(token, object :
             ResponseListener {
             override fun onSuccess(success: Any) {
@@ -39,7 +43,6 @@ class BlockedDashboardViewModel : ViewModel() {
     //-----------------------------------------------------------------------------------------------------------
 
     fun unBlockRoom(token: String, bookingId: Int) {
-        mBlockDashboardRepository = BlockDashboardRepository.getInstance()
         mBlockDashboardRepository!!.unblockRoom(token, bookingId, object:
             ResponseListener {
             override fun onSuccess(success: Any) {

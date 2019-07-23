@@ -28,8 +28,8 @@ class BuildingViewModel : ViewModel() {
 
     var mFailureForDeleteBuilding = MutableLiveData<Any>()
 
-    fun setProfileRepository(mBuildingRepository: BuildingsRepository) {
-        this.mBuildingsRepository = mBuildingRepository
+    fun setBuildingRepository(buildingsRepository: BuildingsRepository) {
+        this.mBuildingsRepository = buildingsRepository
     }
 
     /**

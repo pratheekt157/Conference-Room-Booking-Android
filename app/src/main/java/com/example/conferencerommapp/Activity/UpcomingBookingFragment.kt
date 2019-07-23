@@ -19,9 +19,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.Model.*
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.BookingDashboardRepository
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.utils.*
@@ -35,8 +37,12 @@ import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 import kotlinx.android.synthetic.main.fragment_upcoming_booking.*
 import org.jetbrains.anko.find
 import java.text.SimpleDateFormat
+import javax.inject.Inject
 
 class UpcomingBookingFragment : Fragment() {
+
+    @Inject
+    lateinit var mBookedDashboardRepo: BookingDashboardRepository
     private lateinit var mProgressBar: ProgressBar
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
@@ -61,6 +67,14 @@ class UpcomingBookingFragment : Fragment() {
         observeData()
     }
 
+    private fun initBookedDashBoardRepo() {
+        mBookingDashBoardViewModel.setBookedRoomDashboardRepo(mBookedDashboardRepo)
+    }
+
+    private fun initComponentForUpcomingFragment() {
+        (activity?.application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -79,9 +93,10 @@ class UpcomingBookingFragment : Fragment() {
     fun init() {
         mProgressBar = activity!!.findViewById(R.id.upcoming_main_progress_bar)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(activity!!)
-
         initRecyclerView()
+        initComponentForUpcomingFragment()
         initLateInitializerVariables()
+        initBookedDashBoardRepo()
         booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
         refreshOnPullDown()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {

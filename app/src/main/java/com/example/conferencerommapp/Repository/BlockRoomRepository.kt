@@ -5,6 +5,7 @@ import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.BlockRoom
 import com.example.conferencerommapp.Model.BlockingConfirmation
 import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.services.RestClient
 import com.example.myapplication.Models.ConferenceList
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -13,18 +14,9 @@ import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.concurrent.CopyOnWriteArraySet
+import javax.inject.Inject
 
-class BlockRoomRepository {
-    companion object {
-        private var mBlockRoomRepository: BlockRoomRepository? = null
-        fun getInstance(): BlockRoomRepository {
-            if (mBlockRoomRepository == null) {
-                mBlockRoomRepository = BlockRoomRepository()
-            }
-            return mBlockRoomRepository!!
-        }
-    }
-
+class BlockRoomRepository @Inject constructor(){
     /**
      *  function will make API call
      */
@@ -33,8 +25,7 @@ class BlockRoomRepository {
         /**
          * make API call usnig retrofit
          */
-        val blockRoomApi = ServiceBuilder.getObject()
-        val requestCall: Call<ResponseBody> = blockRoomApi.blockconference(token, mRoom)
+        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.blockconference(token, mRoom)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 when(t) {
@@ -75,7 +66,7 @@ class BlockRoomRepository {
         /**
          *  api call using retrofit
          */
-        val requestCall: Call<List<ConferenceList>> = ServiceBuilder.getObject().conferenceList(token, buildingId)
+        val requestCall: Call<List<ConferenceList>> = RestClient.getWebServiceData()?.conferenceList(token, buildingId)!!
         requestCall.enqueue(object : Callback<List<ConferenceList>> {
             override fun onFailure(call: Call<List<ConferenceList>>, t: Throwable) {
                 when(t) {
@@ -112,8 +103,7 @@ class BlockRoomRepository {
         /**
          * API call using retrofit
          */
-        val blockRoomApi = ServiceBuilder.getObject()
-        val requestCall: Call<BlockingConfirmation> = blockRoomApi.blockConfirmation(token, mRoom)
+        val requestCall: Call<BlockingConfirmation> = RestClient.getWebServiceData()?.blockConfirmation(token, mRoom)!!
         requestCall.enqueue(object : Callback<BlockingConfirmation> {
             override fun onFailure(call: Call<BlockingConfirmation>, t: Throwable) {
                 when(t) {

@@ -16,10 +16,12 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.Model.BlockRoom
 import com.example.conferencerommapp.Model.Building
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.BlockRoomRepository
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BlockRoomViewModel
 import com.example.conferencerommapp.ViewModel.BuildingViewModel
@@ -30,6 +32,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.analytics.FirebaseAnalytics
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_spinner.*
+import javax.inject.Inject
 
 @Suppress("NAME_SHADOWING", "DEPRECATION")
 class BlockConferenceRoomActivity : AppCompatActivity() {
@@ -37,6 +40,9 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     /**
      * Declaring Global variables and butterknife
      */
+    @Inject
+    lateinit var mBlockRoomRepo: BlockRoomRepository
+
     @BindView(R.id.block_conference_room_progress_bar)
     lateinit var mProgressDialog: ProgressBar
     @BindView(R.id.fromTime_b)
@@ -70,7 +76,9 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
     fun init() {
         initActionBar()
         initTextChangeListener()
+        initComponent()
         initLateInitializerVariables()
+        initBlockRoomRepo()
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         if(NetworkState.appIsConnectedToInternet(this)) {
             getBuilding()
@@ -78,6 +86,14 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
             val i = Intent(this@BlockConferenceRoomActivity, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initComponent() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
+    private fun initBlockRoomRepo() {
+        mBlockRoomViewModel.setBlockRoomRepo(mBlockRoomRepo)
     }
 
     private fun initActionBar() {

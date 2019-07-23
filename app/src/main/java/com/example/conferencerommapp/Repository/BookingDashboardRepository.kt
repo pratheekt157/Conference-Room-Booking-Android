@@ -1,10 +1,10 @@
 package com.example.conferencerommapp.Repository
-import android.util.Log
+
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.DashboardDetails
 import com.example.conferencerommapp.ServiceBuilder
-import com.example.conferencerommapp.services.ConferenceService
 import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.GetCurrentTimeInUTC
 import okhttp3.ResponseBody
@@ -13,22 +13,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class BookingDashboardRepository {
-    /**
-     * this block provides a static method which will return the object of repository
-     * if the object is already their than it return the same
-     * or else it will return a new object
-     */
-    companion object {
-        private var mBookingDashboardRepository: BookingDashboardRepository? = null
-        fun getInstance(): BookingDashboardRepository {
-            if (mBookingDashboardRepository == null) {
-                mBookingDashboardRepository = BookingDashboardRepository()
-            }
-            return mBookingDashboardRepository!!
-        }
-    }
+class BookingDashboardRepository @Inject constructor() {
     /**
      * function will make api call for making a booking
      * and call the interface method with data from server
@@ -38,8 +25,7 @@ class BookingDashboardRepository {
          * API call using retrofit
          */
         mBookingDashboardInput.currentDatTime = GetCurrentTimeInUTC.getCurrentTimeInUTC()
-        val service = ServiceBuilder.getObject()
-        val requestCall: Call<DashboardDetails> = service.getDashboard(token, mBookingDashboardInput)
+        val requestCall: Call<DashboardDetails> = RestClient.getWebServiceData()?.getDashboard(token, mBookingDashboardInput)!!
         requestCall.enqueue(object : Callback<DashboardDetails> {
             override fun onFailure(call: Call<DashboardDetails>, t: Throwable) {
                 when(t) {
@@ -71,7 +57,7 @@ class BookingDashboardRepository {
          * api call using retrofit
          */
         val service = ServiceBuilder.getObject()
-        var requestCall: Call<ResponseBody> = service.cancelBookedRoom(token, meetingId)
+        var requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.cancelBookedRoom(token, meetingId)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 when(t) {
@@ -102,8 +88,7 @@ class BookingDashboardRepository {
         /**
          * api call using rerofit
          */
-        val service:ConferenceService = ServiceBuilder.getObject()
-        val requestCall: Call<ResponseBody> = service.cancelRecurringBooking(token,meetId,recurringMeetingId)
+        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.cancelRecurringBooking(token,meetId,recurringMeetingId)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 when(t) {
@@ -127,29 +112,8 @@ class BookingDashboardRepository {
             }
         })
     }
-//    fun getPasscode(token: String, generateNewPasscode: Boolean,emailId: String, listener: ResponseListener) {
-//        /**
-//         * api call using retrofit
-//         */
-//        val service = ServiceBuilder.getObject()
-//        var requestCall: Call<String> = service.getPasscode(token, generateNewPasscode,emailId)
-//        requestCall.enqueue(object : Callback<String> {
-//            override fun onFailure(call: Call<String>, t: Throwable) {
-//                listener.onFailure(Constants.INVALID_TOKEN)
-//            }
-//            override fun onResponse(call: Call<String>, response: Response<String>) {
-//                if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
-//                    listener.onSuccess(response.body()!!)
-//                } else {
-//                    listener.onFailure(response.code())
-//                }
-//            }
-//        })
-//    }
-
     fun getPasscode(token: String,generateNewPasscode:Boolean, emailId:String,listener: ResponseListener){
-        val service = ServiceBuilder.getObject()
-        val requestCall: Call<String> = service.getPasscode(token,generateNewPasscode,emailId)
+        val requestCall: Call<String> = RestClient.getWebServiceData()?.getPasscode(token,generateNewPasscode,emailId)!!
         requestCall.enqueue(object :Callback<String>{
             override fun onFailure(call: Call<String>, t: Throwable) {
                 listener.onFailure(Constants.INVALID_TOKEN)

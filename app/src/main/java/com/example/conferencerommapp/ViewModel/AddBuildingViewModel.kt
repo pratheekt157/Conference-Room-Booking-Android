@@ -2,9 +2,9 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.AddBuilding
 import com.example.conferencerommapp.Repository.AddBuildingRepository
+import com.example.conferencerommapp.services.ResponseListener
 
 open class AddBuildingViewModel : ViewModel() {
 
@@ -23,11 +23,17 @@ open class AddBuildingViewModel : ViewModel() {
     var mFailureForUpdateBuilding = MutableLiveData<Any>()
 
     /**
+     * initialize repo object
+     */
+    fun setBuildingRepository(mAddBuildingRepository: AddBuildingRepository) {
+        this.mAddBuildingRepository = mAddBuildingRepository
+    }
+
+    /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and assign values to the live data objects
      */
     fun addBuildingDetails(mAddBuilding: AddBuilding, token: String) {
-        mAddBuildingRepository = AddBuildingRepository.getInstance()
         mAddBuildingRepository!!.addBuildingDetails(mAddBuilding, token, object :
             ResponseListener {
             override fun onFailure(failure: Any) {
@@ -46,6 +52,7 @@ open class AddBuildingViewModel : ViewModel() {
     fun returnSuccessForAddBuilding(): MutableLiveData<Int> {
         return mSuccessForAddBuilding
     }
+
     /**
      * return negative response from server
      */
@@ -60,7 +67,6 @@ open class AddBuildingViewModel : ViewModel() {
      * and assign values to the live data objects
      */
     fun updateBuildingDetails(mAddBuilding: AddBuilding, token: String) {
-        mAddBuildingRepository = AddBuildingRepository.getInstance()
         mAddBuildingRepository!!.updateBuildingDetails(mAddBuilding, token, object :
             ResponseListener {
             override fun onFailure(failure: Any) {
@@ -79,6 +85,7 @@ open class AddBuildingViewModel : ViewModel() {
     fun returnSuccessForUpdateBuilding(): MutableLiveData<Int> {
         return mSuccessForUpdateBuilding
     }
+
     /**
      * return negative response from server
      */

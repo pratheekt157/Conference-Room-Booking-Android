@@ -20,15 +20,19 @@ class BookingDashboardViewModel : ViewModel() {
      */
     var mSuccessForCancelBooking = MutableLiveData<Int>()
     var mFailureForCancelBooking = MutableLiveData<Any>()
-    // mutablelivedata variable which will hold response from server for passcode
+
+    // mutable live data variable which will hold response from server for passcode
     var mSuccessForPasscode = MutableLiveData<String>()
     var mFailureForPasscode = MutableLiveData<Any>()
+
+    fun setBookedRoomDashboardRepo(mBookedRoomDashboardRepo: BookingDashboardRepository) {
+        this.mBookingDashboardRepository = mBookedRoomDashboardRepo
+    }
     /**
      * function will initialize the repository object and calls the method of repository which will make the api call
      * and function will return the value for MutableLivedata
      */
     fun getBookingList(token: String, mBookingDashboardInput: BookingDashboardInput) {
-        mBookingDashboardRepository = BookingDashboardRepository.getInstance()
         mBookingDashboardRepository!!.getBookingList(
                 token,
                 mBookingDashboardInput,
@@ -59,7 +63,6 @@ class BookingDashboardViewModel : ViewModel() {
      * and function will return the value for MutableLivedata
      */
     fun cancelBooking(token: String, meetingId: Int) {
-        mBookingDashboardRepository = BookingDashboardRepository.getInstance()
         mBookingDashboardRepository!!.cancelBooking(token, meetingId, object :
                 ResponseListener {
             override fun onFailure(failure: Any) {
@@ -88,7 +91,6 @@ class BookingDashboardViewModel : ViewModel() {
      * and function will return the value for MutableLivedata
      */
     fun getPasscode(token: String, generateNewPasscode: Boolean,emailId : String) {
-        mBookingDashboardRepository = BookingDashboardRepository.getInstance()
         mBookingDashboardRepository!!.getPasscode(token, generateNewPasscode,emailId,object :
                 ResponseListener {
             override fun onFailure(failure: Any) {
@@ -113,7 +115,6 @@ class BookingDashboardViewModel : ViewModel() {
     }
     //----------------------------------------------------------------------------------------------
     fun recurringCancelBooking(token: String, meetingId: Int,recurringMeetId:String) {
-        mBookingDashboardRepository = BookingDashboardRepository.getInstance()
         mBookingDashboardRepository!!.recurringCancelBooking(token, meetingId,recurringMeetId, object : ResponseListener {
             override fun onFailure(failure: Any) {
                 mFailureForCancelBooking.value = failure

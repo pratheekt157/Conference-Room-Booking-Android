@@ -14,11 +14,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.PreviousBookingAdapter
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.BookingDashboardRepository
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.GetProgress
@@ -28,9 +30,13 @@ import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.fragment_previous_booking.*
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 class PreviousBookingFragment : Fragment() {
+
+    @Inject
+    lateinit var mBookedDashBoardRepo: BookingDashboardRepository
     private lateinit var mProgressBar: ProgressBar
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
@@ -52,6 +58,14 @@ class PreviousBookingFragment : Fragment() {
         observeData()
     }
 
+    private fun initBookedDashBoardRepo() {
+        mBookingDashBoardViewModel.setBookedRoomDashboardRepo(mBookedDashBoardRepo)
+    }
+
+    private fun initComponentForPreviousFragment() {
+        (activity?.application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
     /**
      * Initialize all late init fields
      */
@@ -59,7 +73,9 @@ class PreviousBookingFragment : Fragment() {
     fun init() {
         mProgressBar = activity!!.findViewById(R.id.progress_bar)
         initRecyclerView()
+        initComponentForPreviousFragment()
         initLateInitializerVariables()
+        initBookedDashBoardRepo()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModel()
         } else {

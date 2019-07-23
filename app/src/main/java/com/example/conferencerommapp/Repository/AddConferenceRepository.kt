@@ -4,35 +4,26 @@ import com.example.conferencerommapp.AddConferenceRoom
 import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.services.RestClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
 
-class AddConferenceRepository {
-
-    companion object {
-        var mAddConferenceRepository: AddConferenceRepository? = null
-        fun getInstance():AddConferenceRepository{
-            if(mAddConferenceRepository == null){
-                mAddConferenceRepository = AddConferenceRepository()
-            }
-            return mAddConferenceRepository!!
-        }
-    }
-
+class AddConferenceRepository @Inject constructor() {
     //Passing the Context and model and call API, In return sends the status of LiveData
-    fun addConferenceDetails(mConferenceRoom : AddConferenceRoom, token: String, listener: ResponseListener) {
+    fun addConferenceDetails(mConferenceRoom: AddConferenceRoom, token: String, listener: ResponseListener) {
         //Retrofit Call
-        val addConferenceRoomService = ServiceBuilder.getObject()
-        val addConferenceRequestCall: Call<ResponseBody> = addConferenceRoomService.addConference(token, mConferenceRoom)
+        val addConferenceRequestCall: Call<ResponseBody> =
+            RestClient.getWebServiceData()?.addConference(token, mConferenceRoom)!!
 
         addConferenceRequestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }
@@ -48,7 +39,7 @@ class AddConferenceRepository {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.code())
-                }else {
+                } else {
                     listener.onFailure(response.code())
                 }
             }
@@ -57,13 +48,13 @@ class AddConferenceRepository {
 
     // ------------------------------------------------update Room Details --------------------------------------
     //Passing the Context and model and call API, In return sends the status of LiveData
-    fun updateConferenceDetails(mConferenceRoom : AddConferenceRoom, token: String, listener: ResponseListener) {
+    fun updateConferenceDetails(mConferenceRoom: AddConferenceRoom, token: String, listener: ResponseListener) {
         //Retrofit Call
-        val addConferenceRoomService = ServiceBuilder.getObject()
-        val addConferenceRequestCall: Call<ResponseBody> = addConferenceRoomService.updateConference(token, mConferenceRoom)
+        val addConferenceRequestCall: Call<ResponseBody> =
+            RestClient.getWebServiceData()?.updateConference(token, mConferenceRoom)!!
         addConferenceRequestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }
@@ -79,7 +70,7 @@ class AddConferenceRepository {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.code())
-                }else {
+                } else {
                     listener.onFailure(response.code())
                 }
             }

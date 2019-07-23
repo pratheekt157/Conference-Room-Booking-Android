@@ -15,20 +15,26 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.CancelledBookingAdpter
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.BookingDashboardRepository
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 class CancelledBookingFragment : Fragment() {
+    @Inject
+    lateinit var mBookedDashBoardRepo: BookingDashboardRepository
+
     private var finalList = ArrayList<Dashboard>()
     private lateinit var mProgressBar: ProgressBar
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
@@ -58,7 +64,9 @@ class CancelledBookingFragment : Fragment() {
         HideSoftKeyboard.hideSoftKeyboard(activity!!)
         mProgressBar = activity!!.findViewById(R.id.cancelled_main_progress_bar)
         initRecyclerView()
+        initComponentForCancelledFragment()
         initLateInitializerVariables()
+        initBookedDashBoardRepo()
         cancelled_booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
         refreshOnPullDown()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
@@ -67,6 +75,14 @@ class CancelledBookingFragment : Fragment() {
             val i = Intent(activity, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
+    }
+
+    private fun initBookedDashBoardRepo() {
+        mBookingDashBoardViewModel.setBookedRoomDashboardRepo(mBookedDashBoardRepo)
+    }
+
+    private fun initComponentForCancelledFragment() {
+        (activity?.application as BaseApplication).getmAppComponent()?.inject(this)
     }
 
     private fun initLateInitializerVariables() {

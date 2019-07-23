@@ -1,7 +1,7 @@
 package com.example.conferencerommapp.Activity
 
 import android.app.Activity
-import android.app.*
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -15,9 +15,11 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.BaseApplication
+import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.AddBuilding
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.AddBuildingRepository
 import com.example.conferencerommapp.ViewModel.AddBuildingViewModel
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.GetProgress
@@ -26,9 +28,14 @@ import com.example.conferencerommapp.utils.ShowToast
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_adding_building.*
+import javax.inject.Inject
 
 @Suppress("DEPRECATION")
 class AddingBuilding : AppCompatActivity() {
+
+
+    @Inject
+    lateinit var mAddBuildingRepository: AddBuildingRepository
 
     /**
      * Declaring Global variables and binned view for using butter knife
@@ -50,11 +57,16 @@ class AddingBuilding : AppCompatActivity() {
         getDataFromIntent()
         observeData()
     }
+
+    private fun initComponent() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun getDataFromIntent() {
         flag = intent.getBooleanExtra(Constants.FLAG, false)
-        if(flag) {
+        if (flag) {
             button_add_building.text = getString(R.string.update_button)
             mUpdateBuildingDetails.buildingId = intent.getIntExtra(Constants.BUILDING_ID, 0)
             buildingNameEditText.text = intent.getStringExtra(Constants.BUILDING_NAME).toEditable()
@@ -115,9 +127,9 @@ class AddingBuilding : AppCompatActivity() {
     fun getBuildingDetails() {
         if (validateInputs()) {
             if (NetworkState.appIsConnectedToInternet(this)) {
-                if(flag) {
+                if (flag) {
                     mUpdateBuildingDetails.buildingName = buildingNameEditText.text.toString().trim()
-                    mUpdateBuildingDetails.place =  buildingPlaceEditText.text.toString().trim()
+                    mUpdateBuildingDetails.place = buildingPlaceEditText.text.toString().trim()
                     updateBuildingDetails(mUpdateBuildingDetails)
                 } else {
                     addDataToObject(mAddBuilding)
@@ -136,8 +148,14 @@ class AddingBuilding : AppCompatActivity() {
      */
     fun init() {
         initActionBar()
-        initTextChangeListener()
+        initComponent()
         initLateInitializerVariables()
+        initAddingBuildingRepository()
+        initTextChangeListener()
+    }
+
+    private fun initAddingBuildingRepository() {
+        mAddBuildingViewModel.setBuildingRepository(mAddBuildingRepository)
     }
 
     private fun initActionBar() {
