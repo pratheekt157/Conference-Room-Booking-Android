@@ -20,6 +20,7 @@ import com.example.conferencerommapp.Activity.NoInternetConnectionActivity
 import com.example.conferencerommapp.Activity.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.*
 import com.example.conferencerommapp.Model.SignIn
+import com.example.conferencerommapp.Repository.CheckRegistrationRepository
 import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
@@ -30,7 +31,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.analytics.FirebaseAnalytics
+import javax.inject.Inject
+
 class SignIn : AppCompatActivity() {
+
+    @Inject
+    lateinit var mCheckRegistrationRepo: CheckRegistrationRepository
     @BindView(R.id.sin_in_progress_bar)
     lateinit var mProgressBar: ProgressBar
     private var RC_SIGN_IN = 0
@@ -68,10 +74,20 @@ class SignIn : AppCompatActivity() {
      * function intialize all items of UI, sharedPreference and calls the setAnimationToLayout function to set the animation to the layouts
      */
     fun initialize() {
+        initComponentForSignIn()
         prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message_processing), this)
         mCheckRegistrationViewModel = ViewModelProviders.of(this).get(CheckRegistrationViewModel::class.java)
+        initRegistrationRepo()
         initializeGoogleSignIn()
+    }
+
+
+    private fun initComponentForSignIn() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+    private fun initRegistrationRepo() {
+        mCheckRegistrationViewModel.setCheckRegistrationRepo(mCheckRegistrationRepo)
     }
     /**
      * function will starts a explict intent for the google sign in

@@ -158,6 +158,8 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuildingViewModel.setBuildingRepository(mAddBuildingRepository)
     }
 
+
+
     private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar!!.title = fromHtml("<font color=\"#FFFFFF\">" + getString(R.string.Add_Buildings) + "</font>")
@@ -273,3 +275,11 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuildingViewModel.updateBuildingDetails(mUpdateBuildingDetails, GetPreference.getTokenFromPreference(this))
     }
 }
+/*
+private fun initComponent() {
+(application as BaseApplication).getmAppComponent()?.inject(this)
+}
+private fun initAddingBuildingRepository() {
+mAddBuildingViewModel.setBuildingRepository(mAddBuildingRepository)
+}
+        */

@@ -18,8 +18,10 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.GoogleGSO
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.BookingDashboardRepository
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.utils.*
@@ -33,11 +35,14 @@ import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.activity_user_dashboard.*
 import kotlinx.android.synthetic.main.app_bar_main2.*
 import kotlinx.android.synthetic.main.nav_header_main2.view.*
+import javax.inject.Inject
 
 
 @Suppress("DEPRECATION")
 class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    @Inject
+    lateinit var mBookingDahBoardRepo: BookingDashboardRepository
     lateinit var mProgressBar: ProgressBar
     private lateinit var acct: GoogleSignInAccount
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
@@ -83,10 +88,21 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         }
     }
     private fun init() {
+        initComponentForBookingDashBoard()
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
         acct = GoogleSignIn.getLastSignedInAccount(this)!!
+        initBookingDashBoardRepo()
         observeData()
     }
+
+    private fun initComponentForBookingDashBoard() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+    private fun initBookingDashBoardRepo() {
+        mBookingDashBoardViewModel.setBookedRoomDashboardRepo(mBookingDahBoardRepo)
+    }
+
+
 
     private fun getPasscode() {
         mProgressBar.visibility = View.VISIBLE

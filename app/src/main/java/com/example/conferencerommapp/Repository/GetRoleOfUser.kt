@@ -2,30 +2,16 @@ package com.example.conferencerommapp.Repository
 
 import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class GetRoleOfUser {
-
-
-    /**
-     * this block provides a static method which will return the object of repository
-     * if the object is already their than it return the same
-     * or else it will return a new object
-     */
-    companion object{
-        private var mGetRoleOfUser: GetRoleOfUser? = null
-        fun getInstance(): GetRoleOfUser {
-            if(mGetRoleOfUser == null) {
-                mGetRoleOfUser = GetRoleOfUser()
-            }
-            return mGetRoleOfUser!!
-        }
-    }
+class GetRoleOfUser @Inject constructor(){
 
     /**
      * function will initialize the MutableLivedata Object and than call a function for api call
@@ -34,8 +20,7 @@ class GetRoleOfUser {
         /**
          * api call using retrofit
          */
-        val service = ServiceBuilder.getObject()
-        val requestCall: Call<Int> = service.getRole(token, email)
+        val requestCall: Call<Int> = RestClient.getWebServiceData()?.getRole(token, email)!!
         requestCall.enqueue(object : Callback<Int> {
             override fun onFailure(call: Call<Int>, t: Throwable) {
                 when(t) {

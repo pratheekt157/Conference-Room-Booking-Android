@@ -1,8 +1,7 @@
 package com.example.conferencerommapp.common.di
 
 import com.example.conferencerommapp.Activity.*
-import com.example.conferencerommapp.Model.AddBuilding
-import com.example.conferencerommapp.Model.SignIn
+import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.buildings.ui.BuildingDashboard
 import dagger.Component
 import javax.inject.Singleton

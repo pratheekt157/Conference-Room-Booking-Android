@@ -3,30 +3,16 @@ package com.example.conferencerommapp.Repository
 import com.example.conferencerommapp.Model.SignIn
 import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class CheckRegistrationRepository {
-
-
-    /**
-     * this block provides a static method which will return the object of repository
-     * if the object is already their than it return the same
-     * or else it will return a new object
-     */
-    companion object{
-        private var mCheckRegistrationRepository: CheckRegistrationRepository? = null
-        fun getInstance(): CheckRegistrationRepository {
-            if(mCheckRegistrationRepository == null) {
-                mCheckRegistrationRepository = CheckRegistrationRepository()
-            }
-            return mCheckRegistrationRepository!!
-        }
-    }
+class CheckRegistrationRepository @Inject constructor(){
 
     /**
      * function will initialize the MutableLivedata Object and than call a function for api call
@@ -35,9 +21,7 @@ class CheckRegistrationRepository {
         /**
          * api call using retrofit
          */
-
-        val service = ServiceBuilder.getObject()
-        val requestCall: Call<SignIn> = service.getRequestCode(token, deviceId)
+        val requestCall: Call<SignIn> = RestClient.getWebServiceData()?.getRequestCode(token, deviceId)!!
         requestCall.enqueue(object : Callback<SignIn> {
             override fun onFailure(call: Call<SignIn>, t: Throwable) {
                 when(t) {

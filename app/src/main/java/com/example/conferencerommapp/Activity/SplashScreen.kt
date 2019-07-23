@@ -19,8 +19,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.Crashlytics
+import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.Repository.CheckRegistrationRepository
+import com.example.conferencerommapp.Repository.GetRoleOfUser
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.ViewModel.GetRoleOfUserViewModel
 import com.example.conferencerommapp.utils.Constants
@@ -31,9 +34,13 @@ import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import io.fabric.sdk.android.Fabric
+import javax.inject.Inject
 
 
 class SplashScreen : AppCompatActivity() {
+
+    @Inject
+    lateinit var mCheckegistationRepo: GetRoleOfUser
 
     private lateinit var mProgressBar: ProgressBar
     private lateinit var prefs: SharedPreferences
@@ -96,11 +103,21 @@ class SplashScreen : AppCompatActivity() {
      * initialize all lateinit variables
      */
     fun init() {
+        initComponentForSplashScreen()
         mProgressBar = findViewById(R.id.splash_screen_progress_bar)
         progressDialog =  GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
         mGetRoleOfUserViewModel = ViewModelProviders.of(this).get(GetRoleOfUserViewModel::class.java)
+        initGetRoleOfUserRepo()
     }
+
+    private fun initComponentForSplashScreen() {
+        (application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+    private fun initGetRoleOfUserRepo() {
+        mGetRoleOfUserViewModel.setGetRoleOfUserRepo(mCheckegistationRepo)
+    }
+
 
     private fun observeData() {
         mGetRoleOfUserViewModel.returnSuccessCodeForUserROle().observe(this, Observer {
