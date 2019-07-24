@@ -161,8 +161,8 @@
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/spinner_rect"
                 android:drawablePadding="5dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp" />
+                android:paddingTop="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_12" />
             <TextView
                     android:id="@+id/text_view_error_spinner_building"
                     android:layout_below="@id/building_name_spinner"

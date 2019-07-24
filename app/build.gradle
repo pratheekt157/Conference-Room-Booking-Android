@@ -7,13 +7,15 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 apply plugin: 'io.fabric'
-
+apply plugin:  'jacoco'
 repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+apply plugin: 'org.sonarqube'
 
 apply plugin: 'kotlin-android'
 
@@ -43,6 +45,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            testCoverageEnabled true
         }
     }
     dataBinding {
@@ -176,8 +181,19 @@ dependencies {
 
 
 }
-apply plugin: 'com.google.gms.google-services'
-
+sonarqube{
+    properties{
+        property "sonar.projectName","Android"
+        property "sonar.projectKey","Android"
+        property "sonar.host.url","http://localhost:9000"
+        property "sonar.language","kotlin"
+        property "sonar.src","src/main/java"
+        property "sonar.java.sources","src/main/java"
+        property "sonar.sourceEncoding","UTF-8"
+        property "sonar.login","admin"
+        property "sonar.password","admin"
+    }
+}
 crashlytics {
     enableNdk true
     androidNdkOut 'src/main/obj'

@@ -30,7 +30,7 @@ class Constants {
         /**
          * ip address for api call
          */
-        var IP_ADDRESS = "http://192.168.3.189/CRB/"
+        var IP_ADDRESS = "http://192.168.3.188/CRB/"
 
 
         const val FLAG = "FLAG"

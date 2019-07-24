@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_margin="@dimen/dp_1"
               android:orientation="horizontal"
-                android:layout_marginTop="2dp"
+              android:layout_marginTop="2dp"
+              android:paddingTop="@dimen/dp_4"
+                android:paddingBottom="@dimen/dp_4"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -14,7 +17,7 @@
     <TextView
         android:id="@+id/spinner_text"
         android:paddingStart="@dimen/dp_5"
-        android:textSize="@dimen/sp_18"
+        android:textSize="@dimen/sp_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

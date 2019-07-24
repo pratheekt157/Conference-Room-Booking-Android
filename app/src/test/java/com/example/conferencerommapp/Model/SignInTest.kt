@@ -1,0 +1,23 @@
+package com.example.conferencerommapp.Model
+
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.junit.Assert.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnitRunner
+
+@RunWith(MockitoJUnitRunner::class)
+class SignInTest{
+    val objectMapper= jacksonObjectMapper()
+    val mSignIn = SignIn()
+
+    @Test
+    fun signIn(){
+        mSignIn.StatusCode = ""
+        mSignIn.Token = ""
+        val data = objectMapper.writeValueAsString(mSignIn)
+        assertEquals(data,"{\"statusCode\":\"\",\"token\":\"\"}")
+    }
+
+
+}
