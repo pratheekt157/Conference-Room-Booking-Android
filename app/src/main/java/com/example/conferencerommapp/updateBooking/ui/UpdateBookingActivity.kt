@@ -111,7 +111,7 @@ class UpdateBookingActivity : AppCompatActivity() {
          * Validate each input field whether they are empty or not
          * If the field contains no values we show a toast to user saying that the value is invalid for particular field
          */
-        if (validate()) {
+        if (validateFromTimeEditText() || validateToTimeEditText()) {
             val minMilliseconds: Long = Constants.MIN_MEETING_DURATION
 
             /**
@@ -150,13 +150,6 @@ class UpdateBookingActivity : AppCompatActivity() {
                         val alertDialog = GetAleretDialog.showDialog(builder)
                         ColorOfDialogButton.setColorOfDialogButton(alertDialog)
                     }
-                    /**
-                     * if MIN_MILIISECONDS <= elapsed that means the meeting duration is more than 15 min
-                     * if the above condition is not true than we show a message in alert that the meeting duration must be greater than 15 min
-                     * if MAX_MILLISECONDS >= elapsed that means the meeting duration is less than 4hours
-                     * if the above condition is not true than we show show a message in alert that the meeting duration must be less than 4hours
-                     * if above both conditions are true than entered time is correct and user is allowed to go to the next actvity
-                     */
                     minMilliseconds <= elapsed -> {
                         updateMeetingDetails()
                         updateBookingLogFirebaseAnalytics()
@@ -210,8 +203,8 @@ class UpdateBookingActivity : AppCompatActivity() {
 
     }
 
-    private fun initComponentForUpdateBooking() {
-        (application as BaseApplication).getmAppComponent()?.inject(this)
+    private  fun initComponentForUpdateBooking() {
+        (application  as BaseApplication).getmAppComponent()?.inject(this)
     }
 
     private fun initUpdateBookingRepo() {
@@ -243,16 +236,23 @@ class UpdateBookingActivity : AppCompatActivity() {
         })
     }
 
-    private fun validate(): Boolean {
 
-        if (TextUtils.isEmpty(newFromTime.text.trim())) {
+    private fun validateFromTimeEditText(): Boolean {
+        return if (TextUtils.isEmpty(newFromTime.text.trim())) {
             Toast.makeText(applicationContext, getString(R.string.invalid_from_time), Toast.LENGTH_SHORT).show()
-            return false
-        } else if (TextUtils.isEmpty(newToTime.text.trim())) {
-            Toast.makeText(applicationContext, getString(R.string.invalid_to_time), Toast.LENGTH_SHORT).show()
-            return false
+            false
+        } else {
+            true
         }
-        return true
+    }
+
+    private fun validateToTimeEditText(): Boolean {
+        return if (TextUtils.isEmpty(newToTime.text.trim())) {
+            Toast.makeText(applicationContext, getString(R.string.invalid_to_time), Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            true
+        }
     }
 
     private fun setEditTextPicker() {
