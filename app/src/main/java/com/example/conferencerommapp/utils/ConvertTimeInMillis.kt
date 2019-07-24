@@ -30,10 +30,7 @@ class ConvertTimeInMillis {
             val fromDateInDateFormat = simpleDateFormatForDate.parse(fromDate)
             val toDateInDateFormat = simpleDateFormatForDate.parse(toDate)
             val dateDifference = toDateInDateFormat.time - fromDateInDateFormat.time
-            if(dateDifference > 0) {
-                return true
-            }
-            return false
+            return dateDifference > 0
         }
     }
 }

@@ -111,7 +111,7 @@ class UpdateBookingActivity : AppCompatActivity() {
          * Validate each input field whether they are empty or not
          * If the field contains no values we show a toast to user saying that the value is invalid for particular field
          */
-        if (validateFromTimeEditText() || validateToTimeEditText()) {
+        if (validate()) {
             val minMilliseconds: Long = Constants.MIN_MEETING_DURATION
 
             /**
@@ -236,23 +236,16 @@ class UpdateBookingActivity : AppCompatActivity() {
         })
     }
 
+    private fun validate(): Boolean {
 
-    private fun validateFromTimeEditText(): Boolean {
-        return if (TextUtils.isEmpty(newFromTime.text.trim())) {
+        if (TextUtils.isEmpty(newFromTime.text.trim())) {
             Toast.makeText(applicationContext, getString(R.string.invalid_from_time), Toast.LENGTH_SHORT).show()
-            false
-        } else {
-            true
-        }
-    }
-
-    private fun validateToTimeEditText(): Boolean {
-        return if (TextUtils.isEmpty(newToTime.text.trim())) {
+            return false
+        } else if (TextUtils.isEmpty(newToTime.text.trim())) {
             Toast.makeText(applicationContext, getString(R.string.invalid_to_time), Toast.LENGTH_SHORT).show()
-            false
-        } else {
-            true
+            return false
         }
+        return true
     }
 
     private fun setEditTextPicker() {
