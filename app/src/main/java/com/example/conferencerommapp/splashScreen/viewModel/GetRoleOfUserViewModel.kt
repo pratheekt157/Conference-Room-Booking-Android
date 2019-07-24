@@ -2,8 +2,8 @@ package com.example.conferencerommapp.splashScreen.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Repository.GetRoleOfUser
 import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.splashScreen.repository.GetRoleOfUser
 
 class GetRoleOfUserViewModel : ViewModel() {
 

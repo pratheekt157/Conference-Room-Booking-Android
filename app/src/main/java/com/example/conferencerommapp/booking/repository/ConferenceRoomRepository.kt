@@ -2,7 +2,6 @@ package com.example.conferencerommapp.booking.repository
 
 import com.example.conferencerommapp.Model.InputDetailsForRoom
 import com.example.conferencerommapp.Model.RoomDetails
-import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants
@@ -12,7 +11,7 @@ import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
-import com.example.conferencerommapp.Repository.ConferenceRoomRepository as ConferenceRoomRepository1
+
 
 class ConferenceRoomRepository @Inject constructor() {
     /**

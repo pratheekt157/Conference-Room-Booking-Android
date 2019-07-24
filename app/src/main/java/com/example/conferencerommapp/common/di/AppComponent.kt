@@ -1,8 +1,20 @@
 package com.example.conferencerommapp.common.di
 
-import com.example.conferencerommapp.Activity.*
+
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.ConferenceRoomDashboard.ui.ConferenceDashBoard
 import com.example.conferencerommapp.SignIn
-import com.example.conferencerommapp.buildings.ui.BuildingDashboard
+import com.example.conferencerommapp.addBuilding.ui.AddingBuilding
+import com.example.conferencerommapp.addConferenceRoom.ui.AddingConference
+import com.example.conferencerommapp.blockDashboard.ui.BlockedDashboard
+import com.example.conferencerommapp.blockRoom.ui.BlockConferenceRoomActivity
+import com.example.conferencerommapp.booking.ui.InputDetailsForBookingFragment
+import com.example.conferencerommapp.booking.ui.SelectMeetingMembersActivity
+import com.example.conferencerommapp.manageBuildings.ui.BuildingDashboard
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
+import com.example.conferencerommapp.recurringMeeting.ui.*
+import com.example.conferencerommapp.splashScreen.ui.SplashScreen
+import com.example.conferencerommapp.updateBooking.ui.UpdateBookingActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -27,9 +39,9 @@ interface AppComponent {
 
     fun inject(conferenceDashBoard: ConferenceDashBoard)
 
-    fun inject(newProjectManagerInput: NewProjectManagerInput)
-
     fun inject(managerBooking: ManagerSelectMeetingMembers)
+
+    fun inject(managerBook: NewProjectManagerInput)
 
     fun inject(noInternetConnectionActivity: NoInternetConnectionActivity)
 

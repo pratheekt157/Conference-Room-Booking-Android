@@ -3,9 +3,9 @@ package com.example.conferencerommapp.booking.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.Model.InputDetailsForRoom
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.RoomDetails
-import com.example.conferencerommapp.Repository.ConferenceRoomRepository
+import com.example.conferencerommapp.booking.repository.ConferenceRoomRepository
+import com.example.conferencerommapp.services.ResponseListener
 
 class ConferenceRoomViewModel : ViewModel() {
 

@@ -1,10 +1,11 @@
-package com.example.conferencerommapp.ViewModel
-import android.util.Log
+package com.example.conferencerommapp.BookingDashboard.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.conferencerommapp.BookingDashboard.repository.BookingDashboardRepository
+import com.example.conferencerommapp.Model.BookingDashboardInput
+import com.example.conferencerommapp.Model.DashboardDetails
 import com.example.conferencerommapp.services.ResponseListener
-import com.example.conferencerommapp.Model.*
-import com.example.conferencerommapp.Repository.BookingDashboardRepository
+
 class BookingDashboardViewModel : ViewModel() {
     /**
      * a object which will hold the reference to the corrosponding repository class

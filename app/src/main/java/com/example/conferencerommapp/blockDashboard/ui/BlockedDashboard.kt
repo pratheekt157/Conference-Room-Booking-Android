@@ -3,7 +3,7 @@ package com.example.conferencerommapp.blockDashboard.ui
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.*
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -21,13 +21,15 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Blocked
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.BlockedDashboardNew
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.R.color.colorPrimary
-import com.example.conferencerommapp.Repository.BlockDashboardRepository
-import com.example.conferencerommapp.Repository.BlockRoomRepository
 import com.example.conferencerommapp.ViewModel.BlockedDashboardViewModel
+import com.example.conferencerommapp.blockDashboard.repository.BlockDashboardRepository
+import com.example.conferencerommapp.blockRoom.ui.BlockConferenceRoomActivity
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn

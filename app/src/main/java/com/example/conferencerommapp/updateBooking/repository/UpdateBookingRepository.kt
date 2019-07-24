@@ -1,10 +1,9 @@
 package com.example.conferencerommapp.updateBooking.repository
 
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.UpdateBooking
-import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
+import com.example.conferencerommapp.utils.Constants
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,7 +12,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class UpdateBookingRepository @Inject constructor(){
+class UpdateBookingRepository @Inject constructor() {
     /**
      * function will make an API call to make request for the updation of booking
      * and call the interface method with data from server
@@ -22,7 +21,7 @@ class UpdateBookingRepository @Inject constructor(){
         val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.update(token, mUpdateBooking)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }

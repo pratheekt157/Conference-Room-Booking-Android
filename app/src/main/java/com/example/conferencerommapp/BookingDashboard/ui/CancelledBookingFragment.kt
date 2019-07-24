@@ -1,9 +1,9 @@
-package com.example.conferencerommapp.Activity
+package com.example.conferencerommapp.recurringMeeting.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.*
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,13 +16,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.example.conferencerommapp.BaseApplication
+import com.example.conferencerommapp.BookingDashboard.repository.BookingDashboardRepository
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.BookingDashboard.viewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.Helper.CancelledBookingAdpter
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.BookingDashboardRepository
-import com.example.conferencerommapp.ViewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -104,7 +106,10 @@ class CancelledBookingFragment : Fragment() {
 
     private fun getViewModel() {
         mProgressBar.visibility = View.VISIBLE
-        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+        mBookingDashBoardViewModel.getBookingList(
+            GetPreference.getTokenFromPreference(activity!!),
+            mBookingDashboardInput
+        )
     }
 
     private fun initRecyclerView() {
@@ -128,7 +133,10 @@ class CancelledBookingFragment : Fragment() {
                         cancelled_progress_bar.visibility = View.VISIBLE
                         pagination++
                         mBookingDashboardInput.pageNumber = pagination
-                        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+                        mBookingDashBoardViewModel.getBookingList(
+                            GetPreference.getTokenFromPreference(activity!!),
+                            mBookingDashboardInput
+                        )
                     }
                 }
             }
@@ -143,7 +151,10 @@ class CancelledBookingFragment : Fragment() {
             finalList.clear()
             pagination = 1
             mBookingDashboardInput.pageNumber = pagination
-            mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+            mBookingDashBoardViewModel.getBookingList(
+                GetPreference.getTokenFromPreference(activity!!),
+                mBookingDashboardInput
+            )
         }
     }
 
@@ -203,8 +214,6 @@ class CancelledBookingFragment : Fragment() {
         finalList.addAll(dashboardItemList)
         cancelled_recyclerView.adapter?.notifyDataSetChanged()
     }
-
-
 
 
 }

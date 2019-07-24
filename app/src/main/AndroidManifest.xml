@@ -30,16 +30,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-        <activity android:name=".buildings.ui.BuildingDashboard"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
         <activity
-                android:name=".Activity.NoInternetConnectionActivity"
+                android:name=".checkConnection.NoInternetConnectionActivity"
                 android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
         <activity
-                android:name=".Activity.SplashScreen"
+                android:name=".splashScreen.ui.SplashScreen"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -49,30 +44,30 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".Activity.ManagerSelectMeetingMembers"
+                android:name=".recurringMeeting.ui.ManagerSelectMeetingMembers"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.NewProjectManagerInput"
+                android:parentActivityName=".recurringMeeting.ui.NewProjectManagerInput"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Activity.SelectMeetingMembersActivity"
+                android:name=".booking.ui.SelectMeetingMembersActivity"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.UserBookingsDashboardActivity"
+                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Activity.UpdateBookingActivity"
+                android:name=".updateBooking.ui.UpdateBookingActivity"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.UserBookingsDashboardActivity"
+                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Activity.NewProjectManagerInput"
+                android:name=".recurringMeeting.ui.NewProjectManagerInput"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.UserBookingsDashboardActivity">
+                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity">
         </activity>
         <activity
-                android:name=".Activity.UserBookingsDashboardActivity"
+                android:name=".BookingDashboard.ui.UserBookingsDashboardActivity"
                 android:label="Booking"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait"
@@ -83,37 +78,37 @@
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-                android:name=".Activity.AddingBuilding"
+                android:name=".addBuilding.ui.AddingBuilding"
                 android:label="Add Building"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.BuildingDashboard"
+                android:parentActivityName=".manageBuildings.ui.BuildingDashboard"
                 android:screenOrientation="portrait"
                 android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-                android:name=".Activity.AddingConference"
+                android:name=".addConferenceRoom.ui.AddingConference"
                 android:label="Add Conference Room"
-                android:parentActivityName=".Activity.ConferenceDashBoard"
+                android:parentActivityName=".ConferenceRoomDashboard.ui.ConferenceDashBoard"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Activity.BuildingDashboard"
-                android:parentActivityName=".Activity.UserBookingsDashboardActivity"
+                android:name=".manageBuildings.ui.BuildingDashboard"
+                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Activity.BlockedDashboard"
-                android:parentActivityName=".Activity.UserBookingsDashboardActivity"
+                android:name=".blockDashboard.ui.BlockedDashboard"
+                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".Activity.BlockConferenceRoomActivity"
+                android:name=".blockRoom.ui.BlockConferenceRoomActivity"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.BlockedDashboard"
+                android:parentActivityName=".blockDashboard.ui.BlockedDashboard"
                 android:screenOrientation="portrait"/>
         <activity
-                android:name=".Activity.ConferenceDashBoard"
+                android:name=".ConferenceRoomDashboard.ui.ConferenceDashBoard"
                 android:launchMode="singleTop"
-                android:parentActivityName=".Activity.BuildingDashboard"
+                android:parentActivityName=".manageBuildings.ui.BuildingDashboard"
                 android:screenOrientation="portrait">
         </activity>
         <meta-data android:name="preloaded_fonts" android:resource="@array/preloaded_fonts"/>

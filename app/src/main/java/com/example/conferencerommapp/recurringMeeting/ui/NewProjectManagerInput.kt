@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.Activity
+package com.example.conferencerommapp.recurringMeeting.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -23,10 +23,11 @@ import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.ManagerConference
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.ManagerConferenceRoomRepository
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
-import com.example.conferencerommapp.buildings.repository.BuildingsRepository
-import com.example.conferencerommapp.buildings.viewModel.BuildingViewModel
+import com.example.conferencerommapp.manageBuildings.repository.BuildingsRepository
+import com.example.conferencerommapp.manageBuildings.viewModel.BuildingViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
+import com.example.conferencerommapp.recurringMeeting.repository.ManagerConferenceRoomRepository
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import kotlinx.android.synthetic.main.activity_project_manager_input.*
@@ -106,6 +107,7 @@ class NewProjectManagerInput : AppCompatActivity() {
     private fun initComponentForManagerBooking() {
         (application as BaseApplication).getmAppComponent()?.inject(this)
     }
+
     private fun initRoomRepo() {
         mManagerConferecneRoomViewModel.setManagerConferenceRoomRepo(mManagerRoomRepo)
     }
@@ -124,7 +126,8 @@ class NewProjectManagerInput : AppCompatActivity() {
 
     // initialize late init properties
     private fun initLateInitVariables() {
-        mBuildingsViewModel = ViewModelProviders.of(this).get(com.example.conferencerommapp.buildings.viewModel.BuildingViewModel::class.java)
+        mBuildingsViewModel = ViewModelProviders.of(this)
+            .get(com.example.conferencerommapp.manageBuildings.viewModel.BuildingViewModel::class.java)
         mManagerConferecneRoomViewModel = ViewModelProviders.of(this).get(ManagerConferenceRoomViewModel::class.java)
         mIntentDataFromActivity = GetIntentDataFromActvity()
 
@@ -165,7 +168,6 @@ class NewProjectManagerInput : AppCompatActivity() {
             applyValidationOnDateAndTime()
         }
     }
-
 
 
     /**
@@ -228,6 +230,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         }
 
     }
+
     //observe data from view model
     private fun observerData() {
         mBuildingsViewModel.returnMBuildingSuccess().observe(this, Observer {
@@ -263,7 +266,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mManagerConferecneRoomViewModel.returnSuccessForSuggested().observe(this, Observer {
             manager_horizontal_line_below_search_button.visibility = View.VISIBLE
             manager_suggestions.visibility = View.VISIBLE
-            if(it.isEmpty()) {
+            if (it.isEmpty()) {
                 manager_suggestions.text = getString(R.string.no_rooms_available)
             } else {
                 manager_suggestions.text = getString(R.string.suggestion_message)
@@ -281,6 +284,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             }
         })
     }
+
     private fun checkForStatusOfRooms(mListOfRooms: List<RoomDetails>?) {
         var count = 0
         for (room in mListOfRooms!!) {
@@ -299,6 +303,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             setAdapter(mListOfRooms)
         }
     }
+
     private fun setAdapter(mListOfRooms: List<RoomDetails>) {
         progressBar.visibility = View.GONE
         customAdapter =
@@ -334,7 +339,10 @@ class NewProjectManagerInput : AppCompatActivity() {
 
     private fun makeCallToApiForSuggestedRooms() {
         mSuggestedRoomApiIsCallled = true
-        mManagerConferecneRoomViewModel.getSuggestedConferenceRoomList(GetPreference.getTokenFromPreference(this), mRoom)
+        mManagerConferecneRoomViewModel.getSuggestedConferenceRoomList(
+            GetPreference.getTokenFromPreference(this),
+            mRoom
+        )
     }
 
     /**
@@ -344,8 +352,9 @@ class NewProjectManagerInput : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
         mBuildingsViewModel.getBuildingList(GetPreference.getTokenFromPreference(this))
     }
-     /**
-      *  add text change listener for the room name
+
+    /**
+     *  add text change listener for the room name
      */
     private fun textChangeListenerOnRoomCapacity() {
         roomCapacityEditText.addTextChangedListener(object : TextWatcher {
@@ -595,7 +604,8 @@ class NewProjectManagerInput : AppCompatActivity() {
         mRoom.capacity = roomCapacityEditText.text.toString().toInt()
         mRoom.buildingId = mBuildingId
         if (dataList.isEmpty()) {
-            Toast.makeText(this, getString(R.string.messgae_for_day_selector_when_nothing_selected), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.messgae_for_day_selector_when_nothing_selected), Toast.LENGTH_SHORT)
+                .show()
         } else {
             getConferenceRoomViewModel()
         }
@@ -620,6 +630,7 @@ class NewProjectManagerInput : AppCompatActivity() {
             listOfDays.add("$day")
         }
     }
+
     /**
      * add text change listener for the start time edit text
      */
@@ -701,7 +712,7 @@ class NewProjectManagerInput : AppCompatActivity() {
      * add text change listener for the purpose edit text
      */
     private fun textChangeListenerOnPurposeEditText() {
-        purposeEditText.addTextChangedListener(object: TextWatcher {
+        purposeEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // nothing here
             }
@@ -723,11 +734,12 @@ class NewProjectManagerInput : AppCompatActivity() {
         return if (purposeEditText.text.toString().trim().isEmpty()) {
             manager_purpose_layout.error = getString(R.string.field_cant_be_empty)
             false
-        }else {
+        } else {
             manager_purpose_layout.error = null
             true
         }
     }
+
     private fun setBuildingSpinner(mBuildingList: List<Building>) {
         val buildingNameList = mutableListOf<String>()
         val buildingIdList = mutableListOf<Int>()

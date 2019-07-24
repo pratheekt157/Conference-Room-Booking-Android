@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.conferencerommapp.Activity
+package com.example.conferencerommapp.recurringMeeting.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -23,16 +23,18 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.SelectMembers
 import com.example.conferencerommapp.Model.EmployeeList
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.ManagerBooking
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.EmployeeRepository
-import com.example.conferencerommapp.Repository.ManagerBookingRepository
 import com.example.conferencerommapp.ViewModel.ManagerBookingViewModel
-import com.example.conferencerommapp.ViewModel.SelectMemberViewModel
+import com.example.conferencerommapp.booking.repository.EmployeeRepository
+import com.example.conferencerommapp.booking.viewModel.SelectMemberViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
+import com.example.conferencerommapp.recurringMeeting.repository.ManagerBookingRepository
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -92,9 +94,9 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
 
     @OnClick(R.id.add_email)
     fun checkSearchEditTextContent() {
-        if(validateEmailFormat()) {
+        if (validateEmailFormat()) {
             val email = searchEditText.text.toString().trim()
-            if(email == acct.email) {
+            if (email == acct.email) {
                 Toast.makeText(this, getString(R.string.already_part_of_meeting), Toast.LENGTH_SHORT).show()
                 return
             }
@@ -113,7 +115,7 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
         initLateInitializerVariables()
         initManagerSelectMembers()
         initManagerBooking()
-        mFirebaseAnalytics= FirebaseAnalytics.getInstance(this)
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModel()
@@ -236,7 +238,8 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
             }
         }
         mManagerBooking.cCMail = emailString
-        val dialog = GetAleretDialog.getDialog(this, getString(R.string.confirm), getString(R.string.book_confirmation_message))
+        val dialog =
+            GetAleretDialog.getDialog(this, getString(R.string.confirm), getString(R.string.book_confirmation_message))
         dialog.setPositiveButton(getString(R.string.book)) { _, _ ->
             if (NetworkState.appIsConnectedToInternet(this)) {
                 addDataToObject()
@@ -256,12 +259,15 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
 
     private fun recurringBookingLog() {
         val recurringBookingBundle = Bundle()
-        mFirebaseAnalytics.logEvent(getString(R.string.recurring_booking),recurringBookingBundle)
+        mFirebaseAnalytics.logEvent(getString(R.string.recurring_booking), recurringBookingBundle)
         mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
         mFirebaseAnalytics.setMinimumSessionDuration(5000)
         mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
         mFirebaseAnalytics.setUserId(mManagerBooking.email)
-        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(this).toString())
+        mFirebaseAnalytics.setUserProperty(
+            getString(R.string.Roll_Id),
+            GetPreference.getRoleIdFromPreference(this).toString()
+        )
     }
 
     /**
@@ -326,10 +332,10 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
             }
 
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                if(charSequence.isEmpty()) {
-                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_search,0)
+                if (charSequence.isEmpty()) {
+                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_search, 0)
                 } else {
-                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_clear,0)
+                    searchEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_clear, 0)
                 }
             }
 
@@ -352,13 +358,12 @@ class ManagerSelectMeetingMembers : AppCompatActivity() {
         }
         customAdapter.filterList(filterName)
         // no items present in recyclerview than give option for add other emails
-        if(customAdapter.itemCount == 0) {
+        if (customAdapter.itemCount == 0) {
             addEmailButton.visibility = View.VISIBLE
-        }else {
+        } else {
             addEmailButton.visibility = View.GONE
         }
     }
-
 
 
     private fun validateEmailFormat(): Boolean {

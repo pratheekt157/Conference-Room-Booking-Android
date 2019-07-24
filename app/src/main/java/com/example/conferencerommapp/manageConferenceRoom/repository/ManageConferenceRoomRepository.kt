@@ -1,9 +1,8 @@
 package com.example.conferencerommapp.ConferenceRoomDashboard.repository
 
-import com.example.conferencerommapp.ServiceBuilder
-import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
+import com.example.conferencerommapp.utils.Constants
 import com.example.myapplication.Models.ConferenceList
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -15,14 +14,15 @@ import javax.inject.Inject
 
 class ManageConferenceRoomRepository @Inject constructor() {
 
-    fun getConferenceRoomList(buildingId: Int, token: String,  listener: ResponseListener) {
+    fun getConferenceRoomList(buildingId: Int, token: String, listener: ResponseListener) {
         /**
          * api call using retorfit
          */
-        val requestCall: Call<List<ConferenceList>> = RestClient.getWebServiceData()?.conferenceList(token, buildingId)!!
+        val requestCall: Call<List<ConferenceList>> =
+            RestClient.getWebServiceData()?.conferenceList(token, buildingId)!!
         requestCall.enqueue(object : Callback<List<ConferenceList>> {
             override fun onFailure(call: Call<List<ConferenceList>>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }
@@ -50,11 +50,11 @@ class ManageConferenceRoomRepository @Inject constructor() {
      * if the response is positive than we will call onSuccess method with response data from server
      * for negative response, we will call onFailure method with response code from server
      */
-    fun deleteBuilding(token: String, id:Int,listener: ResponseListener){
-        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.deleteRoom(token,id)!!
-        requestCall.enqueue(object :Callback<ResponseBody>{
+    fun deleteBuilding(token: String, id: Int, listener: ResponseListener) {
+        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.deleteRoom(token, id)!!
+        requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }
@@ -73,8 +73,7 @@ class ManageConferenceRoomRepository @Inject constructor() {
                      * call interface method which is implemented in ViewModel
                      */
                     listener.onSuccess(response.code())
-                }
-                else
+                } else
                     listener.onFailure(response.code())
             }
 

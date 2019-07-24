@@ -2,10 +2,10 @@ package com.example.conferencerommapp.ViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.ManagerConference
 import com.example.conferencerommapp.Model.RoomDetails
-import com.example.conferencerommapp.Repository.ManagerConferenceRoomRepository
+import com.example.conferencerommapp.recurringMeeting.repository.ManagerConferenceRoomRepository
+import com.example.conferencerommapp.services.ResponseListener
 
 class ManagerConferenceRoomViewModel : ViewModel() {
 

@@ -16,11 +16,14 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.ConferenceRoomDashboard.repository.ManageConferenceRoomRepository
+import com.example.conferencerommapp.ConferenceRoomDashboard.viewModel.ManageConferenceRoomViewModel
 import com.example.conferencerommapp.Helper.ConferenceRecyclerAdapter
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.ManageConferenceRoomRepository
-import com.example.conferencerommapp.ViewModel.ManageConferenceRoomViewModel
+import com.example.conferencerommapp.addConferenceRoom.ui.AddingConference
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList

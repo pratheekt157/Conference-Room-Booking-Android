@@ -3,9 +3,8 @@ package com.example.conferencerommapp.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.Blocked
+import com.example.conferencerommapp.blockDashboard.repository.BlockDashboardRepository
 import com.example.conferencerommapp.services.ResponseListener
-import com.example.conferencerommapp.Repository.BlockDashboardRepository
-import com.example.conferencerommapp.Repository.BlockRoomRepository
 
 class BlockedDashboardViewModel : ViewModel() {
 

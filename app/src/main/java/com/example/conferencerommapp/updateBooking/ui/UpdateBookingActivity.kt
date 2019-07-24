@@ -23,8 +23,9 @@ import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.UpdateBooking
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.UpdateBookingRepository
-import com.example.conferencerommapp.ViewModel.UpdateBookingViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
+import com.example.conferencerommapp.updateBooking.repository.UpdateBookingRepository
+import com.example.conferencerommapp.updateBooking.viewModel.UpdateBookingViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -140,9 +141,9 @@ class UpdateBookingActivity : AppCompatActivity() {
                 when {
                     elapsed2 < 0 -> {
                         val builder = GetAleretDialog.getDialog(
-                                this,
-                                getString(R.string.invalid),
-                                getString(R.string.invalid_fromtime)
+                            this,
+                            getString(R.string.invalid),
+                            getString(R.string.invalid_fromtime)
                         )
                         builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                         }
@@ -162,9 +163,9 @@ class UpdateBookingActivity : AppCompatActivity() {
                     }
                     else -> {
                         val builder = GetAleretDialog.getDialog(
-                                this,
-                                getString(R.string.invalid),
-                                getString(R.string.time_validation_message)
+                            this,
+                            getString(R.string.invalid),
+                            getString(R.string.time_validation_message)
                         )
 
                         builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
@@ -186,7 +187,10 @@ class UpdateBookingActivity : AppCompatActivity() {
         mFirebaseAnalytics.setMinimumSessionDuration(5000)
         mFirebaseAnalytics.setSessionTimeoutDuration(1000000)
         mFirebaseAnalytics.setUserId(GoogleSignIn.getLastSignedInAccount(this)!!.email)
-        mFirebaseAnalytics.setUserProperty(getString(R.string.Roll_Id),GetPreference.getRoleIdFromPreference(this).toString())
+        mFirebaseAnalytics.setUserProperty(
+            getString(R.string.Roll_Id),
+            GetPreference.getRoleIdFromPreference(this).toString()
+        )
     }
 
     private fun updateMeetingDetails() {
@@ -209,6 +213,7 @@ class UpdateBookingActivity : AppCompatActivity() {
     private fun initComponentForUpdateBooking() {
         (application as BaseApplication).getmAppComponent()?.inject(this)
     }
+
     private fun initUpdateBookingRepo() {
         mUpdateBookingViewModel.setUpdateBookingRepo(mUpdateBookingRepo)
     }

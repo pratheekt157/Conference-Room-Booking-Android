@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.Activity
+package com.example.conferencerommapp.checkConnection
 
 import android.app.Activity
 import android.content.Intent
@@ -9,7 +9,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
-
 
 class NoInternetConnectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

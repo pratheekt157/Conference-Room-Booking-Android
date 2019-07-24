@@ -16,12 +16,13 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.Activity.NoInternetConnectionActivity
-import com.example.conferencerommapp.Activity.UserBookingsDashboardActivity
-import com.example.conferencerommapp.Helper.*
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.Helper.GoogleGSO
+import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.SignIn
-import com.example.conferencerommapp.Repository.CheckRegistrationRepository
-import com.example.conferencerommapp.ViewModel.CheckRegistrationViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
+import com.example.conferencerommapp.signIn.repository.CheckRegistrationRepository
+import com.example.conferencerommapp.signIn.viewModel.CheckRegistrationViewModel
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -39,7 +40,7 @@ class SignIn : AppCompatActivity() {
     lateinit var mCheckRegistrationRepo: CheckRegistrationRepository
     @BindView(R.id.sin_in_progress_bar)
     lateinit var mProgressBar: ProgressBar
-    private var RC_SIGN_IN = 0
+    private val RC_SIGN_IN = 0
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private lateinit var prefs: SharedPreferences
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics

@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.conferencerommapp.utils.Constants
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -15,11 +17,13 @@ class RestClient {
         private const val TAG = "RestClient"
         private var service: ConferenceService? = null
         private val clientLogin = OkHttpClient.Builder()
-        private val loggingInterceptor = HttpLoggingInterceptor()
+        private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        var gson: Gson = GsonBuilder()
+            .setLenient()
+            .create()
         init {
             try {
-                loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-                clientLogin.addInterceptor(loggingInterceptor)
+                clientLogin.addInterceptor(logger)
                 clientLogin.readTimeout(120, TimeUnit.SECONDS)
                     .connectTimeout(120, TimeUnit.SECONDS)
                 clientLogin.addInterceptor { chain ->
@@ -33,11 +37,11 @@ class RestClient {
             }
         }
         fun getWebServiceData(): ConferenceService? {
-            val mapper = ObjectMapper()
-            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+          //  val mapper = ObjectMapper()
+           // mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             val retrofit: Retrofit = Retrofit.Builder()
                     .baseUrl(Constants.IP_ADDRESS)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build()
             service = retrofit.create<ConferenceService>(ConferenceService::class.java)
             return service

@@ -1,6 +1,6 @@
 @file:Suppress("DEPRECATION")
 
-package com.example.conferencerommapp.buildings.ui
+package com.example.conferencerommapp.manageBuildings.ui
 
 import android.app.Activity
 import android.app.ProgressDialog
@@ -22,9 +22,9 @@ import com.example.conferencerommapp.ConferenceRoomDashboard.ui.ConferenceDashBo
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.addBuilding.ui.AddingBuilding
-import com.example.conferencerommapp.buildings.adapter.BuildingDashboardAdapter
-import com.example.conferencerommapp.buildings.repository.BuildingsRepository
-import com.example.conferencerommapp.buildings.viewModel.BuildingViewModel
+import com.example.conferencerommapp.manageBuildings.adapter.BuildingDashboardAdapter
+import com.example.conferencerommapp.manageBuildings.repository.BuildingsRepository
+import com.example.conferencerommapp.manageBuildings.viewModel.BuildingViewModel
 import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference

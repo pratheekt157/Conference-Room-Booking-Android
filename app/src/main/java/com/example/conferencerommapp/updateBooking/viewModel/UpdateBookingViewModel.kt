@@ -2,9 +2,9 @@ package com.example.conferencerommapp.updateBooking.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.UpdateBooking
-import com.example.conferencerommapp.Repository.UpdateBookingRepository
+import com.example.conferencerommapp.services.ResponseListener
+import com.example.conferencerommapp.updateBooking.repository.UpdateBookingRepository
 
 
 class UpdateBookingViewModel: ViewModel() {

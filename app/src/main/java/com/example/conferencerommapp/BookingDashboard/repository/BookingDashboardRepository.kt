@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.Repository
+package com.example.conferencerommapp.BookingDashboard.repository
 
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.DashboardDetails
@@ -25,10 +25,11 @@ class BookingDashboardRepository @Inject constructor() {
          * API call using retrofit
          */
         mBookingDashboardInput.currentDatTime = GetCurrentTimeInUTC.getCurrentTimeInUTC()
-        val requestCall: Call<DashboardDetails> = RestClient.getWebServiceData()?.getDashboard(token, mBookingDashboardInput)!!
+        val requestCall: Call<DashboardDetails> =
+            RestClient.getWebServiceData()?.getDashboard(token, mBookingDashboardInput)!!
         requestCall.enqueue(object : Callback<DashboardDetails> {
             override fun onFailure(call: Call<DashboardDetails>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }
@@ -40,6 +41,7 @@ class BookingDashboardRepository @Inject constructor() {
                     }
                 }
             }
+
             override fun onResponse(call: Call<DashboardDetails>, response: Response<DashboardDetails>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.body()!!)
@@ -49,6 +51,7 @@ class BookingDashboardRepository @Inject constructor() {
             }
         })
     }
+
     /**
      * function will make the API Call and call the interface method with data from server
      */
@@ -60,7 +63,7 @@ class BookingDashboardRepository @Inject constructor() {
         var requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.cancelBookedRoom(token, meetingId)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }
@@ -72,6 +75,7 @@ class BookingDashboardRepository @Inject constructor() {
                     }
                 }
             }
+
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.code())
@@ -81,17 +85,19 @@ class BookingDashboardRepository @Inject constructor() {
             }
         })
     }
+
     /**
      * function will make the API Call and call the interface method with data from srver
      */
-    fun recurringCancelBooking(token: String,meetId:Int,recurringMeetingId:String,listener: ResponseListener){
+    fun recurringCancelBooking(token: String, meetId: Int, recurringMeetingId: String, listener: ResponseListener) {
         /**
          * api call using rerofit
          */
-        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.cancelRecurringBooking(token,meetId,recurringMeetingId)!!
+        val requestCall: Call<ResponseBody> =
+            RestClient.getWebServiceData()?.cancelRecurringBooking(token, meetId, recurringMeetingId)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }
@@ -103,6 +109,7 @@ class BookingDashboardRepository @Inject constructor() {
                     }
                 }
             }
+
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.code())
@@ -112,12 +119,15 @@ class BookingDashboardRepository @Inject constructor() {
             }
         })
     }
-    fun getPasscode(token: String,generateNewPasscode:Boolean, emailId:String,listener: ResponseListener){
-        val requestCall: Call<String> = RestClient.getWebServiceData()?.getPasscode(token,generateNewPasscode,emailId)!!
-        requestCall.enqueue(object :Callback<String>{
+
+    fun getPasscode(token: String, generateNewPasscode: Boolean, emailId: String, listener: ResponseListener) {
+        val requestCall: Call<String> =
+            RestClient.getWebServiceData()?.getPasscode(token, generateNewPasscode, emailId)!!
+        requestCall.enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 listener.onFailure(Constants.INVALID_TOKEN)
             }
+
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if ((response.code() == Constants.OK_RESPONSE) or (response.code() == Constants.SUCCESSFULLY_CREATED)) {
                     listener.onSuccess(response.body()!!)

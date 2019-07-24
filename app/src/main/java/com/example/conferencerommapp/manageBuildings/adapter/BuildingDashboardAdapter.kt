@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.buildings.adapter
+package com.example.conferencerommapp.manageBuildings.adapter
 
 
 import android.content.Context

@@ -1,7 +1,7 @@
 package com.example.conferencerommapp.addConferenceRoom.ui
 
 import android.app.Activity
-import android.app.*
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -20,8 +20,9 @@ import com.example.conferencerommapp.AddConferenceRoom
 import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.AddConferenceRepository
-import com.example.conferencerommapp.ViewModel.AddConferenceRoomViewModel
+import com.example.conferencerommapp.addConferenceRoom.repository.AddConferenceRepository
+import com.example.conferencerommapp.addConferenceRoom.viewModel.AddConferenceRoomViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.material.switchmaterial.SwitchMaterial

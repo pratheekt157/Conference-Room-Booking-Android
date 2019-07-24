@@ -20,12 +20,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.Crashlytics
 import com.example.conferencerommapp.BaseApplication
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.CheckRegistrationRepository
-import com.example.conferencerommapp.Repository.GetRoleOfUser
 import com.example.conferencerommapp.SignIn
-import com.example.conferencerommapp.ViewModel.GetRoleOfUserViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
+import com.example.conferencerommapp.splashScreen.repository.GetRoleOfUser
+import com.example.conferencerommapp.splashScreen.viewModel.GetRoleOfUserViewModel
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.GetProgress
 import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
@@ -50,7 +51,7 @@ class SplashScreen : AppCompatActivity() {
     private var email = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Fabric.with(this,Crashlytics())
+        Fabric.with(this, Crashlytics())
         setContentView(R.layout.activity_splash_screen)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         init()
@@ -78,10 +79,9 @@ class SplashScreen : AppCompatActivity() {
     }
 
 
-
     private fun crashHandler() {
 //        Thread.setDefaultUncaughtExceptionHandler { thread, e -> Handler(Looper.getMainLooper()).postAtFrontOfQueue { Runtime.getRuntime().exit(0) } }
-       // val foregroundChecker = ForegroundCounter.createAndInstallCallbacks
+        // val foregroundChecker = ForegroundCounter.createAndInstallCallbacks
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -96,7 +96,7 @@ class SplashScreen : AppCompatActivity() {
      */
     private fun checkRegistration() {
         mProgressBar.visibility = View.VISIBLE
-        mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this),email)
+        mGetRoleOfUserViewModel.getUserRole(GetPreference.getTokenFromPreference(this), email)
     }
 
     /**
@@ -105,7 +105,7 @@ class SplashScreen : AppCompatActivity() {
     fun init() {
         initComponentForSplashScreen()
         mProgressBar = findViewById(R.id.splash_screen_progress_bar)
-        progressDialog =  GetProgress.getProgressDialog(getString(R.string.progress_message), this)
+        progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), this)
         prefs = getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE)
         mGetRoleOfUserViewModel = ViewModelProviders.of(this).get(GetRoleOfUserViewModel::class.java)
         initGetRoleOfUserRepo()
@@ -114,6 +114,7 @@ class SplashScreen : AppCompatActivity() {
     private fun initComponentForSplashScreen() {
         (application as BaseApplication).getmAppComponent()?.inject(this)
     }
+
     private fun initGetRoleOfUserRepo() {
         mGetRoleOfUserViewModel.setGetRoleOfUserRepo(mCheckegistationRepo)
     }
@@ -123,7 +124,7 @@ class SplashScreen : AppCompatActivity() {
         mGetRoleOfUserViewModel.returnSuccessCodeForUserROle().observe(this, Observer {
             mProgressBar.visibility = View.GONE
             setValueForSharedPreference(it)
-            Log.i("Role",it.toString())
+            Log.i("Role", it.toString())
         })
         mGetRoleOfUserViewModel.returnFailureCodeForUserRole().observe(this, Observer {
             mProgressBar.visibility = View.GONE
@@ -137,6 +138,7 @@ class SplashScreen : AppCompatActivity() {
             }
         })
     }
+
     /**
      * pass the intent for the SignIn Activity
      */
@@ -159,7 +161,7 @@ class SplashScreen : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this@SplashScreen)
                 builder.setTitle(getString(R.string.error))
                 builder.setMessage(getString(R.string.restart_app))
-                builder.setPositiveButton(getString(R.string.ok)) { _,_ ->
+                builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
                     finish()
                 }
                 val dialog: AlertDialog = builder.create()
@@ -171,9 +173,9 @@ class SplashScreen : AppCompatActivity() {
     /**
      * set value in shared preference
      */
-    private fun setValueForSharedPreference(it : Int) {
+    private fun setValueForSharedPreference(it: Int) {
         val editor = prefs.edit()
-        editor.putInt(Constants.ROLE_CODE,it)
+        editor.putInt(Constants.ROLE_CODE, it)
         editor.apply()
         goToNextActivity(it)
     }

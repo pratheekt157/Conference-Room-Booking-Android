@@ -1,8 +1,6 @@
-package com.example.conferencerommapp.buildings.repository
+package com.example.conferencerommapp.manageBuildings.repository
 
 import com.example.conferencerommapp.Model.Building
-import com.example.conferencerommapp.ServiceBuilder
-import com.example.conferencerommapp.services.ConferenceService
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants

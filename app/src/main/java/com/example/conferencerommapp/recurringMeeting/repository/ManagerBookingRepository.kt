@@ -1,10 +1,9 @@
 package com.example.conferencerommapp.recurringMeeting.repository
 
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.ManagerBooking
-import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
+import com.example.conferencerommapp.utils.Constants
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,7 +12,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class ManagerBookingRepository @Inject constructor(){
+class ManagerBookingRepository @Inject constructor() {
     /**
      * function will initialize the MutableLivedata Object and than call a function for api call
      * Passing the Context and model and call API, In return sends the status of LiveData
@@ -22,10 +21,11 @@ class ManagerBookingRepository @Inject constructor(){
         /**
          * api call using retrofit
          */
-        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.addManagerBookingDetails(token, mBooking)!!
+        val requestCall: Call<ResponseBody> =
+            RestClient.getWebServiceData()?.addManagerBookingDetails(token, mBooking)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                when(t) {
+                when (t) {
                     is SocketTimeoutException -> {
                         listener.onFailure(Constants.POOR_INTERNET_CONNECTION)
                     }

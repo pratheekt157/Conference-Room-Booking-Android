@@ -2,8 +2,8 @@ package com.example.conferencerommapp.ConferenceRoomDashboard.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.conferencerommapp.ConferenceRoomDashboard.repository.ManageConferenceRoomRepository
 import com.example.conferencerommapp.services.ResponseListener
-import com.example.conferencerommapp.Repository.ManageConferenceRoomRepository
 import com.example.myapplication.Models.ConferenceList
 
 class ManageConferenceRoomViewModel : ViewModel() {
@@ -20,7 +20,7 @@ class ManageConferenceRoomViewModel : ViewModel() {
     }
 
     fun getConferenceRoomList(buildingId: Int, token: String) {
-        mManageConferenceRoomRepository!!.getConferenceRoomList(buildingId, token,  object :
+        mManageConferenceRoomRepository!!.getConferenceRoomList(buildingId, token, object :
             ResponseListener {
             override fun onSuccess(success: Any) {
                 mHrConferenceRoomList.value = success as List<ConferenceList>
@@ -41,8 +41,8 @@ class ManageConferenceRoomViewModel : ViewModel() {
         return mFailureCodeForHrConferenceRoom
     }
 
-    fun deleteConferenceRoom(token: String,roomId: Int){
-        mManageConferenceRoomRepository!!.deleteBuilding(token,roomId,object :ResponseListener{
+    fun deleteConferenceRoom(token: String, roomId: Int) {
+        mManageConferenceRoomRepository!!.deleteBuilding(token, roomId, object : ResponseListener {
             override fun onSuccess(success: Any) {
                 mSuccessForDeleteBuilding.value = success as Int
             }
@@ -53,9 +53,11 @@ class ManageConferenceRoomViewModel : ViewModel() {
 
         })
     }
+
     fun returnSuccessForDeleteRoom(): MutableLiveData<Int> {
         return mSuccessForDeleteBuilding
     }
+
     /**
      * return negative response from server
      */

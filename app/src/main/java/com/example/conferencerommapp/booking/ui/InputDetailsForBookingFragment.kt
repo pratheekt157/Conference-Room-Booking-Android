@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.conferencerommapp.BaseApplication
+import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.RoomAdapter
 import com.example.conferencerommapp.Model.Building
@@ -25,10 +26,11 @@ import com.example.conferencerommapp.Model.GetIntentDataFromActvity
 import com.example.conferencerommapp.Model.InputDetailsForRoom
 import com.example.conferencerommapp.Model.RoomDetails
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.ConferenceRoomRepository
-import com.example.conferencerommapp.ViewModel.ConferenceRoomViewModel
-import com.example.conferencerommapp.buildings.repository.BuildingsRepository
-import com.example.conferencerommapp.buildings.viewModel.BuildingViewModel
+import com.example.conferencerommapp.booking.repository.ConferenceRoomRepository
+import com.example.conferencerommapp.booking.viewModel.ConferenceRoomViewModel
+import com.example.conferencerommapp.manageBuildings.repository.BuildingsRepository
+import com.example.conferencerommapp.manageBuildings.viewModel.BuildingViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn

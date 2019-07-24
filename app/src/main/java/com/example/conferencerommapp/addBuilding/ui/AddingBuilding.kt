@@ -19,8 +19,9 @@ import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.AddBuilding
 import com.example.conferencerommapp.R
-import com.example.conferencerommapp.Repository.AddBuildingRepository
-import com.example.conferencerommapp.ViewModel.AddBuildingViewModel
+import com.example.conferencerommapp.addBuilding.repository.AddBuildingRepository
+import com.example.conferencerommapp.addBuilding.viewModel.AddBuildingViewModel
+import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.GetProgress
 import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
@@ -275,11 +276,3 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuildingViewModel.updateBuildingDetails(mUpdateBuildingDetails, GetPreference.getTokenFromPreference(this))
     }
 }
-/*
-private fun initComponent() {
-(application as BaseApplication).getmAppComponent()?.inject(this)
-}
-private fun initAddingBuildingRepository() {
-mAddBuildingViewModel.setBuildingRepository(mAddBuildingRepository)
-}
-        */

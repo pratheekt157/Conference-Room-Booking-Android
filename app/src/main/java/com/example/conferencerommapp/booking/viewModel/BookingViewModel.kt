@@ -1,10 +1,10 @@
-package com.example.conferencerommapp.booking.ui
+package com.example.conferencerommapp.booking.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.Booking
-import com.example.conferencerommapp.Repository.BookingRepository
+import com.example.conferencerommapp.booking.repository.BookingRepository
+import com.example.conferencerommapp.services.ResponseListener
 
 class BookingViewModel: ViewModel() {
 

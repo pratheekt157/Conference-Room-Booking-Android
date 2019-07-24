@@ -2,10 +2,10 @@ package com.example.conferencerommapp.blockRoom.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.BlockRoom
 import com.example.conferencerommapp.Model.BlockingConfirmation
-import com.example.conferencerommapp.Repository.BlockRoomRepository
+import com.example.conferencerommapp.blockRoom.repository.BlockRoomRepository
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.myapplication.Models.ConferenceList
 
 

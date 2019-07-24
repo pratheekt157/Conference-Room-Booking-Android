@@ -2,8 +2,6 @@ package com.example.conferencerommapp.common.di
 
 import android.content.Context
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.Repository.ConferenceRoomRepository
-import com.example.conferencerommapp.buildings.repository.BuildingsRepository
 import com.example.conferencerommapp.utils.Constants
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -13,7 +11,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
-import java.text.SimpleDateFormat
 import javax.inject.Singleton
 
 @Singleton
@@ -97,17 +94,6 @@ class AppModule(private val application: BaseApplication) {
         objectMapper = provideObjectMapper()
         objectMapper!!.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
         return objectMapper!!
-    }
-
-
-    /**
-     * This method provides a simpleDateFormat instance
-     *
-     * @returnRouteSuggestionsRepository
-     */
-    @Provides
-    fun providesSimpleDateFormatInstance(): SimpleDateFormat {
-        return SimpleDateFormat()
     }
 
 

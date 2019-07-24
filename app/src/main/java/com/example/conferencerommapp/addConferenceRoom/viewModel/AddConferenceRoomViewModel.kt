@@ -3,7 +3,7 @@ package com.example.conferencerommapp.addConferenceRoom.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.AddConferenceRoom
-import com.example.conferencerommapp.Repository.AddConferenceRepository
+import com.example.conferencerommapp.addConferenceRoom.repository.AddConferenceRepository
 import com.example.conferencerommapp.services.ResponseListener
 
 class AddConferenceRoomViewModel : ViewModel() {

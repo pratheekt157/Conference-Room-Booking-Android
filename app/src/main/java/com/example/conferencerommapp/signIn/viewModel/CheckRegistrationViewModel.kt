@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.conferencerommapp.Model.SignIn
 import com.example.conferencerommapp.services.ResponseListener
-import com.example.conferencerommapp.Repository.CheckRegistrationRepository
+import com.example.conferencerommapp.signIn.repository.CheckRegistrationRepository
 
 class CheckRegistrationViewModel : ViewModel() {
 
