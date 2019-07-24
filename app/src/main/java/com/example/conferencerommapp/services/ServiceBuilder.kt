@@ -1,18 +1,14 @@
 package com.example.conferencerommapp
 
 import android.annotation.SuppressLint
-import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ConferenceService
-import okhttp3.Interceptor
+import com.example.conferencerommapp.utils.Constants
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import com.google.gson.GsonBuilder
-import com.google.gson.Gson
-
 
 
 @SuppressLint("StaticFieldLeak")
