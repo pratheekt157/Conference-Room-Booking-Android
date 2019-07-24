@@ -10,6 +10,8 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'io.fabric'
 
+apply plugin: 'org.sonarqube'
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -60,6 +62,8 @@ android {
     kapt {
         generateStubs = true
     }
+
+
 }
 
 dependencies {
@@ -179,15 +183,25 @@ dependencies {
     // Multi Dex
     implementation 'com.android.support:multidex:1.0.3'
 
-
 }
-
+sonarqube{
+    properties{
+        property "sonar.projectName","Android"
+        property "sonar.projectKey","Android"
+        property "sonar.host.url","http://localhost:9000"
+        property "sonar.language","kotlin"
+        property "sonar.src","src/main/java"
+        property "sonar.java.sources","src/main/java"
+        property "sonar.sourceEncoding","UTF-8"
+        property "sonar.login","admin"
+        property "sonar.password","admin"
+    }
+}
 crashlytics {
     enableNdk true
     androidNdkOut 'src/main/obj'
     androidNdkLibsOut 'src/main/libs'
 }
-
 ext {
     enableCrashlytics = true
 }
