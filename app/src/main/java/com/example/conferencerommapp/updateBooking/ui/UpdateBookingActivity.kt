@@ -113,57 +113,24 @@ class UpdateBookingActivity : AppCompatActivity() {
          */
         if (validate()) {
             val minMilliseconds: Long = Constants.MIN_MEETING_DURATION
-
-            /**
-             * Get the start and end time of meeting from the input fields
-             */
             val startTime = newFromTime.text.toString()
             val endTime = newToTime.text.toString()
-
-            /**
-             * setting a aalert dialog instance for the current context
-             */
             try {
-
-                /**
-                 * getting the values for time validation variables from method calculateTimeInMillis
-                 */
                 val (elapsed, elapsed2) = ConvertTimeInMillis.calculateTimeInMilliseconds(
                     startTime,
                     endTime,
                     mIntentDataFromActivity.date.toString()
                 )
-                /**
-                 * if the elapsed2 < 0 that means the from time is less than the current time. In that case
-                 * we restrict the user to move forword and show some message in alert that the time is not valid
-                 */
-
                 when {
                     elapsed2 < 0 -> {
-                        val builder = GetAleretDialog.getDialog(
-                            this,
-                            getString(R.string.invalid),
-                            getString(R.string.invalid_fromtime)
-                        )
-                        builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
-                        }
-                        val alertDialog = GetAleretDialog.showDialog(builder)
-                        ColorOfDialogButton.setColorOfDialogButton(alertDialog)
+                        showMessageForInvalidTime(getString(R.string.invalid_fromtime))
                     }
                     minMilliseconds <= elapsed -> {
                         updateMeetingDetails()
                         updateBookingLogFirebaseAnalytics()
                     }
                     else -> {
-                        val builder = GetAleretDialog.getDialog(
-                            this,
-                            getString(R.string.invalid),
-                            getString(R.string.time_validation_message)
-                        )
-
-                        builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
-                        }
-                        GetAleretDialog.showDialog(builder)
+                        showMessageForInvalidTime(getString(R.string.time_validation_message))
                     }
                 }
             } catch (e: Exception) {
@@ -171,6 +138,20 @@ class UpdateBookingActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    /**
+     * function will show a alert dialog for invalid input for time from user.
+     */
+    private fun showMessageForInvalidTime(message: String) {
+        val builder = GetAleretDialog.getDialog(
+            this,
+            getString(R.string.invalid),
+            message
+        )
+        builder.setPositiveButton(getString(R.string.ok)) { _, _ ->
+        }
+        GetAleretDialog.showDialog(builder)
     }
 
     private fun updateBookingLogFirebaseAnalytics() {
@@ -264,12 +245,9 @@ class UpdateBookingActivity : AppCompatActivity() {
     @SuppressLint("SimpleDateFormat")
     private fun setValuesInEditText(mIntentDataFromActivity: GetIntentDataFromActvity) {
         purpose.text = mIntentDataFromActivity.purpose!!.toEditable()
-
-
         newFromTime.text = mIntentDataFromActivity.fromTime!!.toEditable()
         newToTime.text = mIntentDataFromActivity.toTime!!.toEditable()
         date.text = FormatDate.formatDate(mIntentDataFromActivity.date!!).toEditable()
-
         buildingName.text = mIntentDataFromActivity.buildingName!!.toEditable()
         roomName.text = mIntentDataFromActivity.roomName!!.toEditable()
     }

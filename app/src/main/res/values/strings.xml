@@ -57,9 +57,7 @@
     <string name="invalid_date">Invalid Date</string>
     <string name="invalid_capacity">Invalid capacity</string>
     <string name="invalid">Invalid</string>
-    <string name="time_validation_message">Meeting duration must be more than
-        15 minutes or start time must be less than end time
-    </string>
+    <string name="time_validation_message">Start time must be less than end time</string>
     <string name="invalid_fromtime">Start time must be greater than the current time</string>
     <string name="status">Status</string>
     <string name="room_not_available">No Room Available</string>

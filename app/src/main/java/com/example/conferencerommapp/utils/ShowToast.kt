@@ -11,11 +11,30 @@ import es.dmoral.toasty.Toasty
 class ShowToast {
     companion object {
         fun show(mContext: Context, errorCode: Int) {
-            Toasty.info(mContext,
-                showMessageAccordingToCode(mContext, errorCode), Toast.LENGTH_SHORT, true).show()
+            Toasty.info(
+                mContext,
+                showMessageAccordingToCode(mContext, errorCode), Toast.LENGTH_SHORT, true
+            ).show()
         }
+
         fun showMessageAccordingToCode(mContext: Context, errorCode: Int): String {
-            var message = mContext.getString(R.string.something_went_wrong)
+            val statusCodeMap = mutableMapOf(
+                Constants.NOT_ACCEPTABLE to mContext.getString(R.string.parameter_missing),
+                Constants.NOT_MODIFIED to mContext.getString(R.string.not_modified_message),
+                Constants.NO_CONTENT_FOUND to mContext.getString(R.string.no_booking_available),
+                Constants.NOT_FOUND to mContext.getString(R.string.not_found),
+                Constants.INTERNAL_SERVER_ERROR to mContext.getString(R.string.internal_server_error),
+                Constants.UNAVAILABLE_SLOT to mContext.getString(R.string.slot_unavailable),
+                Constants.POOR_INTERNET_CONNECTION to mContext.getString(R.string.poor_internet_connection)
+            )
+            return statusCodeMap[errorCode]!!
+        }
+    }
+
+}
+
+/*
+var message = mContext.getString(R.string.something_went_wrong)
             when (errorCode) {
                 Constants.NOT_ACCEPTABLE -> {
                     message = mContext.getString(R.string.parameter_missing)
@@ -39,8 +58,4 @@ class ShowToast {
                     message = mContext.getString(R.string.poor_internet_connection)
                 }
             }
-            return message
-        }
-    }
-
-}
+        */

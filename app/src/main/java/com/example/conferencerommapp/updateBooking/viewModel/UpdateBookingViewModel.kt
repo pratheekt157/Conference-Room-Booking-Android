@@ -20,7 +20,7 @@ class UpdateBookingViewModel: ViewModel() {
     var mSuccessForUpdate =  MutableLiveData<Int>()
 
     /**
-     * a MutableLivedata variable which will hold the positive response from repository
+     * a Mutable Live data variable which will hold the positive response from repository
      */
     var mFailureForUpdate =  MutableLiveData<Any>()
 
