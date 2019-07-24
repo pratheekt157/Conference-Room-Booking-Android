@@ -1,7 +1,7 @@
-package com.example.conferencerommapp.BookingDashboard.viewModel
+package com.example.conferencerommapp.bookingDashboard.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.BookingDashboard.repository.BookingDashboardRepository
+import com.example.conferencerommapp.bookingDashboard.repository.BookingDashboardRepository
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.DashboardDetails
 import com.example.conferencerommapp.services.ResponseListener

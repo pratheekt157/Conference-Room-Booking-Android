@@ -9,49 +9,47 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.BookingDashboard.repository.BookingDashboardRepository
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
-import com.example.conferencerommapp.BookingDashboard.viewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.bookingDashboard.repository.BookingDashboardRepository
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.viewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.Helper.CancelledBookingAdpter
 import com.example.conferencerommapp.Helper.NetworkState
-import com.example.conferencerommapp.Helper.PreviousBookingAdapter
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.Dashboard
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.utils.GetProgress
-import com.example.conferencerommapp.utils.ShowDialogForSessionExpired
-import com.example.conferencerommapp.utils.ShowToast
+import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import kotlinx.android.synthetic.main.fragment_previous_booking.*
+import kotlinx.android.synthetic.main.fragment_cancelled_booking.*
 import javax.inject.Inject
 
 @Suppress("DEPRECATION")
-class PreviousBookingFragment : Fragment() {
-
+class CancelledBookingFragment : Fragment() {
     @Inject
     lateinit var mBookedDashBoardRepo: BookingDashboardRepository
-    private lateinit var mProgressBar: ProgressBar
+
     private var finalList = ArrayList<Dashboard>()
+    private lateinit var mProgressBar: ProgressBar
     private lateinit var mBookingDashBoardViewModel: BookingDashboardViewModel
     private lateinit var acct: GoogleSignInAccount
     private lateinit var progressDialog: ProgressDialog
-    private lateinit var mBookingListAdapter: PreviousBookingAdapter
+    private lateinit var mBookingListAdapter: CancelledBookingAdpter
     var mBookingDashboardInput = BookingDashboardInput()
     var pagination: Int = 1
     var hasMoreItem: Boolean = false
-    var isApiCalled: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_previous_booking, container, false)
+        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        return inflater.inflate(R.layout.fragment_cancelled_booking, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,45 +58,44 @@ class PreviousBookingFragment : Fragment() {
         observeData()
     }
 
-    private fun initBookedDashBoardRepo() {
-        mBookingDashBoardViewModel.setBookedRoomDashboardRepo(mBookedDashBoardRepo)
-    }
-
-    private fun initComponentForPreviousFragment() {
-        (activity?.application as BaseApplication).getmAppComponent()?.inject(this)
-    }
-
     /**
      * Initialize all late init fields
      */
     @SuppressLint("ResourceAsColor")
     fun init() {
-        mProgressBar = activity!!.findViewById(R.id.progress_bar)
+        HideSoftKeyboard.hideSoftKeyboard(activity!!)
+        mProgressBar = activity!!.findViewById(R.id.cancelled_main_progress_bar)
         initRecyclerView()
-        initComponentForPreviousFragment()
+        initComponentForCancelledFragment()
         initLateInitializerVariables()
         initBookedDashBoardRepo()
+        cancelled_booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
+        refreshOnPullDown()
         if (NetworkState.appIsConnectedToInternet(activity!!)) {
             getViewModel()
         } else {
-            val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
+            val i = Intent(activity, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
-        refreshOnPullDown()
     }
 
-    @SuppressLint("ResourceAsColor")
+    private fun initBookedDashBoardRepo() {
+        mBookingDashBoardViewModel.setBookedRoomDashboardRepo(mBookedDashBoardRepo)
+    }
+
+    private fun initComponentForCancelledFragment() {
+        (activity?.application as BaseApplication).getmAppComponent()?.inject(this)
+    }
+
     private fun initLateInitializerVariables() {
         progressDialog = GetProgress.getProgressDialog(getString(R.string.progress_message), activity!!)
         acct = GoogleSignIn.getLastSignedInAccount(activity)!!
         mBookingDashBoardViewModel = ViewModelProviders.of(this).get(BookingDashboardViewModel::class.java)
-        previous__booking_refresh_layout.setColorSchemeColors(R.color.colorPrimary)
         mBookingDashboardInput.pageSize = Constants.PAGE_SIZE
-        mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_PREVIOUS
+        mBookingDashboardInput.status = Constants.BOOKING_DASHBOARD_TYPE_CANCELLED
         mBookingDashboardInput.pageNumber = pagination
         mBookingDashboardInput.email = acct.email.toString()
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -109,33 +106,35 @@ class PreviousBookingFragment : Fragment() {
 
     private fun getViewModel() {
         mProgressBar.visibility = View.VISIBLE
-        //progressDialog.show()
-        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+        mBookingDashBoardViewModel.getBookingList(
+            GetPreference.getTokenFromPreference(activity!!),
+            mBookingDashboardInput
+        )
     }
 
     private fun initRecyclerView() {
-        mBookingListAdapter = PreviousBookingAdapter(
+        mBookingListAdapter = CancelledBookingAdpter(
             finalList,
             activity!!,
-            object : PreviousBookingAdapter.ShowMembersListener {
+            object : CancelledBookingAdpter.ShowMembersListener {
                 override fun showMembers(mEmployeeList: List<String>, position: Int) {
                     showMeetingMembers(mEmployeeList, position)
                 }
 
             }
         )
-        previous__recyclerView.adapter = mBookingListAdapter
-        previous__recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        cancelled_recyclerView.adapter = mBookingListAdapter
+        cancelled_recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    if (!isApiCalled && hasMoreItem) {
-                        isApiCalled = true
-                        pagination++
-                        previous_progress_bar.visibility = View.VISIBLE
-                        mBookingDashboardInput.pageNumber = pagination
-                        mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
-                    }
+                if (!recyclerView.canScrollVertically(1) && hasMoreItem) {
+                    cancelled_progress_bar.visibility = View.VISIBLE
+                    pagination++
+                    mBookingDashboardInput.pageNumber = pagination
+                    mBookingDashBoardViewModel.getBookingList(
+                        GetPreference.getTokenFromPreference(activity!!),
+                        mBookingDashboardInput
+                    )
                 }
             }
         })
@@ -145,11 +144,14 @@ class PreviousBookingFragment : Fragment() {
      * add refresh listener on pull down
      */
     private fun refreshOnPullDown() {
-        previous__booking_refresh_layout.setOnRefreshListener {
+        cancelled_booking_refresh_layout.setOnRefreshListener {
             finalList.clear()
             pagination = 1
             mBookingDashboardInput.pageNumber = pagination
-            mBookingDashBoardViewModel.getBookingList(GetPreference.getTokenFromPreference(activity!!), mBookingDashboardInput)
+            mBookingDashBoardViewModel.getBookingList(
+                GetPreference.getTokenFromPreference(activity!!),
+                mBookingDashboardInput
+            )
         }
     }
 
@@ -157,27 +159,25 @@ class PreviousBookingFragment : Fragment() {
      * all observer for LiveData
      */
     private fun observeData() {
+
         /**
          * observing data for booking list
          */
         mBookingDashBoardViewModel.returnSuccess().observe(this, Observer {
-            previous_progress_bar.visibility = View.GONE
-            previous__booking_refresh_layout.isRefreshing = false
+            cancelled_progress_bar.visibility = View.GONE
+            cancelled_booking_refresh_layout.isRefreshing = false
             mProgressBar.visibility = View.GONE
-            //progressDialog.dismiss()
-            previous__empty_view.visibility = View.GONE
-            hasMoreItem = it.paginationMetaData!!.nextPage!!
             setFilteredDataToAdapter(it.dashboard!!)
+            hasMoreItem = it.paginationMetaData!!.nextPage!!
         })
         mBookingDashBoardViewModel.returnFailure().observe(this, Observer {
-            previous_progress_bar.visibility = View.GONE
-            previous__booking_refresh_layout.isRefreshing = false
+            cancelled_progress_bar.visibility = View.GONE
+            cancelled_booking_refresh_layout.isRefreshing = false
             mProgressBar.visibility = View.GONE
-            //progressDialog.dismiss()
             if (it == Constants.INVALID_TOKEN) {
                 ShowDialogForSessionExpired.showAlert(activity!!, UserBookingsDashboardActivity())
             } else if (it == Constants.NO_CONTENT_FOUND && finalList.size == 0) {
-                previous__empty_view.visibility = View.VISIBLE
+                cancelled_empty_view.visibility = View.VISIBLE
             } else {
                 ShowToast.show(activity!!, it as Int)
             }
@@ -190,7 +190,7 @@ class PreviousBookingFragment : Fragment() {
      */
     fun showMeetingMembers(mEmployeeList: List<String>, position: Int) {
         val arrayListOfNames = ArrayList<String>()
-        arrayListOfNames.add(finalList[position].organizer!! + getString(R.string.organizer))
+        arrayListOfNames.add(finalList[position].organizer!! + "(Organizer)")
         for (item in mEmployeeList) {
             arrayListOfNames.add(item)
         }
@@ -209,7 +209,8 @@ class PreviousBookingFragment : Fragment() {
      */
     private fun setFilteredDataToAdapter(dashboardItemList: List<Dashboard>) {
         finalList.addAll(dashboardItemList)
-        previous__recyclerView.adapter?.notifyDataSetChanged()
+        cancelled_recyclerView.adapter?.notifyDataSetChanged()
     }
-}
 
+
+}

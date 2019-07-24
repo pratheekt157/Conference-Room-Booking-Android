@@ -13,8 +13,8 @@ class SignInTest{
 
     @Test
     fun signIn(){
-        mSignIn.StatusCode = ""
-        mSignIn.Token = ""
+        mSignIn.statusCode = ""
+        mSignIn.token = ""
         val data = objectMapper.writeValueAsString(mSignIn)
         assertEquals(data,"{\"statusCode\":\"\",\"token\":\"\"}")
     }

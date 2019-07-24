@@ -30,7 +30,7 @@ class RoomAdapter(
     /**
      * bind data with the view
      */
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NewApi")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val amiList = roomDetailsList[position].amenities
@@ -63,9 +63,9 @@ class RoomAdapter(
         }
         if (roomDetailsList[position].status == "Unavailable") {
             holder.roomNameTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_unavailable, 0, 0, 0)
-            holder.roomNameTextView.setTextColor(Color.parseColor("#BDBDBD"))
-            holder.permissionTextView.setTextColor(Color.parseColor("#BDBDBD"))
-            holder.buildingNameTextView.setTextColor(Color.parseColor("#BDBDBD"))
+            holder.roomNameTextView.setTextColor(mContext.getResources().getColor(R.color.aminities))
+            holder.permissionTextView.setTextColor(mContext.getResources().getColor(R.color.aminities))
+            holder.buildingNameTextView.setTextColor(mContext.getResources().getColor(R.color.aminities))
             holder.mainCard.elevation = 0.75F
         }
         setDataToFields(holder, position)

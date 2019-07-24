@@ -37,8 +37,6 @@ class RestClient {
             }
         }
         fun getWebServiceData(): ConferenceService? {
-          //  val mapper = ObjectMapper()
-           // mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             val retrofit: Retrofit = Retrofit.Builder()
                     .baseUrl(Constants.IP_ADDRESS)
                     .addConverterFactory(GsonConverterFactory.create(gson))

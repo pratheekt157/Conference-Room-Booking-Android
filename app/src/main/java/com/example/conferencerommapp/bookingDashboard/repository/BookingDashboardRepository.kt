@@ -1,8 +1,7 @@
-package com.example.conferencerommapp.BookingDashboard.repository
+package com.example.conferencerommapp.bookingDashboard.repository
 
 import com.example.conferencerommapp.Model.BookingDashboardInput
 import com.example.conferencerommapp.Model.DashboardDetails
-import com.example.conferencerommapp.ServiceBuilder
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants
@@ -59,8 +58,7 @@ class BookingDashboardRepository @Inject constructor() {
         /**
          * api call using retrofit
          */
-        val service = ServiceBuilder.getObject()
-        var requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.cancelBookedRoom(token, meetingId)!!
+        val requestCall: Call<ResponseBody> = RestClient.getWebServiceData()?.cancelBookedRoom(token, meetingId)!!
         requestCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 when (t) {

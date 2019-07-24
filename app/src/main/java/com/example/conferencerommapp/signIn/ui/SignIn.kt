@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.GoogleGSO
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Model.SignIn
@@ -103,7 +103,7 @@ class SignIn : AppCompatActivity() {
     private fun initializeGoogleSignIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestIdToken(getString(R.string.server_client_id))
+                .requestIdToken(getString(R.string.server_client_id_partial))
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     }
@@ -196,10 +196,10 @@ class SignIn : AppCompatActivity() {
      */
     private fun setValueForSharedPreference(it: SignIn?) {
         val editor = prefs.edit()
-        val code : String = it!!.StatusCode.toString()
+        val code : String = it!!.statusCode.toString()
         editor.putInt(Constants.ROLE_CODE,code.toInt())
         editor.apply()
-        saveCustomToken(it.Token)
+        saveCustomToken(it.token)
         intentToNextActivity(code.toInt())
     }
     /**

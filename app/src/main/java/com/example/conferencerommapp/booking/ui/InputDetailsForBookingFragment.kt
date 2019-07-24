@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.RoomAdapter
 import com.example.conferencerommapp.Model.Building
@@ -271,9 +271,6 @@ class InputDetailsForBookingFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.RES_CODE && resultCode == Activity.RESULT_OK) {
             getViewModelForBuildingList()
-        }
-        if (requestCode == Constants.RES_CODE2 && resultCode == Activity.RESULT_OK) {
-
         }
         if (requestCode == Constants.RES_CODE3 && resultCode == Activity.RESULT_OK) {
             makeCallToApiForSuggestedRooms()

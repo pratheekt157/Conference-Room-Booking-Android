@@ -19,9 +19,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.BookingDashboard.repository.BookingDashboardRepository
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
-import com.example.conferencerommapp.BookingDashboard.viewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.bookingDashboard.repository.BookingDashboardRepository
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.viewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.UpcomingBookingAdapter
 import com.example.conferencerommapp.Model.BookingDashboardInput
@@ -160,17 +160,14 @@ class UpcomingBookingFragment : Fragment() {
         dashBord_recyclerView1.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (!recyclerView.canScrollVertically(1)) {
-                    // todo check if the there are more items existing in database
-                    if (hasMoreItem) {
-                        pagination++
-                        mBookingDashboardInput.pageNumber = pagination
-                        upcoming_booking_progress_bar.visibility = View.VISIBLE
-                        mBookingDashBoardViewModel.getBookingList(
-                            GetPreference.getTokenFromPreference(activity!!),
-                            mBookingDashboardInput
-                        )
-                    }
+                if (!recyclerView.canScrollVertically(1) && hasMoreItem) {
+                    pagination++
+                    mBookingDashboardInput.pageNumber = pagination
+                    upcoming_booking_progress_bar.visibility = View.VISIBLE
+                    mBookingDashBoardViewModel.getBookingList(
+                        GetPreference.getTokenFromPreference(activity!!),
+                        mBookingDashboardInput
+                    )
                 }
             }
         })
@@ -329,7 +326,7 @@ class UpcomingBookingFragment : Fragment() {
                 bookingId = finalList[position].bookingId!!
                 if (NetworkState.appIsConnectedToInternet(activity!!)) {
                     cancelBooking(finalList[position].bookingId!!)
-                    singleCancelLogFirebaseAnaytics(position)
+                    singleCancelLogFirebaseAnaytics()
                 } else {
                     val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                     startActivityForResult(i, Constants.RES_CODE2)
@@ -340,7 +337,7 @@ class UpcomingBookingFragment : Fragment() {
                 recurringmeetingId = finalList[position].recurringmeetingId
                 if (NetworkState.appIsConnectedToInternet(activity!!)) {
                     recurringCancelBooking(bookingId,recurringmeetingId)
-                    recurringCancelLogFirebaseAnalytics(position)
+                    recurringCancelLogFirebaseAnalytics()
                 } else {
                     val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                     startActivityForResult(i, Constants.RES_CODE2)
@@ -356,7 +353,7 @@ class UpcomingBookingFragment : Fragment() {
         ColorOfDialogButton.setColorOfDialogButton(dialog)
     }
 
-    private fun recurringCancelLogFirebaseAnalytics(position: Int) {
+    private fun recurringCancelLogFirebaseAnalytics() {
         val cancellation = Bundle()
         mFirebaseAnalytics.logEvent(getString(R.string.recurring_cancellation),cancellation)
         mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)
@@ -386,7 +383,7 @@ class UpcomingBookingFragment : Fragment() {
             bookingId = finalList[position].bookingId!!
             if (NetworkState.appIsConnectedToInternet(activity!!)) {
                 cancelBooking(finalList[position].bookingId!!)
-                singleCancelLogFirebaseAnaytics(position)
+                singleCancelLogFirebaseAnaytics()
             } else {
                 val i = Intent(activity!!, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE2)
@@ -398,7 +395,7 @@ class UpcomingBookingFragment : Fragment() {
         ColorOfDialogButton.setColorOfDialogButton(dialog)
     }
 
-    private fun singleCancelLogFirebaseAnaytics(position: Int) {
+    private fun singleCancelLogFirebaseAnaytics() {
         val cancellation = Bundle()
         mFirebaseAnalytics.logEvent(getString(R.string.single_cancellation),cancellation)
         mFirebaseAnalytics.setAnalyticsCollectionEnabled(true)

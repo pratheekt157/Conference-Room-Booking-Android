@@ -36,7 +36,7 @@ import java.util.*
 import javax.inject.Inject
 
 @Suppress("NAME_SHADOWING", "DEPRECATION")
-class NewProjectManagerInput : AppCompatActivity() {
+class RecurringBookingInputDetails : AppCompatActivity() {
 
     @Inject
     lateinit var mManagerRoomRepo: ManagerConferenceRoomRepository
@@ -149,7 +149,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         if (NetworkState.appIsConnectedToInternet(this)) {
             getViewModelForBuildingList()
         } else {
-            val i = Intent(this@NewProjectManagerInput, NoInternetConnectionActivity::class.java)
+            val i = Intent(this@RecurringBookingInputDetails, NoInternetConnectionActivity::class.java)
             startActivityForResult(i, Constants.RES_CODE)
         }
     }
@@ -240,7 +240,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mBuildingsViewModel.returnMBuildingFailure().observe(this, Observer {
             progressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
-                ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
+                ShowDialogForSessionExpired.showAlert(this, RecurringBookingInputDetails())
             } else {
                 ShowToast.show(this, it as Int)
             }
@@ -255,7 +255,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mManagerConferecneRoomViewModel.returnFailure().observe(this, Observer {
             progressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
-                ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
+                ShowDialogForSessionExpired.showAlert(this, RecurringBookingInputDetails())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -277,7 +277,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         mManagerConferecneRoomViewModel.returnFailureForSuggestedRooms().observe(this, Observer {
             progressBar.visibility = View.GONE
             if (it == Constants.INVALID_TOKEN) {
-                ShowDialogForSessionExpired.showAlert(this, NewProjectManagerInput())
+                ShowDialogForSessionExpired.showAlert(this, RecurringBookingInputDetails())
             } else {
                 ShowToast.show(this, it as Int)
                 finish()
@@ -332,7 +332,7 @@ class NewProjectManagerInput : AppCompatActivity() {
     }
 
     private fun goToSelectMeetingMembersActivity() {
-        val intent = Intent(this@NewProjectManagerInput, ManagerSelectMeetingMembers::class.java)
+        val intent = Intent(this@RecurringBookingInputDetails, ManagerSelectMeetingMembers::class.java)
         intent.putExtra(Constants.EXTRA_INTENT_DATA, mSetIntentData)
         startActivity(intent)
     }
@@ -533,7 +533,7 @@ class NewProjectManagerInput : AppCompatActivity() {
         /**
          * setting a alert dialog instance for the current context
          */
-        val builder = android.app.AlertDialog.Builder(this@NewProjectManagerInput)
+        val builder = android.app.AlertDialog.Builder(this@RecurringBookingInputDetails)
         builder.setTitle("Check...")
         try {
 
@@ -580,7 +580,7 @@ class NewProjectManagerInput : AppCompatActivity() {
                 ColorOfDialogButton.setColorOfDialogButton(dialog)
             }
         } catch (e: Exception) {
-            Toast.makeText(this@NewProjectManagerInput, getString(R.string.invalid_details), Toast.LENGTH_LONG).show()
+            Toast.makeText(this@RecurringBookingInputDetails, getString(R.string.invalid_details), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -616,9 +616,9 @@ class NewProjectManagerInput : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
             mManagerConferecneRoomViewModel.getConferenceRoomList(mRoom, GetPreference.getTokenFromPreference(this))
         } else {
-
+            val i = Intent(this@RecurringBookingInputDetails, NoInternetConnectionActivity::class.java)
+            startActivityForResult(i, Constants.RES_CODE2)
         }
-
     }
 
     /**

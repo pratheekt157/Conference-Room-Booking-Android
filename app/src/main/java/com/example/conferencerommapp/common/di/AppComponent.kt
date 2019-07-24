@@ -1,7 +1,7 @@
 package com.example.conferencerommapp.common.di
 
 
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.ConferenceRoomDashboard.ui.ConferenceDashBoard
 import com.example.conferencerommapp.SignIn
 import com.example.conferencerommapp.addBuilding.ui.AddingBuilding
@@ -41,7 +41,7 @@ interface AppComponent {
 
     fun inject(managerBooking: ManagerSelectMeetingMembers)
 
-    fun inject(managerBook: NewProjectManagerInput)
+    fun inject(managerBookDetails: RecurringBookingInputDetails)
 
     fun inject(noInternetConnectionActivity: NoInternetConnectionActivity)
 

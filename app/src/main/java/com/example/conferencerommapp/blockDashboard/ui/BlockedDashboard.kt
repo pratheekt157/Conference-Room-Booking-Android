@@ -21,7 +21,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Blocked
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.BlockedDashboardNew
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
@@ -62,6 +62,7 @@ class BlockedDashboard : AppCompatActivity() {
     private lateinit var mFirebaseAnalytics: FirebaseAnalytics
     private lateinit var progressDialog: ProgressDialog
     private var mBlockRoomList = ArrayList<Blocked>()
+    private var bookingId = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_blocked_dashboard)
@@ -117,7 +118,7 @@ class BlockedDashboard : AppCompatActivity() {
             loadBlocking()
         }
         if (requestCode == Constants.RES_CODE2 && resultCode == Activity.RESULT_OK) {
-            //unblockRoom(mRoom)
+            unblockRoom(bookingId)
         }
     }
 
@@ -201,7 +202,14 @@ class BlockedDashboard : AppCompatActivity() {
         builder.setTitle(getString(R.string.confirm))
         builder.setMessage(getString(R.string.unblock_room_confirmation_message))
         builder.setPositiveButton(getString(R.string.yes)) { _, _ ->
-            unblockRoom(mBookingId)
+            if(NetworkState.appIsConnectedToInternet(this)) {
+                unblockRoom(mBookingId)
+            } else {
+                bookingId = mBookingId
+                val i = Intent(this@BlockedDashboard, NoInternetConnectionActivity::class.java)
+                startActivityForResult(i, Constants.RES_CODE2)
+            }
+
             unBlockLogFirebase()
         }
         builder.setNegativeButton(getString(R.string.no)) { _, _ ->

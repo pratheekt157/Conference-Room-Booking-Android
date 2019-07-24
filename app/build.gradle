@@ -186,8 +186,8 @@ dependencies {
 }
 sonarqube{
     properties{
-        property "sonar.projectName","Android"
-        property "sonar.projectKey","Android"
+        property "sonar.projectName","ConferenceRoomAndroid"
+        property "sonar.projectKey","ConferenceRoomAndroid"
         property "sonar.host.url","http://localhost:9000"
         property "sonar.language","kotlin"
         property "sonar.src","src/main/java"

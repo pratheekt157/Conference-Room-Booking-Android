@@ -46,28 +46,28 @@
         <activity
                 android:name=".recurringMeeting.ui.ManagerSelectMeetingMembers"
                 android:launchMode="singleTop"
-                android:parentActivityName=".recurringMeeting.ui.NewProjectManagerInput"
+                android:parentActivityName=".recurringMeeting.ui.RecurringBookingInputDetails"
                 android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".booking.ui.SelectMeetingMembersActivity"
                 android:launchMode="singleTop"
-                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
+                android:parentActivityName=".bookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".updateBooking.ui.UpdateBookingActivity"
                 android:launchMode="singleTop"
-                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
+                android:parentActivityName=".bookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".recurringMeeting.ui.NewProjectManagerInput"
+                android:name=".recurringMeeting.ui.RecurringBookingInputDetails"
                 android:launchMode="singleTop"
-                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity">
+                android:parentActivityName=".bookingDashboard.ui.UserBookingsDashboardActivity">
         </activity>
         <activity
-                android:name=".BookingDashboard.ui.UserBookingsDashboardActivity"
+                android:name=".bookingDashboard.ui.UserBookingsDashboardActivity"
                 android:label="Booking"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait"
@@ -93,12 +93,12 @@
         </activity>
         <activity
                 android:name=".manageBuildings.ui.BuildingDashboard"
-                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
+                android:parentActivityName=".bookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".blockDashboard.ui.BlockedDashboard"
-                android:parentActivityName=".BookingDashboard.ui.UserBookingsDashboardActivity"
+                android:parentActivityName=".bookingDashboard.ui.UserBookingsDashboardActivity"
                 android:screenOrientation="portrait"/>
         <activity
                 android:name=".blockRoom.ui.BlockConferenceRoomActivity"

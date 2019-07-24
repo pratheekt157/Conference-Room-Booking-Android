@@ -175,7 +175,6 @@
         <item>16</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="successfully_sign_out">Successfully Signed Out</string>
     <string name="room_capacity_must_be_more_than_0">Room Capacity must be more than 0</string>

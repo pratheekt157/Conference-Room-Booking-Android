@@ -20,7 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.Crashlytics
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
@@ -56,7 +56,6 @@ class SplashScreen : AppCompatActivity() {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         init()
         observeData()
-        crashHandler()
         val logoHandler = Handler()
         val logoRunnable = Runnable {
             val account = GoogleSignIn.getLastSignedInAccount(this)
@@ -79,10 +78,6 @@ class SplashScreen : AppCompatActivity() {
     }
 
 
-    private fun crashHandler() {
-//        Thread.setDefaultUncaughtExceptionHandler { thread, e -> Handler(Looper.getMainLooper()).postAtFrontOfQueue { Runtime.getRuntime().exit(0) } }
-        // val foregroundChecker = ForegroundCounter.createAndInstallCallbacks
-    }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

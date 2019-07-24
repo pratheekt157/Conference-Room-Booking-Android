@@ -25,6 +25,7 @@ import com.example.conferencerommapp.blockRoom.repository.BlockRoomRepository
 import com.example.conferencerommapp.blockRoom.viewModel.BlockRoomViewModel
 import com.example.conferencerommapp.manageBuildings.viewModel.BuildingViewModel
 import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
+import com.example.conferencerommapp.manageBuildings.repository.BuildingsRepository
 import com.example.conferencerommapp.utils.*
 import com.example.conferenceroomtabletversion.utils.GetPreference
 import com.example.myapplication.Models.ConferenceList
@@ -42,6 +43,9 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
      */
     @Inject
     lateinit var mBlockRoomRepo: BlockRoomRepository
+
+    @Inject
+    lateinit var mBuildingRepo: BuildingsRepository
 
     @BindView(R.id.block_conference_room_progress_bar)
     lateinit var mProgressDialog: ProgressBar
@@ -78,6 +82,7 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
         initTextChangeListener()
         initComponent()
         initLateInitializerVariables()
+        initBuildingRepo()
         initBlockRoomRepo()
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         if(NetworkState.appIsConnectedToInternet(this)) {
@@ -94,6 +99,10 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
 
     private fun initBlockRoomRepo() {
         mBlockRoomViewModel.setBlockRoomRepo(mBlockRoomRepo)
+    }
+
+    private fun initBuildingRepo() {
+        mBuildingViewModel.setBuildingRepository(mBuildingRepo)
     }
 
     private fun initActionBar() {
@@ -128,7 +137,9 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
                     // get confirmation from server
                 }
                 Constants.RES_CODE4 -> {
-
+                    /**
+                     * Do Nothing
+                     */
                 }
             }
         }

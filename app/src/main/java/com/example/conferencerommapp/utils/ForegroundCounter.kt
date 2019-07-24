@@ -10,9 +10,15 @@ class ForegroundCounter: Application.ActivityLifecycleCallbacks{
     var startCount: Int = 0
 
     override fun onActivityPaused(activity: Activity?) {
+        /**
+         * onActivity is Paused
+         */
     }
 
     override fun onActivityResumed(activity: Activity?) {
+        /**
+         * onActivity is Resumed
+         */
     }
 
     override fun onActivityStarted(activity: Activity?) {
@@ -20,6 +26,9 @@ class ForegroundCounter: Application.ActivityLifecycleCallbacks{
     }
 
     override fun onActivityDestroyed(activity: Activity?) {
+        /**
+         * onActivity is Destroyed
+         */
     }
 
     override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
@@ -31,6 +40,9 @@ class ForegroundCounter: Application.ActivityLifecycleCallbacks{
     }
 
     override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
+        /**
+         * onActivity is Created
+         */
     }
 
 

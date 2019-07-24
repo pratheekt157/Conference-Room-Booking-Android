@@ -17,7 +17,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.BookingDashboard.ui.UserBookingsDashboardActivity
+import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.ConferenceRoomDashboard.ui.ConferenceDashBoard
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R

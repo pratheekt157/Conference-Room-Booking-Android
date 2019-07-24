@@ -1,4 +1,4 @@
-package com.example.conferencerommapp.BookingDashboard.ui
+package com.example.conferencerommapp.bookingDashboard.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.conferencerommapp.BaseApplication
-import com.example.conferencerommapp.BookingDashboard.repository.BookingDashboardRepository
-import com.example.conferencerommapp.BookingDashboard.viewModel.BookingDashboardViewModel
+import com.example.conferencerommapp.bookingDashboard.repository.BookingDashboardRepository
+import com.example.conferencerommapp.bookingDashboard.viewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.Helper.GoogleGSO
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.SignIn
@@ -26,7 +26,7 @@ import com.example.conferencerommapp.blockDashboard.ui.BlockedDashboard
 import com.example.conferencerommapp.booking.ui.InputDetailsForBookingFragment
 import com.example.conferencerommapp.manageBuildings.ui.BuildingDashboard
 import com.example.conferencerommapp.recurringMeeting.ui.CancelledBookingFragment
-import com.example.conferencerommapp.recurringMeeting.ui.NewProjectManagerInput
+import com.example.conferencerommapp.recurringMeeting.ui.RecurringBookingInputDetails
 import com.example.conferencerommapp.recurringMeeting.ui.PreviousBookingFragment
 import com.example.conferencerommapp.recurringMeeting.ui.UpcomingBookingFragment
 import com.example.conferencerommapp.splashScreen.ui.SplashScreen
@@ -185,7 +185,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
                 startActivity(Intent(this@UserBookingsDashboardActivity, BlockedDashboard::class.java))
             }
             R.id.project_manager -> {
-                startActivity(Intent(this@UserBookingsDashboardActivity, NewProjectManagerInput::class.java))
+                startActivity(Intent(this@UserBookingsDashboardActivity, RecurringBookingInputDetails::class.java))
             }
             R.id.hr_add -> {
                 startActivity(Intent(this@UserBookingsDashboardActivity, BuildingDashboard::class.java))

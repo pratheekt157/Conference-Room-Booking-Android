@@ -16,7 +16,6 @@ object ServiceBuilder {
 
     private val logger = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
-    // private lateinit var mContext: Context
     private val okHttp: OkHttpClient.Builder = OkHttpClient.Builder()
         .addInterceptor(logger)
         .connectTimeout(900, TimeUnit.SECONDS)
@@ -38,15 +37,4 @@ object ServiceBuilder {
     fun getObject(): ConferenceService {
         return buildService(ConferenceService::class.java)
     }
-
-    /**
-     * .addInterceptor {
-    it.proceed(
-    it.request().newBuilder()
-    .addHeader("Token", getTokenFromSharedPreference())
-    .addHeader("UserId", getUserIdFromSharedPreference()).build()
-    )
-
-    }
-     */
 }
