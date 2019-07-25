@@ -1,11 +1,10 @@
 package com.example.conferencerommapp.blockRoom.repository
 
-import com.example.conferencerommapp.utils.Constants
-import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.Model.BlockRoom
 import com.example.conferencerommapp.Model.BlockingConfirmation
-import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
+import com.example.conferencerommapp.utils.Constants
 import com.example.myapplication.Models.ConferenceList
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -13,7 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.util.concurrent.CopyOnWriteArraySet
 import javax.inject.Inject
 
 class BlockRoomRepository @Inject constructor(){

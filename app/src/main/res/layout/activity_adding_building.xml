@@ -11,7 +11,7 @@
         android:layout_marginTop="@dimen/dp_8"
         app:cardCornerRadius="@dimen/card_corner_radius_dp_5"
         app:cardUseCompatPadding="true"
-        tools:context=".Activity.AddingBuilding">
+        tools:context=".addBuilding.ui.AddingBuilding">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

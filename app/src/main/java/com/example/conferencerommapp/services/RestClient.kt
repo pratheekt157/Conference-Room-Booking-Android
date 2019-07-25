@@ -39,7 +39,7 @@ class RestClient {
         fun getWebServiceData(): ConferenceService? {
             val retrofit: Retrofit = Retrofit.Builder()
                     .baseUrl(Constants.IP_ADDRESS)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addConverterFactory(GsonConverterFactory.create(gson)).client(clientLogin.build())
                     .build()
             service = retrofit.create<ConferenceService>(ConferenceService::class.java)
             return service

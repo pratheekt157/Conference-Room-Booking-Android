@@ -169,6 +169,7 @@ class SignIn : AppCompatActivity() {
      * if not registered than make an intent to registration activity
      */
     private fun checkRegistration() {
+        progressDialog.show()
         mProgressBar.visibility = View.VISIBLE
         mCheckRegistrationViewModel.checkRegistration(getGoogleIdToken(), GetPreference.getDeviceIdFromPreference(this))
     }
@@ -181,11 +182,13 @@ class SignIn : AppCompatActivity() {
     private fun observeData() {
         //positive response from server
         mCheckRegistrationViewModel.returnSuccessCode().observe(this, Observer {
+            progressDialog.dismiss()
             mProgressBar.visibility = View.GONE
             setValueForSharedPreference(it)
         })
         // Negative response from server
         mCheckRegistrationViewModel.returnFailureCode().observe(this, Observer {
+            progressDialog.dismiss()
             mProgressBar.visibility = View.GONE
             ShowToast.show(this, it as Int)
             signOut()

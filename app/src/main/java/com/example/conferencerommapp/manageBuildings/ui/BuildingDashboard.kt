@@ -190,6 +190,7 @@ class BuildingDashboard : AppCompatActivity() {
         val dialog = GetAleretDialog.getDialog(this,"Delete","Are you sure you wnat to delete the Building")
         dialog.setPositiveButton(R.string.ok){_,_->
             mBuildingsViewModel.deleteBuilding(GetPreference.getTokenFromPreference(this),buildingId)
+            getViewModel()
         }
         dialog.setNegativeButton(R.string.cancel){_,_->
 
@@ -197,6 +198,7 @@ class BuildingDashboard : AppCompatActivity() {
         val builder = GetAleretDialog.showDialog(dialog)
         ColorOfDialogButton.setColorOfDialogButton(builder)
     }
+
 
     /**
      * setting the adapter by passing the data into it and implementing a Interface BtnClickListner of BuildingAdapter class

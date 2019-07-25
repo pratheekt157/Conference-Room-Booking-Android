@@ -132,7 +132,6 @@ class ConferenceDashBoard : AppCompatActivity() {
         mManageConferenceRoomViewModel.returnSuccessForDeleteRoom().observe(this, Observer {
             mProgressBar.visibility = View.GONE
             Toasty.success(this, getString(R.string.successfull_deletion)).show()
-            getConference(buildingId)
         })
 
         mManageConferenceRoomViewModel.returnFailureForDeleteRoom().observe(this, Observer {
@@ -171,6 +170,7 @@ class ConferenceDashBoard : AppCompatActivity() {
         val dialog = GetAleretDialog.getDialog(this, "Delete", "Are you sure you wnat to delete the Room")
         dialog.setPositiveButton(R.string.ok) { _, _ ->
             mManageConferenceRoomViewModel.deleteConferenceRoom(GetPreference.getTokenFromPreference(this), roomId!!)
+            getConference(buildingId)
         }
         dialog.setNegativeButton(R.string.cancel) { _, _ ->
 

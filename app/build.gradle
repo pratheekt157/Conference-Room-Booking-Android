@@ -182,6 +182,8 @@ dependencies {
 
     // Multi Dex
     implementation 'com.android.support:multidex:1.0.3'
+    implementation "com.wajahatkarim3.easyvalidation:easyvalidation-core:1.0.1"
+
 
 }
 sonarqube{

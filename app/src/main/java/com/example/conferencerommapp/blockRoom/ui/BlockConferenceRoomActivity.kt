@@ -133,14 +133,6 @@ class BlockConferenceRoomActivity : AppCompatActivity() {
                 Constants.RES_CODE2 -> {
                     conferenceRoomListFromBackend(mBuildingId)
                 }
-                Constants.RES_CODE3 -> {
-                    // get confirmation from server
-                }
-                Constants.RES_CODE4 -> {
-                    /**
-                     * Do Nothing
-                     */
-                }
             }
         }
     }

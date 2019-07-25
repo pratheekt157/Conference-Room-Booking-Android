@@ -18,6 +18,7 @@ class ShowToast {
         }
 
         fun showMessageAccordingToCode(mContext: Context, errorCode: Int): String {
+
             val statusCodeMap = mutableMapOf(
                 Constants.NOT_ACCEPTABLE to mContext.getString(R.string.parameter_missing),
                 Constants.NOT_MODIFIED to mContext.getString(R.string.not_modified_message),
@@ -27,6 +28,8 @@ class ShowToast {
                 Constants.UNAVAILABLE_SLOT to mContext.getString(R.string.slot_unavailable),
                 Constants.POOR_INTERNET_CONNECTION to mContext.getString(R.string.poor_internet_connection)
             )
+            if (statusCodeMap[errorCode]==null)
+                return mContext.getString(R.string.internal_server_error)
             return statusCodeMap[errorCode]!!
         }
     }

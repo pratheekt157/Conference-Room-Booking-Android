@@ -58,22 +58,29 @@ class AddingBuilding : AppCompatActivity() {
         getDataFromIntent()
         observeData()
     }
+    /**
+     * initialize all lateinit variables
+     */
+    fun init() {
+        initActionBar()
+        initComponent()
+        initLateInitializerVariables()
+        initAddingBuildingRepository()
+        initTextChangeListener()
+    }
+
 
     private fun initComponent() {
         (application as BaseApplication).getmAppComponent()?.inject(this)
     }
-
-    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 
     private fun getDataFromIntent() {
         flag = intent.getBooleanExtra(Constants.FLAG, false)
         if (flag) {
             button_add_building.text = getString(R.string.update_button)
             mUpdateBuildingDetails.buildingId = intent.getIntExtra(Constants.BUILDING_ID, 0)
-            buildingNameEditText.text = intent.getStringExtra(Constants.BUILDING_NAME).toEditable()
-            buildingPlaceEditText.text = intent.getStringExtra(Constants.BUILDING_PLACE).toEditable()
-        } else {
-            button_add_building.text = getString(R.string.ADD)
+            buildingNameEditText.text = Editable.Factory.getInstance().newEditable(intent.getStringExtra(Constants.BUILDING_NAME))
+            buildingPlaceEditText.text = Editable.Factory.getInstance().newEditable(intent.getStringExtra(Constants.BUILDING_PLACE))
         }
     }
 
@@ -86,7 +93,7 @@ class AddingBuilding : AppCompatActivity() {
      * add text change listener for the building Name
      */
     private fun textChangeListenerOnBuildingName() {
-        buildingNameEditText.addTextChangedListener(object : TextWatcher {
+        buildingNameEditText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // nothing here
             }
@@ -100,12 +107,11 @@ class AddingBuilding : AppCompatActivity() {
             }
         })
     }
-
     /**
      * add text change listener for the building place
      */
     private fun textChangeListenerOnBuildingPlace() {
-        buildingPlaceEditText.addTextChangedListener(object : TextWatcher {
+        buildingPlaceEditText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // nothing here
             }
@@ -127,33 +133,19 @@ class AddingBuilding : AppCompatActivity() {
     @OnClick(R.id.button_add_building)
     fun getBuildingDetails() {
         if (validateInputs()) {
-            if (NetworkState.appIsConnectedToInternet(this)) {
-                if (flag) {
-                    mUpdateBuildingDetails.buildingName = buildingNameEditText.text.toString().trim()
-                    mUpdateBuildingDetails.place = buildingPlaceEditText.text.toString().trim()
-                    updateBuildingDetails(mUpdateBuildingDetails)
-                } else {
-                    addDataToObject(mAddBuilding)
-                    addBuild(mAddBuilding)
-                }
+            if(NetworkState.appIsConnectedToInternet(this)) {
+                addDataToObject(mAddBuilding)
+                addBuild(mAddBuilding)
             } else {
                 val i = Intent(this@AddingBuilding, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE)
             }
+
         }
     }
 
 
-    /**
-     * initialize all lateinit variables
-     */
-    fun init() {
-        initActionBar()
-        initComponent()
-        initLateInitializerVariables()
-        initAddingBuildingRepository()
-        initTextChangeListener()
-    }
+
 
     private fun initAddingBuildingRepository() {
         mAddBuildingViewModel.setBuildingRepository(mAddBuildingRepository)
@@ -220,7 +212,7 @@ class AddingBuilding : AppCompatActivity() {
         mAddBuilding.place = buildingPlaceEditText.text.toString().trim()
     }
 
-    /**addBuildingDetails
+    /**
      * validation for field building name for empty condition
      */
     private fun validateBuildingName(): Boolean {
@@ -235,6 +227,15 @@ class AddingBuilding : AppCompatActivity() {
     }
 
     /**
+     * validate all input fields
+     */
+    private fun validateInputs(): Boolean {
+        if (!validateBuildingName() or !validateBuildingPlace()) {
+            return false
+        }
+        return true
+    }
+    /**
      * validation for building place for empty condition
      */
     private fun validateBuildingPlace(): Boolean {
@@ -248,16 +249,6 @@ class AddingBuilding : AppCompatActivity() {
         }
     }
 
-
-    /**
-     * validate all input fields
-     */
-    private fun validateInputs(): Boolean {
-        if (!validateBuildingName() or !validateBuildingPlace()) {
-            return false
-        }
-        return true
-    }
 
     /**
      * function calls the ViewModel of addingBuilding and send data to the backend
