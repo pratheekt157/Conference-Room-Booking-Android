@@ -21,6 +21,7 @@ import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardAc
 import com.example.conferencerommapp.ConferenceRoomDashboard.ui.ConferenceDashBoard
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.R
+import com.example.conferencerommapp.addBuilding.ui.AddBuilding
 import com.example.conferencerommapp.addBuilding.ui.AddingBuilding
 import com.example.conferencerommapp.manageBuildings.adapter.BuildingDashboardAdapter
 import com.example.conferencerommapp.manageBuildings.repository.BuildingsRepository
@@ -61,7 +62,7 @@ class BuildingDashboard : AppCompatActivity() {
      */
     @OnClick(R.id.button_add_building)
     fun addBuildingFloatingButton() {
-        startActivity(Intent(this, AddingBuilding::class.java).putExtra("FLAG",false))
+        startActivity(Intent(this, AddBuilding::class.java).putExtra("FLAG",false))
     }
 
     /**

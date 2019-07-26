@@ -4,6 +4,7 @@ package com.example.conferencerommapp.common.di
 import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.ConferenceRoomDashboard.ui.ConferenceDashBoard
 import com.example.conferencerommapp.SignIn
+import com.example.conferencerommapp.addBuilding.ui.AddBuilding
 import com.example.conferencerommapp.addBuilding.ui.AddingBuilding
 import com.example.conferencerommapp.addConferenceRoom.ui.AddingConference
 import com.example.conferencerommapp.blockDashboard.ui.BlockedDashboard
@@ -53,6 +54,8 @@ interface AppComponent {
 
     fun inject(userBookingsDashboardActivity: UserBookingsDashboardActivity)
 
+    fun inject(addBuildingNew: AddBuilding)
+
     /**
      * fragment dagger injection object
      */
@@ -64,4 +67,6 @@ interface AppComponent {
     fun inject(previousBookingFragment: PreviousBookingFragment)
 
     fun inject(upcomingBookingFragment: UpcomingBookingFragment)
+
+
 }
