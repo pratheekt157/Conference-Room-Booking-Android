@@ -2,8 +2,7 @@ package com.example.conferencerommapp.booking.repository
 
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.services.ResponseListener
-import com.example.conferencerommapp.Model.EmployeeList
-import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.model.EmployeeList
 import com.example.conferencerommapp.services.RestClient
 import retrofit2.Call
 import retrofit2.Callback

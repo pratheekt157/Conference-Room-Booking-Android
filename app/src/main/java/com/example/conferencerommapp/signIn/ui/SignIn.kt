@@ -19,7 +19,7 @@ import butterknife.OnClick
 import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.GoogleGSO
 import com.example.conferencerommapp.Helper.NetworkState
-import com.example.conferencerommapp.Model.SignIn
+import com.example.conferencerommapp.model.SignIn
 import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.signIn.repository.CheckRegistrationRepository
 import com.example.conferencerommapp.signIn.viewModel.CheckRegistrationViewModel

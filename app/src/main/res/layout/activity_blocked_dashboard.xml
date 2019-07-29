@@ -7,7 +7,7 @@
         android:background="@color/recycler_view_background"
         android:id="@+id/r2_block_dashboard"
         android:layout_height="match_parent"
-        tools:context=".Activity.BlockedDashboard">
+        tools:context=".blockDashboard.ui.BlockedDashboard">
 
     <ProgressBar
             android:id="@+id/block_dashboard_progress_bar"
@@ -39,7 +39,7 @@
             android:visibility="gone"/>
 
     <com.github.clans.fab.FloatingActionButton
-            app:menu_shadowColor="#66aff198"
+            app:menu_shadowColor="@color/shadowColor"
             app:fab_colorPressed="@color/colorPrimary1"
             app:menu_colorPressed="@color/colorPrimary"
             app:fab_colorNormal="@color/colorPrimary"

@@ -6,7 +6,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/dp_16"
-        tools:context=".Activity.UpdateBookingActivity">
+        tools:context=".updateBooking.ui.UpdateBookingActivity">
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout6"
             android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dp_8"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -66,13 +66,13 @@
                 android:hint="@string/room_name"
                 android:drawableTint="@color/nonEditableValues"
                 android:drawableStart="@drawable/ic_room_black_24dp"
-                android:drawablePadding="5dp"/>
+                android:drawablePadding="@dimen/dp_5"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/dp_8"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -96,7 +96,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/from_time_input_layout"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

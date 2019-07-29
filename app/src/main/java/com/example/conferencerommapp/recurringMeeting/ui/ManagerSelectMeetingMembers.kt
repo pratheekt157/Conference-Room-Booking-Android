@@ -26,9 +26,9 @@ import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.SelectMembers
-import com.example.conferencerommapp.Model.EmployeeList
-import com.example.conferencerommapp.Model.GetIntentDataFromActvity
-import com.example.conferencerommapp.Model.ManagerBooking
+import com.example.conferencerommapp.model.EmployeeList
+import com.example.conferencerommapp.model.GetIntentDataFromActvity
+import com.example.conferencerommapp.model.ManagerBooking
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.ViewModel.ManagerBookingViewModel
 import com.example.conferencerommapp.booking.repository.EmployeeRepository

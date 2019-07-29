@@ -69,7 +69,7 @@
                 android:id="@+id/view_landing_main"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
-                android:background="#e6e6e6"/>
+                android:background="@color/horizontal_view_color"/>
 
         <LinearLayout
                 android:orientation="horizontal"
@@ -89,7 +89,7 @@
                     android:textColor="@color/amenities_color"
                     android:visibility="gone"
                     android:drawableTint="@color/grey"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dp_16"
                     android:maxLines="1"
@@ -101,7 +101,7 @@
                     android:drawableTint="@color/grey"
                     android:textColor="@color/amenities_color"
                     android:visibility="gone"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dp_16"
                     android:hint="@string/whiteboard_marker"
@@ -129,7 +129,7 @@
                     android:textSize="@dimen/sp_12"
                     android:textColor="@color/amenities_color"
                     android:visibility="gone"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dp_16"
                     android:maxLines="1"
@@ -141,7 +141,7 @@
                     android:drawableTint="@color/grey"
                     android:textColor="@color/amenities_color"
                     android:visibility="gone"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dp_16"
                     android:hint="@string/speaker"
@@ -169,7 +169,7 @@
                     android:textSize="@dimen/sp_12"
                     android:textColor="@color/amenities_color"
                     android:visibility="gone"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dp_16"
                     android:maxLines="1"

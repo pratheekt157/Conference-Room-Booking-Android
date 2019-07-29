@@ -17,7 +17,7 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
-import com.example.conferencerommapp.Model.AddBuilding
+import com.example.conferencerommapp.model.AddBuilding
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.addBuilding.repository.AddBuildingRepository
 import com.example.conferencerommapp.addBuilding.viewModel.AddBuildingViewModel
@@ -133,14 +133,19 @@ class AddingBuilding : AppCompatActivity() {
     @OnClick(R.id.button_add_building)
     fun getBuildingDetails() {
         if (validateInputs()) {
-            if(NetworkState.appIsConnectedToInternet(this)) {
-                addDataToObject(mAddBuilding)
-                addBuild(mAddBuilding)
+            if (NetworkState.appIsConnectedToInternet(this)) {
+                if(flag) {
+                    mUpdateBuildingDetails.buildingName = buildingNameEditText.text.toString().trim()
+                    mUpdateBuildingDetails.place =  buildingPlaceEditText.text.toString().trim()
+                    updateBuildingDetails(mUpdateBuildingDetails)
+                } else {
+                    addDataToObject(mAddBuilding)
+                    addBuild(mAddBuilding)
+                }
             } else {
                 val i = Intent(this@AddingBuilding, NoInternetConnectionActivity::class.java)
                 startActivityForResult(i, Constants.RES_CODE)
             }
-
         }
     }
 

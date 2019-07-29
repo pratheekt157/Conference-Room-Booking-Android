@@ -27,5 +27,7 @@
     <color name="attendee_and_meeting_status_text_color">#4F4F4F</color>
     <color name="horizontal_view_color">#E5E5E5</color>
     <color name="action_button_text_color">#006DBE</color>
+    <color name="shadowColor">#66aff198</color>
+    <color name="recycler_background">#F7F7F7</color>
 
 </resources>

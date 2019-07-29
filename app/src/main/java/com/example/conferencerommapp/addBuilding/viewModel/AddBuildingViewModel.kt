@@ -2,7 +2,7 @@ package com.example.conferencerommapp.addBuilding.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Model.AddBuilding
+import com.example.conferencerommapp.model.AddBuilding
 import com.example.conferencerommapp.addBuilding.repository.AddBuildingRepository
 import com.example.conferencerommapp.services.ResponseListener
 

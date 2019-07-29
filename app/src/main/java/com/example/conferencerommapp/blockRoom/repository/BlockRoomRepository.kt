@@ -1,7 +1,7 @@
 package com.example.conferencerommapp.blockRoom.repository
 
-import com.example.conferencerommapp.Model.BlockRoom
-import com.example.conferencerommapp.Model.BlockingConfirmation
+import com.example.conferencerommapp.model.BlockRoom
+import com.example.conferencerommapp.model.BlockingConfirmation
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants

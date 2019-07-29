@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/recycler_view_background"
-        tools:context=".Activity.BuildingDashboard">
+        tools:context=".manageBuildings.ui.BuildingDashboard">
 
     <ProgressBar
             android:id="@+id/building_dashboard_progress_bar"

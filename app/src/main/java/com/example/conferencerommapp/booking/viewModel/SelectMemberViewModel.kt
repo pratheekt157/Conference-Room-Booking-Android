@@ -2,7 +2,7 @@ package com.example.conferencerommapp.booking.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.conferencerommapp.Model.EmployeeList
+import com.example.conferencerommapp.model.EmployeeList
 import com.example.conferencerommapp.booking.repository.EmployeeRepository
 import com.example.conferencerommapp.services.ResponseListener
 

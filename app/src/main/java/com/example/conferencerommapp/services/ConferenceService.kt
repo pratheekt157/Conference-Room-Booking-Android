@@ -1,9 +1,9 @@
 package com.example.conferencerommapp.services
 
 import com.example.conferencerommapp.Blocked
-import com.example.conferencerommapp.Model.*
+import com.example.conferencerommapp.model.*
 import com.example.conferencerommapp.AddConferenceRoom
-import com.example.conferencerommapp.Model.InputDetailsForRoom
+import com.example.conferencerommapp.model.InputDetailsForRoom
 import com.example.myapplication.Models.ConferenceList
 import okhttp3.ResponseBody
 import retrofit2.Call

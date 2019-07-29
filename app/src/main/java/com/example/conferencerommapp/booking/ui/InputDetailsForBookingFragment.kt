@@ -21,10 +21,10 @@ import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardActivity
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.RoomAdapter
-import com.example.conferencerommapp.Model.Building
-import com.example.conferencerommapp.Model.GetIntentDataFromActvity
-import com.example.conferencerommapp.Model.InputDetailsForRoom
-import com.example.conferencerommapp.Model.RoomDetails
+import com.example.conferencerommapp.model.Building
+import com.example.conferencerommapp.model.GetIntentDataFromActvity
+import com.example.conferencerommapp.model.InputDetailsForRoom
+import com.example.conferencerommapp.model.RoomDetails
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.booking.repository.ConferenceRoomRepository
 import com.example.conferencerommapp.booking.viewModel.ConferenceRoomViewModel

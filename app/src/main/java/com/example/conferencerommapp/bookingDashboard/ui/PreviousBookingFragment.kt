@@ -20,8 +20,8 @@ import com.example.conferencerommapp.bookingDashboard.ui.UserBookingsDashboardAc
 import com.example.conferencerommapp.bookingDashboard.viewModel.BookingDashboardViewModel
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.PreviousBookingAdapter
-import com.example.conferencerommapp.Model.BookingDashboardInput
-import com.example.conferencerommapp.Model.Dashboard
+import com.example.conferencerommapp.model.BookingDashboardInput
+import com.example.conferencerommapp.model.Dashboard
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.utils.Constants

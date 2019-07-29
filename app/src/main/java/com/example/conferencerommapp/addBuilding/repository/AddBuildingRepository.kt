@@ -1,6 +1,6 @@
 package com.example.conferencerommapp.addBuilding.repository
 
-import com.example.conferencerommapp.Model.AddBuilding
+import com.example.conferencerommapp.model.AddBuilding
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants

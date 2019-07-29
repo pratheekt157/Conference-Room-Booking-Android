@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:paddingBottom="5dp"
+              android:paddingBottom="@dimen/dp_5"
               android:layout_height="match_parent">
 
     <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="@dimen/dp_23"
+            android:layout_height="@dimen/dp_23"
             android:id="@+id/icon"
-            android:paddingTop="4dp"
+            android:paddingTop="@dimen/dp_4"
             android:src="@drawable/arrow_pointing_to_right"/>
 
     <TextView
             android:id="@+id/spinner_text"
-            android:paddingLeft="14dp"
-            android:paddingTop="4dp"
+            android:paddingLeft="@dimen/dp_14"
+            android:paddingTop="@dimen/dp_4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

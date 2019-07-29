@@ -10,7 +10,7 @@
             android:layout_marginLeft="@dimen/dp_8"
             android:layout_marginRight="@dimen/dp_8"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginBottom="1dp"
+            android:layout_marginBottom="@dimen/dp_1"
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/card_corner_radius_dp_5">
         <LinearLayout
@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <TextView
-                        android:drawablePadding="8dp"
+                        android:drawablePadding="@dimen/dp_8"
                         android:textColor="@color/sub_item_text_color"
                         android:textSize="@dimen/sp_12"
                         android:drawableStart="@drawable/ic_business_black_24dp"
@@ -69,10 +69,10 @@
                             android:textSize="@dimen/sp_12"
                             android:id="@+id/date"
                             android:drawableStart="@drawable/ic_today_resized"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/dp_8"
                             android:hint="@string/date_hint"
                             android:textColorHint="@color/sub_item_text_color"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"/>
                     <TextView
@@ -85,7 +85,7 @@
                             android:layout_marginTop="@dimen/dp_8"
                             android:textColorHint="@color/sub_item_text_color"
                             android:hint="@string/start_end_time_hint"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
 
@@ -105,7 +105,7 @@
                             android:textSize="@dimen/sp_12"
                             android:visibility="gone"
                             android:text="@string/you_are_an_attendee"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"/>
 
@@ -114,10 +114,10 @@
                             android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:drawablePadding="@dimen/dp_8"
                             android:drawableStart="@drawable/ic_pending"
-                            android:textSize="12sp"
+                            android:textSize="@dimen/sp_12"
                             android:visibility="gone"
                             android:text="@string/pending_for_approval"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -132,7 +132,7 @@
                         android:background="@color/horizontal_view_color"/>
                 <TextView
                         android:layout_below="@id/horizontal_line1"
-                        android:textColor="#BDBDBD"
+                        android:textColor="@color/aminities"
                         android:textSize="@dimen/sp_12"
                         android:id="@+id/aminities_text_view"
                         android:layout_marginTop="@dimen/dp_8"
@@ -158,7 +158,7 @@
                             android:textSize="@dimen/sp_12"
                             android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:drawablePadding="@dimen/dp_16"
                             android:maxLines="1"
@@ -169,7 +169,7 @@
                             android:textSize="@dimen/sp_12"
                             android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:drawablePadding="@dimen/dp_16"
                             android:hint="@string/whiteboard_marker"
@@ -196,7 +196,7 @@
                             android:textSize="@dimen/sp_12"
                             android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:drawablePadding="@dimen/dp_16"
                             android:maxLines="1"
@@ -207,7 +207,7 @@
                             android:textSize="@dimen/sp_12"
                             android:textColor="@color/attendee_and_meeting_status_text_color"
                             android:visibility="gone"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:drawablePadding="@dimen/dp_16"
                             android:hint="@string/speaker"
@@ -234,7 +234,7 @@
                             android:textSize="@dimen/sp_12"
                             android:textColor="@color/amenities_color"
                             android:visibility="gone"
-                            android:layout_width="0dp"
+                            android:layout_width="@dimen/dp_0"
                             android:layout_weight="1"
                             android:drawablePadding="@dimen/dp_16"
                             android:maxLines="1"
@@ -268,7 +268,7 @@
                         android:fontFamily="@font/roboto"
                         android:textSize="@dimen/sp_14"
                         android:id="@+id/btnCancel"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
                 <TextView
@@ -279,7 +279,7 @@
                         android:fontFamily="@font/roboto"
                         android:textSize="@dimen/sp_14"
                         android:id="@+id/editBtn"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"/>
             </LinearLayout>

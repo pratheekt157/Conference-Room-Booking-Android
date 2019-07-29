@@ -20,8 +20,8 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
-import com.example.conferencerommapp.Model.GetIntentDataFromActvity
-import com.example.conferencerommapp.Model.UpdateBooking
+import com.example.conferencerommapp.model.GetIntentDataFromActvity
+import com.example.conferencerommapp.model.UpdateBooking
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.checkConnection.NoInternetConnectionActivity
 import com.example.conferencerommapp.updateBooking.repository.UpdateBookingRepository

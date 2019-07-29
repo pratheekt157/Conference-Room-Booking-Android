@@ -18,10 +18,10 @@ import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
 import com.example.conferencerommapp.Helper.RoomAdapter
-import com.example.conferencerommapp.Model.Building
-import com.example.conferencerommapp.Model.GetIntentDataFromActvity
-import com.example.conferencerommapp.Model.ManagerConference
-import com.example.conferencerommapp.Model.RoomDetails
+import com.example.conferencerommapp.model.Building
+import com.example.conferencerommapp.model.GetIntentDataFromActvity
+import com.example.conferencerommapp.model.ManagerConference
+import com.example.conferencerommapp.model.RoomDetails
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.ViewModel.ManagerConferenceRoomViewModel
 import com.example.conferencerommapp.manageBuildings.repository.BuildingsRepository

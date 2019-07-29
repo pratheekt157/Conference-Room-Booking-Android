@@ -1,7 +1,7 @@
 package com.example.conferencerommapp.recurringMeeting.repository
 
-import com.example.conferencerommapp.Model.ManagerConference
-import com.example.conferencerommapp.Model.RoomDetails
+import com.example.conferencerommapp.model.ManagerConference
+import com.example.conferencerommapp.model.RoomDetails
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants

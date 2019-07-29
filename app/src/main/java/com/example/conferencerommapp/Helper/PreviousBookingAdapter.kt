@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.conferencerommapp.Model.Dashboard
+import com.example.conferencerommapp.model.Dashboard
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.utils.Constants
 import com.example.conferencerommapp.utils.FormatDate

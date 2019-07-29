@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Activity.SelectMeetingMembersActivity">
+        tools:context=".booking.ui.SelectMeetingMembersActivity">
     <ProgressBar
             android:id="@+id/select_meeting_members_progress_bar"
             android:visibility="gone"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:paddingLeft="16dp"
+            android:paddingLeft="@dimen/dp_16"
             android:singleLine="true"
             android:hint="@string/search"
             android:layout_marginTop="@dimen/dp_10"

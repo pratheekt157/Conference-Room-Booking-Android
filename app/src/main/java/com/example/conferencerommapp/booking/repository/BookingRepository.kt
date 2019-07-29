@@ -1,6 +1,6 @@
 package com.example.conferencerommapp.booking.repository
 
-import com.example.conferencerommapp.Model.Booking
+import com.example.conferencerommapp.model.Booking
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants

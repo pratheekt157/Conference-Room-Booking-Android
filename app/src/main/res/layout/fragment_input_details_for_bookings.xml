@@ -26,7 +26,7 @@
                     android:weightSum="2">
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/from_time_layout"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
@@ -49,7 +49,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/to_time_layout"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/dp_0"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
@@ -159,7 +159,7 @@
                     android:layout_below="@id/building_name_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#ba160c"
+                    android:textColor="@color/error_color"
                     android:visibility="invisible"
                     android:layout_marginStart="@dimen/dp_20"
                     android:textSize="@dimen/sp_12"

@@ -60,7 +60,7 @@
                     android:drawableStart="@drawable/ic_today_resized"
                     android:layout_marginTop="8dp"
                     android:text="@string/date_hint"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
             <TextView
@@ -70,9 +70,9 @@
                     android:textSize="@dimen/sp_12"
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_time_dashboard"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:text="@string/start_end_time_hint"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <View
@@ -81,7 +81,7 @@
                 android:id="@+id/line"
                 android:background="#E5E5E5"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+                android:layout_height="@dimen/dp_1"/>
 
         <TextView
                 android:layout_below="@+id/line"

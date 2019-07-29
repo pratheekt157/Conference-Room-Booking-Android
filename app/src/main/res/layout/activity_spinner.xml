@@ -24,7 +24,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/block_from_time_layout"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -45,7 +45,7 @@
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/block_to_time_layout"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/dp_0"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -104,7 +104,7 @@
             android:id="@+id/error_spinner_building_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#ba160c"
+            android:textColor="@color/error_color"
             android:visibility="invisible"
             android:layout_marginStart="@dimen/dp_12"
             android:textSize="@dimen/sp_12"

@@ -6,7 +6,7 @@
         android:layout_marginLeft="@dimen/dp_8"
         android:layout_marginRight="@dimen/dp_8"
         android:layout_marginTop="@dimen/dp_8"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="@dimen/dp_1"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/card_corner_radius_dp_5">
     <RelativeLayout
@@ -63,9 +63,9 @@
                     android:textSize="@dimen/sp_12"
                     android:id="@+id/cancelled_date"
                     android:drawableStart="@drawable/ic_today_resized"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:text="@string/date_hint"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"/>
             <TextView
@@ -75,9 +75,9 @@
                     android:textSize="@dimen/sp_12"
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_time_dashboard"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/dp_8"
                     android:text="@string/start_end_time_hint"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/dp_0"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
     </RelativeLayout>

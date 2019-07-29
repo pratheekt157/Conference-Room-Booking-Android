@@ -1,7 +1,6 @@
 package com.example.conferencerommapp.signIn.repository
 
-import com.example.conferencerommapp.Model.SignIn
-import com.example.conferencerommapp.ServiceBuilder
+import com.example.conferencerommapp.model.SignIn
 import com.example.conferencerommapp.services.ResponseListener
 import com.example.conferencerommapp.services.RestClient
 import com.example.conferencerommapp.utils.Constants

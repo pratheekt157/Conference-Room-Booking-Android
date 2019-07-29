@@ -18,8 +18,8 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.example.conferencerommapp.BaseApplication
 import com.example.conferencerommapp.Helper.NetworkState
-import com.example.conferencerommapp.Model.BlockRoom
-import com.example.conferencerommapp.Model.Building
+import com.example.conferencerommapp.model.BlockRoom
+import com.example.conferencerommapp.model.Building
 import com.example.conferencerommapp.R
 import com.example.conferencerommapp.blockRoom.repository.BlockRoomRepository
 import com.example.conferencerommapp.blockRoom.viewModel.BlockRoomViewModel
