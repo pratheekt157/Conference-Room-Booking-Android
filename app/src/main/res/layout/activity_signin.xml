@@ -57,7 +57,7 @@
                     android:gravity="center"
                     android:layout_weight="0.45"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp">
+                    android:layout_height="@dimen/dp_0">
                 <com.shobhitpuri.custombuttons.GoogleSignInButton
                         android:id="@+id/sign_in_button"
                         android:layout_width="wrap_content"

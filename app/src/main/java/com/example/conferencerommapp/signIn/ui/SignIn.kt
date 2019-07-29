@@ -48,7 +48,7 @@ class SignIn : AppCompatActivity() {
     private lateinit var mCheckRegistrationViewModel: CheckRegistrationViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signin_new)
+        setContentView(R.layout.activity_signin)
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         crashHandler()
         ButterKnife.bind(this)
