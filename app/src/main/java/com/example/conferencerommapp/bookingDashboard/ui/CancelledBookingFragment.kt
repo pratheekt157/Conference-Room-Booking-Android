@@ -63,7 +63,7 @@ class CancelledBookingFragment : Fragment() {
      */
     @SuppressLint("ResourceAsColor")
     fun init() {
-        HideSoftKeyboard.hideSoftKeyboard(activity!!)
+       // HideSoftKeyboard.hideSoftKeyboard(activity!!)
         mProgressBar = activity!!.findViewById(R.id.cancelled_main_progress_bar)
         initRecyclerView()
         initComponentForCancelledFragment()

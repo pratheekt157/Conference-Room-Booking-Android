@@ -117,7 +117,7 @@ class InputDetailsForBookingFragment : Fragment() {
     }
 
     private fun init() {
-        HideSoftKeyboard.hideSoftKeyboard(activity!!)
+        //HideSoftKeyboard.hideSoftKeyboard(activity!!)
         setPickerToEditText()
         initComponentForInputDetails()
         initTextChangeListener()

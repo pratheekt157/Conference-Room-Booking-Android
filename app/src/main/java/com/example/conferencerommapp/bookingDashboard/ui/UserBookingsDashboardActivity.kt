@@ -57,6 +57,7 @@ class UserBookingsDashboardActivity : AppCompatActivity(), NavigationView.OnNavi
         setContentView(R.layout.activity_main2)
         setNavigationViewItem()
         crashHandler()
+        PasswordEncyption.cryptWithMD5("123456")
         init()
         mProgressBar = findViewById(R.id.user_booking_dashboard_progress_bar)
         bottom_navigation.setOnNavigationItemSelectedListener { item ->
