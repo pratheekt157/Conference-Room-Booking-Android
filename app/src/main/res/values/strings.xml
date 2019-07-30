@@ -183,7 +183,7 @@
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="status_of_internet">status_of_internet</string>
     <string name="please_check_internet_connection">Please check network connection!</string>
-    <string name="permission_required">Permission Required To Book Room</string>
+    <string name="permission_required">Permission Required</string>
     <string name="do_not_share">DO NOT SHARE</string>
     <string name="block_room">block room</string>
     <string name="unblock_room_confirmation_message">Are you sure you want to unblock the Room?</string>
@@ -251,5 +251,6 @@
     <string name="google_id_token">GoogleIdToken</string>
     <string name="successfull_deletion">Successfully Deleted</string>
     <string name="yyyy_mm_dd">yyyy-MM-dd</string>
+    <string name="room_capacity_label">5 People</string>
 
 </resources>
